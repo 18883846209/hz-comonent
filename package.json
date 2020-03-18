@@ -1,0 +1,21 @@
+{
+  "name": "react-mobile-tmp",
+  "version": "1.0.0",
+  "description": "移动端项目实例集",
+  "scripts": {
+    "lint": "lerna run lint"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "dependencies": {
+    "lerna": "3.20.2",
+    "pre-commit": "1.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://192.168.110.8:10080/tangqitao/react-mobile-tmp.git"
+  },
+  "author": "tangqitao",
+  "license": "ISC"
+}
