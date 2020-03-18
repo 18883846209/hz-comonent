@@ -1,0 +1,22 @@
+@time: 400ms;
+
+:global {
+  .next-page-transitions-enter {
+    transform: translate3d(20px, 0, 0);
+    opacity: 0;
+  }
+  .next-page-transitions-enter-active {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+    transition: opacity @time, transform @time;
+  }
+  .next-page-transitions-exit {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  .next-page-transitions-exit-active {
+    transform: translate3d(-20px, 0, 0);
+    opacity: 0;
+    transition: opacity @time, transform @time;
+  }
+}
