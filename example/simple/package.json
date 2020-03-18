@@ -8,13 +8,13 @@
     "start": "cross-env NODE_ENV=production next start",
     "analyze:bundles": "cross-env ANALYZE=BUNDLES next build src",
     "analyze:size": "cross-env ANALYZE=SIZE next build src",
+    "lint": "npm run eslint && npm run stylelint",
     "eslint": "eslint --ext .jsx,.js src/",
     "stylelint": "stylelint '**/*.less'",
     "prettier": "prettier --write '**/*.{js,jsx,md,json}'"
   },
   "pre-commit": [
-    "eslint",
-    "stylelint"
+    "lint"
   ],
   "dependencies": {
     "next": "9.3.1",
