@@ -1,6 +1,7 @@
 module.exports = {
   extends: ["airbnb", "prettier", "prettier/react"],
   parser: "babel-eslint",
+  plugins: ["react", "react-hooks"],
   rules: {
     strict: 0,
     "no-param-reassign": 0,
@@ -28,7 +29,10 @@ module.exports = {
     "linebreak-style": 0,
     "no-useless-catch": 0,
     "consistent-return": 0,
-    "no-else-return": ["error", { allowElseIf: true }]
+    "no-else-return": ["error", { allowElseIf: true }],
+    "react/jsx-props-no-spreading": 0,
+    "import/prefer-default-export": 0,
+    "prefer-object-spread": 0
   },
   globals: {
     expect: true,

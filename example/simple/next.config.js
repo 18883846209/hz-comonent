@@ -1,4 +1,5 @@
 const withLess = require("@zeit/next-less");
+const withCSS = require("@zeit/next-css");
 const withSourceMaps = require("@zeit/next-source-maps");
 const path = require("path");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
@@ -58,7 +59,7 @@ const nextConfig = {
   lessLoaderOptions: {
     javascriptEnabled: true,
     modifyVars: {
-      hack: `true; @import "${resolveCwd("config/theme.less")}";`
+      hack: `true; @import "${resolveCwd("src/styles/themes/default.less")}";`
     },
     plugins: [new NpmImportPlugin({ prefix: "~" })]
   },
@@ -139,10 +140,12 @@ const nextConfig = {
   }
 };
 
-module.exports = withLess(
-  withSourceMaps(
-    // withAssets(
-    withCssChunkConfig(nextConfig)
-    // )
+module.exports = withCSS(
+  withLess(
+    withSourceMaps(
+      // withAssets(
+      withCssChunkConfig(nextConfig)
+      // )
+    )
   )
 );

@@ -4,7 +4,7 @@
 import { stringify } from "qs";
 import getConfig from "next/config";
 
-import { getCookie } from "@utils/cookie";
+import { getCookie } from "@/utils/cookie";
 
 const { publicRuntimeConfig } = getConfig();
 

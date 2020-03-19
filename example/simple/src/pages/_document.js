@@ -3,7 +3,7 @@
 import React from "react";
 import Document, { Head, Main, NextScript } from "next/document";
 
-const bodyClassName = "tqt-koa-next";
+const BODY_CLASSNAME = "tqt-koa-next";
 
 export default class extends Document {
   static async getInitialProps(ctx) {
@@ -17,6 +17,9 @@ export default class extends Document {
         <Head>
           <meta charSet="utf-8" />
           <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />
+          {/* 全局引入rem.js */}
+          <script src="/static/lib/rem/antm-viewport.min.js" />
+          {/* antd-m 依赖 fastclick */}
           <script src="/static/lib/fastclick/1.0.6/fastclick.js" />
           <script
             // eslint-disable-next-line
@@ -31,7 +34,7 @@ if ('addEventListener' in document) {
             }}
           />
         </Head>
-        <body className={bodyClassName}>
+        <body className={BODY_CLASSNAME}>
           <Main />
           <NextScript />
         </body>

@@ -1,11 +1,19 @@
 import React from "react";
+import Link from "next/link";
 
 const Home = () => (
   <div className="container">
     <main>
-      <h1 className="title">
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
+      <div>
+        <Link href="/test">
+          <a>test</a>
+        </Link>
+      </div>
+      <div>
+        <Link href="/set-up">
+          <a>set-up</a>
+        </Link>
+      </div>
     </main>
 
     <footer>
