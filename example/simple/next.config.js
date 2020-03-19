@@ -46,7 +46,7 @@ const nextConfig = {
             context.options && typeof context.options.context === "string" ? context.options.context : context.context;
         }
         const request = path.relative(options.context, context.resourcePath);
-        options.content = options.hashPrefix + request + "+" + localName;
+        options.content = `${options.hashPrefix}${request}+${localName}`;
         localIdentName = localIdentName.replace(/\[local\]/gi, localName);
         const hash = loaderUtils.interpolateName(context, localIdentName, options);
         return hash.replace(new RegExp("[^a-zA-Z0-9\\-_\u00A0-\uFFFF]", "g"), "-").replace(/^((-?[0-9])|--)/, "_$1");
@@ -74,7 +74,7 @@ const nextConfig = {
     return `${Date.now()}`;
   },
 
-  webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
+  webpack: (config, { dev, isServer }) => {
     if (isServer) {
       const antStyles = /antd-mobile\/.*?\/style.*?/;
       const origExternals = [...config.externals];
@@ -103,13 +103,15 @@ const nextConfig = {
         config.plugins.push(
           new BundleAnalyzerPlugin({
             analyzerMode: "server",
-            analyzerPort: dev ? 8888 : 8889,
+            analyzerPort: isServer ? 8888 : 8889, // 8888是ssr资源 、 8889是sap资源
             openAnalyzer: true
           })
         );
         break;
       case "SIZE":
         config.plugins.push(new WebpackBundleSizeAnalyzerPlugin("stats.txt"));
+        break;
+      default:
         break;
     }
 

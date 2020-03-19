@@ -1,13 +1,13 @@
 {
   "name": "simple",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build src",
+    "build": "cross-env NODE_ENV=production next build",
     "start": "cross-env NODE_ENV=production next start",
-    "analyze:bundles": "cross-env ANALYZE=BUNDLES next build src",
-    "analyze:size": "cross-env ANALYZE=SIZE next build src",
+    "analyze:bundles": "cross-env ANALYZE=BUNDLES next build",
+    "analyze:size": "cross-env ANALYZE=SIZE next build",
     "lint": "npm run eslint && npm run stylelint",
     "eslint": "eslint --ext .jsx,.js src/",
     "stylelint": "stylelint '**/*.less'",

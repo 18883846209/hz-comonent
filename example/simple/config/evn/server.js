@@ -1,7 +1,5 @@
 const envConfig = require("./client");
 
-const env = process.env.NODE_ENV || "development";
-
 /**
  * 字段              含义               取值
  * log4js           日志记录            undefined -> 不记录, log -> 写成日志, console -> 控制台打印
@@ -9,6 +7,7 @@ const env = process.env.NODE_ENV || "development";
  * token            后端接口临时长存token
  * api              后端接口地址
  * proxyUpload      重定向上传地址
+ * ocrApi           orc地址
  */
 const base = {
   ...envConfig,
@@ -31,4 +30,4 @@ module.exports = {
     log4js: "log",
     api: "http://192.168.111.142:8908"
   }
-}[env];
+}[process.env.NODE_ENV || "development"];
