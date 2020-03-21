@@ -31,7 +31,7 @@
     "lodash": "4.17.15",
     "next-page-transitions": "1.0.0-beta.2",
     "nprogress": "0.2.0",
-    "postcss-pxtorem": "5.1.1",
+    "postcss-adaptive": "0.5.0",
     "postcss-css-variables": "0.14.0",
     "autoprefixer": "9.7.4"
   },

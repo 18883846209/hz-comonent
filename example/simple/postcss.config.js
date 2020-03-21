@@ -1,5 +1,5 @@
 const autoprefixer = require("autoprefixer");
-const pxtorem = require("postcss-pxtorem");
+const adaptive = require("postcss-adaptive");
 const cssvariables = require("postcss-css-variables");
 
 module.exports = {
@@ -7,9 +7,9 @@ module.exports = {
     autoprefixer({
       overrideBrowserslist: ["last 2 versions", "Firefox ESR", "> 1%", "ie >= 8", "iOS >= 8", "Android >= 4"]
     }),
-    pxtorem({
-      rootValue: 50,
-      propWhiteList: []
+    adaptive({
+      remUnit: 75,
+      autoRem: true
     }),
     cssvariables()
   ]
