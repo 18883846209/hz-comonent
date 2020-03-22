@@ -11,4 +11,4 @@ RUN npm install --registry=https://registry.npm.taobao.org
 ENV NODE_ENV=production
 RUN npm run build
 EXPOSE 3000
-CMD APP_VERSION=$APP_VERSION NODE_ENV=$NODE_ENV npm run dev
+CMD APP_VERSION=$APP_VERSION NODE_ENV=$NODE_ENV npm run start
