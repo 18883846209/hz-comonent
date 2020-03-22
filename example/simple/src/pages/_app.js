@@ -47,6 +47,21 @@ export default class extends App {
 
   componentDidMount() {
     window.hzConfig = publicRuntimeConfig;
+
+    // detect 0.5px supports
+    const docEl = document.documentElement;
+    const dpr = window.devicePixelRatio || 1;
+    if (dpr >= 2) {
+      const fakeBody = document.createElement("body");
+      const testElement = document.createElement("div");
+      testElement.style.border = ".5px solid transparent";
+      fakeBody.appendChild(testElement);
+      docEl.appendChild(fakeBody);
+      if (testElement.offsetHeight === 1) {
+        docEl.classList.add("hairlines");
+      }
+      docEl.removeChild(fakeBody);
+    }
   }
 
   componentWillUnmount() {}

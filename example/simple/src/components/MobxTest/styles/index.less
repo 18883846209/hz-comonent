@@ -1,10 +1,15 @@
 .h1 {
+  width: 750px; // 设计图按照 750px 宽
+  height: 18px;
   color: red;
-  font-size: 24px; // 将自动转换为 rem
-  border-top: 1px solid #333; // postcss 自动解决 1px 问题
+  font-size: 24px; // font* 将不会转换 rem 而是转换成正确的 px
+  line-height: 18px;
+  border-top: 1px solid #333; // 小于1.1px的单位不会转化成为rem，并且 postcss 自动解决 1px 问题
+  border-bottom: 4px solid #333;
 }
 
 .h1-1 {
   color: green;
-  font-size: 24PX; // 设置为 PX 放弃自动转换
+  /* prettier-ignore */
+  font-size: 24PX; // 设置为 PX 放弃自动转换（这里开启 prettier-ignore 避免大小写转换!）
 }

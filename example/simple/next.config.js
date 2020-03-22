@@ -37,7 +37,7 @@ const nextConfig = {
     localIdentName: "[local]___[hash:base64:5]",
     context: path.join(__dirname, "src"),
     getLocalIdent: (context, localIdentName, localName, options) => {
-      if (context.resourcePath.includes("node_modules")) {
+      if (context.resourcePath.includes("node_modules") || localName === "hairlines") {
         return localName;
       }
       const match = context.resourcePath.match(/src(.*)/);
@@ -140,8 +140,8 @@ const nextConfig = {
   }
 };
 
-module.exports = withCSS(
-  withLess(
+module.exports = withLess(
+  withCSS(
     withSourceMaps(
       // withAssets(
       withCssChunkConfig(nextConfig)
