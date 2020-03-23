@@ -6,8 +6,7 @@ import useStores from "@/hooks/useStores";
 import Styles from "./styles/index.less";
 
 export default observer(() => {
-  const { commonStore } = useStores();
-  const { themeStore } = useStores();
+  const { commonStore, themeStore } = useStores();
 
   return (
     <>

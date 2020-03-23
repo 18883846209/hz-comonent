@@ -109,13 +109,13 @@ pages/set-up/go-home.js
 
 #### 命名规范
 
-建议采用
+建议采用中划线
 
 #### 文件路径
 
 src/styles/\*下用于存放基础公共样式方法或页面组件样式（pages 下的组件）
 
-特别说明：src/components/\*下的组件样式无需放入此目录，而是推荐在目录在创建 styles 目录，如：
+特别说明：src/components/\*下的组件样式无需放入此目录，而是推荐在组件中创建 styles 目录，如：
 
 ```
 components
@@ -199,7 +199,7 @@ components
 
 此为项目根目录下的 public 文件夹，里面的所有资源都将跟随 node 服务对外发布，如：/public/static/favicon.ico
 
-tips：一般不易更变的文件可存放在此处！
+tips：一般不易更换的文件可存放在此处！
 
 特别说明：
 
