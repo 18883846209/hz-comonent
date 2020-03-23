@@ -3,7 +3,6 @@
  * cookiePrefix             cookie前缀
  * localStoragePrefix       localStorage前缀
  * OK_CODE                  请求api成功code
- * staticUrl                静态资源地址
  * host                     本机地址
  * cdn                      cdn地址
  * wx_debug                 wx_debug模式
@@ -17,7 +16,6 @@ const base = {
   cookiePrefix: "hz_m_simple_",
   localStoragePrefix: "hz_m_simple_",
   OK_CODE: "0000",
-  staticUrl: "",
   cdn: "",
   // uploadUrl: "http://222.177.11.1:8909",
   wx_AppID: "",
