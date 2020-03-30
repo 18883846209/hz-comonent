@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
+import PropTypes from "prop-types";
 
-const Home = () => (
+const Home = ({ timerNum }) => (
   <div className="container">
     <main>
       <div>
@@ -14,6 +15,11 @@ const Home = () => (
           <a>set-up</a>
         </Link>
       </div>
+      <div>
+        <Link href={`/test/${timerNum}`}>
+          <a>test/[id]</a>
+        </Link>
+      </div>
     </main>
 
     <footer>
@@ -21,5 +27,11 @@ const Home = () => (
     </footer>
   </div>
 );
+Home.getInitialProps = async () => {
+  return { timerNum: Date.now() };
+};
+Home.propTypes = {
+  timerNum: PropTypes.number
+};
 
 export default Home;

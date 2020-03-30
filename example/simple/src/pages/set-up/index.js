@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
+// 延迟展示
 const TestPage = () => (
   <div className="container">
     <main>
@@ -11,8 +12,9 @@ const TestPage = () => (
   </div>
 );
 TestPage.getInitialProps = async () => {
+  // 可以用作服务端请求
   await new Promise(resolve => {
-    setTimeout(resolve, 50000);
+    setTimeout(resolve, 1000 * 3);
   });
   return {};
 };

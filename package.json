@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "description": "移动端项目实例集",
   "scripts": {
-    "lint": "lerna run lint"
+    "lint": "lerna run lint",
+    "mc:init": "muchang-tools run init"
   },
   "pre-commit": [
     "lint"
   ],
   "dependencies": {
     "lerna": "3.20.2",
-    "pre-commit": "1.2.2"
+    "pre-commit": "1.2.2",
+    "muchang-tools": "0.0.5"
   },
   "repository": {
     "type": "git",
