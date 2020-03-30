@@ -142,7 +142,6 @@ var Adaptive = (function() {
               // generate a new rule of `hairline`
               if (!noDealHairline && this._needHairline(originDeclarationValue)) {
                 var newDeclaration = _extends({}, declaration);
-                console.log(originDeclarationValue);
                 newDeclaration.value = this._getCalcValue("px", originDeclarationValue, true);
                 newRule.declarations.push(newDeclaration);
               }
