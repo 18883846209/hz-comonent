@@ -227,4 +227,12 @@ mobx 类存放在 src/stores 目录下；
 
 ## 其他说明
 
+### 如何启用 assetPrefix 资产前缀？
+
+什么情况下会使用资产前缀呢？最常见的情况是用到 cdn 的时候...（或者使用 uri 路径划分服务时）
+
+启用方式很简单，config/evn/client -> 修改配置 cdn，重新打包部署。
+
+注意：引用 public/\* 时，记得正确编写代码 `${publicRuntimeConfig.cdn}/*`！
+
 ...
