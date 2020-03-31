@@ -9,7 +9,7 @@ const NpmImportPlugin = require("less-plugin-npm-import");
 
 const envConfig = require("./config/evn/client");
 const serverConfig = require("./config/evn/server");
-// const withAssets = require("./utils/with-assets");
+const withAssets = require("./utils/with-assets");
 const withCssChunkConfig = require("./utils/with-css-chunk");
 
 // 根目录下的文件
@@ -140,12 +140,4 @@ const nextConfig = {
   }
 };
 
-module.exports = withLess(
-  withCSS(
-    withSourceMaps(
-      // withAssets(
-      withCssChunkConfig(nextConfig)
-      // )
-    )
-  )
-);
+module.exports = withLess(withCSS(withSourceMaps(withAssets(withCssChunkConfig(nextConfig)))));
