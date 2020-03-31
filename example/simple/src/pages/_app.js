@@ -83,10 +83,10 @@ export default class extends App {
             name="viewport"
             content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"
           />
-          <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />
-          <link href="/static/images/logo.png" rel="apple-touch-icon-precomposed" />
-          <script src="/static/lib/rem/adaptive.min.js" />
-          <script src="/static/lib/fastclick/1.0.6/fastclick.js" />
+          <link rel="shortcut icon" href={`${publicRuntimeConfig.cdn}/static/favicon.ico`} type="image/x-icon" />
+          <link href={`${publicRuntimeConfig.cdn}/static/images/logo.png`} rel="apple-touch-icon-precomposed" />
+          <script src={`${publicRuntimeConfig.cdn}/static/lib/rem/adaptive.min.js`} />
+          <script src={`${publicRuntimeConfig.cdn}/static/lib/fastclick/1.0.6/fastclick.js`} />
           <script
             // eslint-disable-next-line
             dangerouslySetInnerHTML={{

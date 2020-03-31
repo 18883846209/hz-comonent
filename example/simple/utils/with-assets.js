@@ -18,7 +18,7 @@ module.exports = (nextConfig = {}) => {
             options: {
               limit: 1024,
               name: `${baseUrl}[path][name].[hash:7].[ext]`,
-              publicPath
+              publicPath: `${nextConfig.assetPrefix}${publicPath}`
             }
           }
         ]
@@ -34,7 +34,7 @@ module.exports = (nextConfig = {}) => {
       //       options: {
       //         limit: 1024,
       //         name: `${baseUrl}assets/node_modules/[path][name].[hash:7].[ext]`,
-      //         publicPath
+      //         publicPath: `${nextConfig.assetPrefix}${publicPath}`
       //       }
       //     }
       //   ]
