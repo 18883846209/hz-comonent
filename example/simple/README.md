@@ -235,4 +235,53 @@ mobx 类存放在 src/stores 目录下；
 
 注意：引用 public/\* 时，记得正确编写代码 `${publicRuntimeConfig.cdn}/*`！
 
+### 如何模拟 hover 效果？
+
+使用 [rmc-feedback](https://www.npmjs.com/package/rmc-feedback)
+
+下面实现一个简单的按钮：
+
+```jsx
+<TouchFeedback activeClassName={Styles["container-hover"]}>
+  <div className={Styles["container"]} onClick={handleMsgClick}>
+    <i />
+    <p>境外人员录入</p>
+  </div>
+</TouchFeedback>
+```
+
+```less
+.container {
+  display: flex;
+  align-items: center;
+  height: 102px;
+  margin-bottom: 16px;
+  padding: 0 48px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.13);
+  transition: all 300ms;
+
+  &-hover {
+    background-color: #e7e7e7;
+  }
+
+  i {
+    .bg-image("@/assets/images/home/icon-1");
+
+    width: 32px;
+    height: 44px;
+    margin-right: 26px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+
+  p {
+    color: #333;
+    font-weight: 500;
+    font-size: 17px;
+  }
+}
+```
+
 ...
