@@ -11,7 +11,7 @@ import { InjectStoreContext, initializeData } from "@/contexts/store";
 import "@/styles/common/reset.less";
 import "@/styles/common/nprogress.less";
 import "@/styles/common/next-page-transitions.less";
-// import Layout from "@components/layout/base-layout";
+import Layout from "@/components/Layout";
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -101,11 +101,11 @@ if ('addEventListener' in document) {
           />
         </Head>
         <InjectStoreContext initialData={initialStoreData}>
-          {/* <Layout router={router}> */}
-          <PageTransition timeout={TIMEOUT} classNames="next-page-transitions">
-            <Component {...pageProps} key={router.route} />
-          </PageTransition>
-          {/* </Layout> */}
+          <Layout router={router}>
+            <PageTransition timeout={TIMEOUT} classNames="next-page-transitions">
+              <Component {...pageProps} key={router.route} />
+            </PageTransition>
+          </Layout>
         </InjectStoreContext>
       </>
     );
