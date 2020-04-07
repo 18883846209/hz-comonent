@@ -9,6 +9,7 @@ const TestPage = () => (
       <Link href="/">
         <a>go home</a>
       </Link>
+      
       <MobxTest />
     </main>
   </div>
