@@ -3,22 +3,16 @@ import { useRouter } from "next/router";
 import propTypes from "prop-types";
 import { NavBar } from "antd-mobile";
 
-const Base = ({ children }) => {
+const Base = ({ children, showRight = false, showBack = true }) => {
   const router = useRouter();
   function onBack() {
     router.back();
   }
+  const LeftContent = showBack ? "返回" : null;
+  const RightContent = showRight ? "..." : null;
   return (
     <>
-      <NavBar
-        mode="dark"
-        leftContent="返回"
-        // rightContent={[
-        //   <Icon key="0" type="search" style={{ marginRight: "16px" }} />,
-        //   <Icon key="1" type="ellipsis" />
-        // ]}
-        onLeftClick={onBack}
-      >
+      <NavBar mode="dark" leftContent={LeftContent} rightContent={RightContent} onLeftClick={onBack}>
         标题
       </NavBar>
       {children}
@@ -27,7 +21,9 @@ const Base = ({ children }) => {
 };
 
 Base.propTypes = {
-  children: propTypes.node
+  children: propTypes.node,
+  showBack: propTypes.bool,
+  showRight: propTypes.bool
 };
 
 export default Base;
