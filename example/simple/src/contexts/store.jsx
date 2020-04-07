@@ -19,7 +19,9 @@ export function initializeData(initialData = store || {}) {
 }
 
 export const InjectStoreContext = ({ children, initialData }) => {
-  store = initializeData(initialData);
+  if (!store) {
+    store = initializeData(typeof window === "undefined" ? {} : initialData);
+  }
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
 };
 InjectStoreContext.propTypes = {

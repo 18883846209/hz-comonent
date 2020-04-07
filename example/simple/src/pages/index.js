@@ -28,7 +28,7 @@ const Home = ({ timerNum }) => (
   </div>
 );
 Home.getInitialProps = async () => {
-  return { timerNum: Date.now() };
+  return { timerNum: Date.now(), title: "title-test" };
 };
 Home.propTypes = {
   timerNum: PropTypes.number
