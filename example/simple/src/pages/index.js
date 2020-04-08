@@ -28,6 +28,11 @@ const Home = ({ timerNum }) => (
           <a>class-mobx</a>
         </Link>
       </div>
+      <div>
+        <Link href="/transition">
+          <a>transition</a>
+        </Link>
+      </div>
     </main>
 
     <footer>

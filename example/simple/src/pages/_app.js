@@ -7,6 +7,7 @@ import { PageTransition } from "next-page-transitions";
 import getConfig from "next/config";
 
 import { InjectStoreContext } from "@/contexts/store";
+import Loader from "@/components/Loader";
 
 import "@/styles/common/reset.less";
 import "@/styles/common/nprogress.less";
@@ -44,7 +45,6 @@ export default class extends App {
 
   render() {
     const { Component, router, initialStoreData, pageProps } = this.props;
-
     return (
       <>
         <Head>
@@ -77,7 +77,18 @@ if ('addEventListener' in document) {
           />
         </Head>
         <InjectStoreContext initialData={initialStoreData}>
-          <PageTransition timeout={TIMEOUT} classNames="next-page-transitions">
+          <PageTransition
+            timeout={TIMEOUT}
+            classNames="next-page-transitions"
+            // skipInitialTransition
+            loadingDelay={500}
+            loadingComponent={<Loader />}
+            loadingTimeout={{
+              enter: TIMEOUT,
+              exit: 0
+            }}
+            loadingClassNames="next-page-transitions-loading"
+          >
             <Component {...pageProps} key={router.route} />
           </PageTransition>
         </InjectStoreContext>

@@ -217,15 +217,44 @@ mobx 类存放在 src/stores 目录下；
 
 实例存放在 src/contexts 目录下；
 
-默认情况下 src/contexts/store.jsx 为全局 mobx 的初始化文件
-
-公共的全局 mobx hooks 方法在 src/hooks/useStores.jsx
+默认情况下 src/contexts/store.jsx 为公共的全局 mobx 的初始化文件，并为其封装了 hooks 方法（在 src/hooks/useStores.jsx）、inject 方法。
 
 ### 六、工具类使用
 
 项目在 src/utils 下内置了 cookie、localStorage、request 等公共方法，务必统一使用
 
 ## 其他说明
+
+### 全局 mobx 的使用方法？
+
+#### 1.hooks 组件中使用方法：
+
+```jsx
+import { observer } from "mobx-react";
+
+import useStores from "@/hooks/useStores";
+
+export default observer(() => {
+  const { themeStore } = useStores();
+  // ... themeStore
+});
+```
+
+#### 2.class 组件中使用方式：
+
+注意：我们不推荐使用 inject，而是未来全部使用 hooks 方法！
+
+```jsx
+import { observer } from "mobx-react";
+
+import { inject } from "@/contexts/store";
+
+@inject("themeStore")
+@observer
+class Main extends React.Component {
+  // ... this.props.themeStore
+}
+```
 
 ### 如何启用 assetPrefix 资产前缀？
 

@@ -11,7 +11,6 @@ import { inject } from "@/contexts/store";
 class Main extends React.Component {
   renderTest = () => {
     const { themeStore } = this.props;
-    console.log(this.props);
     return (
       <>
         <div>themeStore.theme = {themeStore.theme}</div>
@@ -39,6 +38,6 @@ class Main extends React.Component {
   }
 }
 Main.propTypes = {
-  themeStore: PropTypes.object.isRequired
+  themeStore: PropTypes.object
 };
 export default Main;
