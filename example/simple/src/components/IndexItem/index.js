@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import styles from "./styles/index.less";
 
-const Module = ({ text, icon, style, className, onClick }) => (
+const Menu = ({ text, icon, style, className, onClick }) => (
   <div className={classnames(styles.container, className)} style={style}>
     <div className={styles.wrap} onClick={onClick}>
       <div className={styles.icon}>{icon}</div>
@@ -11,10 +11,7 @@ const Module = ({ text, icon, style, className, onClick }) => (
     </div>
   </div>
 );
-Module.getInitialProps = async () => {
-  return {};
-};
-Module.propTypes = {
+Menu.propTypes = {
   text: PropTypes.string,
   onClick: PropTypes.func,
   className: PropTypes.string,
@@ -22,4 +19,4 @@ Module.propTypes = {
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
 };
 
-export default Module;
+export default Menu;
