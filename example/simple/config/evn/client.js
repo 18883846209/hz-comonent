@@ -25,6 +25,10 @@ const base = {
   ocr_options: {
     username: "test",
     signdata: "NULL"
+  },
+  appConfig: {
+    callName: "hzAppCallFn",
+    callAndroid: "android"
   }
 };
 

@@ -52,7 +52,7 @@ export function dataURLtoFile(dataurl, filename = "fileName") {
 
 // 判断微信中ios 、android
 export function isBrowser() {
-  const userAgent = navigator.userAgent;
+  const userAgent = window.navigator.userAgent;
   const isAndroid = userAgent.indexOf("Android") > -1 || userAgent.indexOf("Adr") > -1; // android终端
   const isiOS = !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); // ios终端
   if (isAndroid) {

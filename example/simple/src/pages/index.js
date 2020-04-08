@@ -13,24 +13,34 @@ const Home = ({ timerNum }) => (
           <a>test</a>
         </Link>
       </div>
+      <br />
       <div>
         <Link href="/set-up">
           <a>set-up</a>
         </Link>
       </div>
+      <br />
       <div>
         <Link href={`/test/${timerNum}`}>
           <a>test/[id]</a>
         </Link>
       </div>
+      <br />
       <div>
         <Link href="/class-mobx">
           <a>class-mobx</a>
         </Link>
       </div>
+      <br />
       <div>
         <Link href="/transition">
           <a>transition</a>
+        </Link>
+      </div>
+      <br />
+      <div>
+        <Link href="/with-app">
+          <a>with-app</a>
         </Link>
       </div>
     </main>
