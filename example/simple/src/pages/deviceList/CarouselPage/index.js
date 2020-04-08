@@ -23,19 +23,22 @@ export default observer(props => {
         backgroundColor: "rgba(0,0,0,0.4)",
         width: "100%",
         zIndex: 99999,
-        height: maskHeight
+        height: "100%"
         // overflowX: "hidden",
       }}
       onClick={props.cancle}
     >
-      <div style={{ backgroundColor: "white", width: "100%", height: 200, marginTop:"50%" }}>
-        <Carousel>
-          {images.map((val, index) => (
+      <div style={{ backgroundColor: "white", width: "100%", height: 200, marginTop:"50%" }}
+      onClick={(event) => { event.preventDefault() }}
+      >
+        <Carousel selectedIndex={props.defaultIndex}>
+          {props.sources.map((val, index) => (
             <img
-              src="/static/images/logo.png"
+              src={val.pic}
               alt=""
               style={{ width: "100%", verticalAlign: "top", height: "200px" }}
               key={index}
+              onClick={(event) => { event.preventDefault() }}
             />
           ))}
         </Carousel>

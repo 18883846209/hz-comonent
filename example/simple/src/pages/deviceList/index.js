@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { List } from "antd-mobile";
 import CarouselPage from "./CarouselPage";
+import {getCalculateTime} from "../../utils/utils";
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -11,24 +12,23 @@ const devices = [
   { title: "监控点3", subTitle: "ADN<洪湖东路<渝北区<重庆市<本域" }
 ];
 
+const images = [
+    {pic:"/static/images/logo.png"},
+    {pic:"/static/images/catchPic.png"},
+    {pic:"/static/images/logo.png"}
+]
+
 // 延迟展示
 const DeviceList = () => {
     const [isVisible, setVisible] = useState(false)
     const cancle = ()=>{
-        console.log(11111);
         setVisible(false)
     };
-    document.addEventListener('touchmove', function(e) {
-        if(isVisible){
-            e.preventDefault();
-        }
-       }, false);
+    console.log(getCalculateTime("2020-4-8 14:00:00"));
+ 
   return (
     <div className="container">
       <main>
-        {/* <Link href="/">
-        <a>go home</a>
-      </Link> */}
       <div>
         <List className="my-list">
           {devices.map(item => (
@@ -39,7 +39,7 @@ const DeviceList = () => {
           ))}
           <Item arrow="horizontal" multipleLine onClick={() => {setVisible(true)}}>
             Title
-            <Brief>subtitle</Brief>
+            <Brief>{getCalculateTime("2020-4-5 13:03:00")}</Brief>
           </Item>
           <Item arrow="horizontal" multipleLine onClick={() => {}} platform="android">
             ListItem （Android）
@@ -70,7 +70,7 @@ const DeviceList = () => {
         </List>
         </div>
         {isVisible ? 
-        <CarouselPage cancle={cancle} />
+        <CarouselPage cancle={cancle} sources={images} defaultIndex={1} />
         :
         null
         }
@@ -79,33 +79,5 @@ const DeviceList = () => {
     </div>
   );
 };
-// const DeviceList = () => (
-//   <div className="container">
-//     <main>
-//       {/* <Link href="/">
-//         <a>go home</a>
-//       </Link> */}
-//       <List className="my-list">
-//        {devices.map(item => (
-//            <Item arrow="horizontal" multipleLine arrow="empty">
-//            {item.title}
-//            <Brief>{item.subTitle}</Brief>
-//          </Item>
-//        ))}
-//         <Item arrow="horizontal" multipleLine onClick={() => {}}>
-//           Title
-//           <Brief>subtitle</Brief>
-//         </Item>
-//         <Item arrow="horizontal" multipleLine onClick={() => {}} platform="android">
-//           ListItem （Android）
-//           <Brief>
-//             There may have water ripple effect of <br /> material if you set the click event.
-//           </Brief>
-//         </Item>
-//       </List>
-//       <CarouselPage visible={true}></CarouselPage>
-//     </main>
-//   </div>
-// );
 
 export default DeviceList;
