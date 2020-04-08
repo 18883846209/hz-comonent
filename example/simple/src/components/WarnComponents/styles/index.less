@@ -1,0 +1,50 @@
+@import "~@styles/mixins/main.less";
+@bg: rgb(92, 196, 243);
+@textColor: #fff;
+.height {
+  height: 1.5em;
+  line-height: 1.5;
+}
+.card {
+  display: inline-block;
+  font-size: 0;
+  .text {
+    .height;
+    background-color: @bg;
+    text-align: center;
+    color: @textColor;
+    font-size: 14px;
+  }
+}
+.progress {
+  position: relative;
+  width: 100%;
+  background-color: #666;
+  color: @textColor;
+  text-align: center;
+  .height;
+  .num {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 10;
+    transform: translateX(-50%);
+  }
+  .percent {
+    height: 100%;
+    background-color: @bg;
+  }
+}
+.item {
+  position: relative;
+  line-height: 1.5em;
+  min-height: 1em;
+  .left {
+    position: absolute;
+  }
+  .desc {
+    padding: 0 0 0 2em;
+    margin-left: 5px;
+    .overflow-clamps;
+  }
+}

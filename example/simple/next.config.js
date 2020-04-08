@@ -21,7 +21,8 @@ function resolveCwd(...args) {
 const polyfillsFile = "./src/utils/polyfills.js";
 
 const alias = {
-  "@": path.join(__dirname, "src")
+  "@": path.join(__dirname, "src"),
+  '@styles':path.join(__dirname,'src/styles')
 };
 
 const nextConfig = {

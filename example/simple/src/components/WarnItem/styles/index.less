@@ -1,4 +1,8 @@
-.main {
+@import "~@styles/mixins/main.less";
+.warn_item {
+  &:not(:last-of-type) {
+    margin-bottom: 50px;
+  }
   .top {
     margin-bottom: 10px;
     .left {
@@ -10,30 +14,13 @@
       float: right;
     }
   }
-  .card {
-    display: inline-block;
-    font-size: 0;
-    .text {
-      background-color: rgb(92, 196, 243);
-      text-align: center;
-      color: #fff;
-      font-size: 14px;
-    }
-  }
   .bottom {
     .right {
+      min-width: 48%;
       max-width: 50%;
       display: inline-block;
+      vertical-align: top;
       margin-left: 10px;
-    }
-  }
-  .progress {
-    width: 100%;
-    background-color: #666;
-    color: #fff;
-    text-align: center;
-    .percent {
-      background-color: rgb(92, 196, 243);
     }
   }
 }

@@ -2,20 +2,33 @@ import React from "react";
 import { useRouter } from "next/router";
 import propTypes from "prop-types";
 import { NavBar } from "antd-mobile";
+import styles from "./styles/index.less";
+
+const routes = {
+  "/": "掌上作战室",
+  "/warn-list": "告警列表",
+  "/warn-detail": "告警详情"
+};
 
 const Base = ({ children, showRight = false, showBack = true }) => {
   const router = useRouter();
   function onBack() {
-    router.back();
+    if (router.asPath !== "/") {
+      router.back();
+    } else {
+      router.replace("/");
+    }
   }
-  const LeftContent = showBack ? "返回" : null;
+  const LeftContent = showBack && router.asPath !== "/" ? "返回" : null;
   const RightContent = showRight ? "..." : null;
   return (
     <>
       <NavBar mode="dark" leftContent={LeftContent} rightContent={RightContent} onLeftClick={onBack}>
-        标题
+        {routes[router.asPath] || ""}
       </NavBar>
-      {children}
+      <div className={styles.main} style={{ height: "calc(100vh - 45px)" }}>
+        {children}
+      </div>
     </>
   );
 };

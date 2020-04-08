@@ -1,29 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import classnames from "classnames";
+import { Progress, Item, Card } from "@/components/WarnComponents/index";
 import styles from "./styles/index.less";
 
-const Card = ({ url, text = "", style }) => (
-  <div className={styles.card} style={style}>
-    <img src={url} width={80} height={100} alt="" />
-    <div className={styles.text}>{text}</div>
-  </div>
-);
-
-const Progress = ({ percent = 0 }) => (
-  <div className={styles.progress}>
-    <div className={styles.percent} style={{ width: "80%" }}>{`${percent}%`}</div>
-  </div>
-);
-
-const Item = ({ desc = "奥德赛testsdasd爱神的箭卡里克" }) => (
-  <div className={styles.Item}>
-    <div className={styles.desc}>{desc}</div>
-  </div>
-);
-
-const Warn = () => (
-  <div className={styles.main}>
+const Warn = ({ onClick }) => (
+  <div className={styles.warn_item} onClick={onClick}>
     <div className={styles.top}>
       <div className={styles.left}>姓名姓名姓名姓名姓名</div>
       <div className={styles.right}>20秒</div>
@@ -32,7 +13,10 @@ const Warn = () => (
       <Card style={{ marginRight: 10 }} text="抓拍照" />
       <Card text="布控照" />
       <div className={styles.right}>
-        <Item />
+        <div style={{ height: 100 }}>
+          <Item desc="asdasdasd测试测试asdasdasd测试测试asdasdasd测试测试" />
+          <Item />
+        </div>
         <Progress />
       </div>
     </div>
@@ -41,17 +25,9 @@ const Warn = () => (
 Warn.getInitialProps = async () => {
   return {};
 };
-Warn.propTypes = {};
-Card.propTypes = {
-  url: PropTypes.string,
-  text: PropTypes.string,
-  style: PropTypes.object
-};
-Progress.propTypes = {
-  percent: PropTypes.number
-};
-Item.propTypes = {
-  desc: PropTypes.string
+
+Warn.propTypes = {
+  onClick: PropTypes.func
 };
 
 export default Warn;

@@ -5,3 +5,12 @@
     background-image: ~"url('@{url}@3x.png')";
   }
 }
+
+// 多行文本省略号
+.overflow-clamps(@line: 2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @line;
+  overflow: hidden;
+  word-break: break-all;
+}
