@@ -1,4 +1,9 @@
 .filter {
+  position: absolute;
+  z-index: 1000;
+  background-color: #ffffff;
+  width: 100%;
+  border-bottom: 0.5px solid #ddd;
   .filter-title {
     display: flex;
     justify-content: space-around;
@@ -28,4 +33,13 @@
       font-size: 14px;
     }
   }
+}
+.height {
+  height: 80px;
+}
+.mask {
+  position: absolute;
+  width: 100%;
+  background-color: rgba(0,0,0,0.4);
+  z-index: 999;
 }
