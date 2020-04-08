@@ -6,9 +6,6 @@
     "lint": "lerna run lint",
     "mc:init": "muchang-tools run init"
   },
-  "pre-commit": [
-    "lint"
-  ],
   "dependencies": {
     "lerna": "3.20.2",
     "pre-commit": "1.2.2",
