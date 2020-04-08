@@ -1,5 +1,6 @@
 import { List, Flex, WingBlank } from "antd-mobile";
 import styles from "@/styles/executeDetails/index.less";
+import router from "next/router";
 import classNames from "classnames";
 import img from "@/assets/images/test.jpg";
 
@@ -40,7 +41,9 @@ function ExecuteDetails({ id = "" }) {
         {contentList.map(data => (
           <div className={styles["execute-content"]} key={data.key}>
             <div className={styles["content-title"]}>{data.key}</div>
-            <div className={styles["content-value"]}>{data.value}</div>
+            <div className={styles["content-value"]}>
+              {data.key === "区域" ? <u className={styles["link"]} onClick={() => router.push("/devices")}>{data.value}</u> : data.value}
+            </div>
           </div>
         ))}
         <div className={styles["execute-content"]} key={1}>

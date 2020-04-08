@@ -78,25 +78,27 @@ function ExecuteList(props) {
     <>
       <Filter filterDatas={filterDataList} callback={getFilterVal} />
       <List className={styles["execute-list"]}>
-        <Link href="/execute-details">
-          <Item multipleLine onClick={() => {}} key={1}>
-            <Flex>
-              <div className={styles["item-left"]}>
-                <img className={styles["img"]} src={img} />
-              </div>
-              <div className={styles["item-right"]}>
-                <span className={styles["name"]}>测试布控</span>
-                <span className={styles["state"]}>布控中</span>
-                <div className={styles["date"]}>20-03-27 15:33 ~ 20-03-27 16:33</div>
-                <div className={styles["detail"]}>
-                  <span>admin</span>
-                  <span>03-22 19:03</span>
-                  <span className={styles["operation"]}>XXX</span>
+        {new Array(10).fill(1).map(item => (
+          <Link href="/execute-details">
+            <Item multipleLine onClick={() => {}} key={1}>
+              <Flex>
+                <div className={styles["item-left"]}>
+                  <img className={styles["img"]} src={img} />
                 </div>
-              </div>
-            </Flex>
-          </Item>
-        </Link>
+                <div className={styles["item-right"]}>
+                  <span className={styles["name"]}>测试布控</span>
+                  <span className={styles["state"]}>布控中</span>
+                  <div className={styles["date"]}>20-03-27 15:33 ~ 20-03-27 16:33</div>
+                  <div className={styles["detail"]}>
+                    <span>admin</span>
+                    <span>03-22 19:03</span>
+                    <span className={styles["operation"]}>XXX</span>
+                  </div>
+                </div>
+              </Flex>
+            </Item>
+          </Link>
+        ))}
         <Item multipleLine onClick={() => {}} key={1}>
           <Flex>
             <div className={classnames(styles["item-left"], styles["item-name-list"])}>

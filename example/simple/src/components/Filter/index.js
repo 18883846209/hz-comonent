@@ -15,7 +15,7 @@ function FilterList({ valList, visible, onClick, selected, title }) {
           key={item.key}
           onClick={() => onClick(item.value)}
         >
-          <span className={selected[title] === item.value ? styles.selected : ''}>{item.key}</span>
+          <span className={selected[title] === item.value ? styles.selected : ""}>{item.key}</span>
         </Item>
       ))}
     </div>
@@ -69,12 +69,16 @@ function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => 
   };
 
   return (
-    <div className={styles.filter}>
-      <div className={styles["filter-title"]} style={style}>
-        <FilterTitle title={filterDatas} onClick={titleOnClick} />
+    <>
+      <div className={styles.filter}>
+        <div className={styles["filter-title"]} style={style}>
+          <FilterTitle title={filterDatas} onClick={titleOnClick} />
+        </div>
+        <FilterList visible={visible} valList={valList} title={title} selected={selected} onClick={itemClick} />
       </div>
-      <FilterList visible={visible} valList={valList} title={title} selected={selected} onClick={itemClick} />
-    </div>
+      {visible ? <div className={styles.mask} style={{ height: 'calc(100% - 45px)' }} /> : null}
+      <div className={styles.height} />
+    </>
   );
 }
 
