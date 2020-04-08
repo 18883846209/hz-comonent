@@ -18,12 +18,18 @@ const DeviceList = () => {
         console.log(11111);
         setVisible(false)
     };
+    document.addEventListener('touchmove', function(e) {
+        if(isVisible){
+            e.preventDefault();
+        }
+       }, false);
   return (
     <div className="container">
       <main>
         {/* <Link href="/">
         <a>go home</a>
       </Link> */}
+      <div>
         <List className="my-list">
           {devices.map(item => (
             <Item multipleLine arrow="empty">
@@ -31,6 +37,26 @@ const DeviceList = () => {
               <Brief>{item.subTitle}</Brief>
             </Item>
           ))}
+          <Item arrow="horizontal" multipleLine onClick={() => {setVisible(true)}}>
+            Title
+            <Brief>subtitle</Brief>
+          </Item>
+          <Item arrow="horizontal" multipleLine onClick={() => {}} platform="android">
+            ListItem （Android）
+            <Brief>
+              There may have water ripple effect of <br /> material if you set the click event.
+            </Brief>
+          </Item>
+          <Item arrow="horizontal" multipleLine onClick={() => {}}>
+            Title
+            <Brief>subtitle</Brief>
+          </Item>
+          <Item arrow="horizontal" multipleLine onClick={() => {}} platform="android">
+            ListItem （Android）
+            <Brief>
+              There may have water ripple effect of <br /> material if you set the click event.
+            </Brief>
+          </Item>
           <Item arrow="horizontal" multipleLine onClick={() => {}}>
             Title
             <Brief>subtitle</Brief>
@@ -42,7 +68,13 @@ const DeviceList = () => {
             </Brief>
           </Item>
         </List>
-        <CarouselPage visible={isVisible} cancle={cancle} />
+        </div>
+        {isVisible ? 
+        <CarouselPage cancle={cancle} />
+        :
+        null
+        }
+        
       </main>
     </div>
   );
