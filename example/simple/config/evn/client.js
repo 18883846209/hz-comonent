@@ -17,6 +17,7 @@ const base = {
   localStoragePrefix: "hz_m_simple_",
   OK_CODE: "0000",
   cdn: "",
+  subsystem: "",
   // uploadUrl: "http://222.177.11.1:8909",
   wx_AppID: "",
   amapWeb: "",

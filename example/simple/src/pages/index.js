@@ -1,6 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import PropTypes from "prop-types";
+import getConfig from "next/config";
+
+const { publicRuntimeConfig } = getConfig();
 
 const Home = ({ timerNum }) => (
   <div className="container">
@@ -20,10 +23,15 @@ const Home = ({ timerNum }) => (
           <a>test/[id]</a>
         </Link>
       </div>
+      <div>
+        <Link href="/class-mobx">
+          <a>class-mobx</a>
+        </Link>
+      </div>
     </main>
 
     <footer>
-      Powered by <img src="/static/images/logo.png" alt="Logo" />
+      Powered by <img src={`${publicRuntimeConfig.cdn}/static/images/logo.png`} alt="Logo" />
     </footer>
   </div>
 );

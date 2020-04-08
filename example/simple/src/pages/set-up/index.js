@@ -16,7 +16,7 @@ TestPage.getInitialProps = async () => {
   await new Promise(resolve => {
     setTimeout(resolve, 1000 * 3);
   });
-  return {};
+  return { title: "set-up" };
 };
 
 export default TestPage;
