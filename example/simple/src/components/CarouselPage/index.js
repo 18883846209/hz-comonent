@@ -28,7 +28,7 @@ export default observer(props => {
       }}
       onClick={props.cancle}
     >
-      <div style={{ backgroundColor: "white", width: "100%", height: 200, marginTop:"50%" }}
+      <div style={{ backgroundColor: "white", width: "100%", height: 200, marginTop:maskHeight/2 - 100 }}
       onClick={(event) => { event.preventDefault() }}
       >
         <Carousel selectedIndex={props.defaultIndex}>

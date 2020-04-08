@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { List } from "antd-mobile";
-import CarouselPage from "./CarouselPage";
+// import CarouselPage from "./CarouselPage";
+import CarouselPage from "@/components/CarouselPage/index";
 import {getCalculateTime} from "../../utils/utils";
 
 const Item = List.Item;
@@ -18,14 +19,12 @@ const images = [
     {pic:"/static/images/logo.png"}
 ]
 
-// 延迟展示
 const DeviceList = () => {
     const [isVisible, setVisible] = useState(false)
     const cancle = ()=>{
-        setVisible(false)
+        setVisible(false);
     };
-    console.log(getCalculateTime("2020-4-8 14:00:00"));
- 
+
   return (
     <div className="container">
       <main>
