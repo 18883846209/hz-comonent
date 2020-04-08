@@ -1,11 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import router from "next/router";
-import PropTypes from "prop-types";
 import Item from "@/components/IndexItem/index";
 import styles from "./styles/index.less";
 
 const Home = () => {
-  const [] = useState();
   return (
     <div className="container">
       <div className={styles.top}>掌上作战室</div>
@@ -15,6 +13,6 @@ const Home = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Home;

@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import PropTypes from "prop-types";
 import Item from "@/components/WarnItem/index";
 import styles from "./styles/index.less";

@@ -16,7 +16,7 @@ Module.getInitialProps = async () => {
 };
 Module.propTypes = {
   text: PropTypes.string,
-  // onClick: PropTypes.func,
+  onClick: PropTypes.func,
   className: PropTypes.string,
   style: PropTypes.object,
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node])

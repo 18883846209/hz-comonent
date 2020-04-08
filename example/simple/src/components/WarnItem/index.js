@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classnames from "classnames";
+// import classnames from "classnames";
 import styles from "./styles/index.less";
 
 const Card = ({ url, text = "", style }) => (
   <div className={styles.card} style={style}>
-    <img src={url} width={80} height={100} />
+    <img src={url} width={80} height={100} alt="" />
     <div className={styles.text}>{text}</div>
   </div>
 );
@@ -42,5 +42,16 @@ Warn.getInitialProps = async () => {
   return {};
 };
 Warn.propTypes = {};
+Card.propTypes = {
+  url: PropTypes.string,
+  text: PropTypes.string,
+  style: PropTypes.object
+};
+Progress.propTypes = {
+  percent: PropTypes.number
+};
+Item.propTypes = {
+  desc: PropTypes.string
+};
 
 export default Warn;
