@@ -7,7 +7,8 @@ import styles from "./styles/index.less";
 const routes = {
   "/": "掌上作战室",
   "/warn-list": "告警列表",
-  "/warn-detail": "告警详情"
+  "/warn-detail": "告警详情",
+  "/devices": "布控区域"
 };
 
 const Base = ({ children, showRight = false, showBack = true }) => {
