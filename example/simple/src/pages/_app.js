@@ -61,6 +61,10 @@ export default class extends App {
           />
           <link rel="shortcut icon" href={`${publicRuntimeConfig.cdn}/static/favicon.ico`} type="image/x-icon" />
           <link href={`${publicRuntimeConfig.cdn}/static/images/logo.png`} rel="apple-touch-icon-precomposed" />
+          {/* 下面代码为了解决dev模式下路由跳转时的缓存问题 */}
+          {process.env.NODE_ENV !== "production" && (
+            <link rel="stylesheet" type="text/css" href={`/_next/static/css/styles.chunk.css?v=${router.route}`} />
+          )}
           <script src={`${publicRuntimeConfig.cdn}/static/lib/rem/adaptive.min.js`} />
           <script src={`${publicRuntimeConfig.cdn}/static/lib/fastclick/1.0.6/fastclick.js`} />
           <script
