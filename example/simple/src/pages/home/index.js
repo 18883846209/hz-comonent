@@ -7,7 +7,6 @@ import styles from "./styles/index.less";
 
 const Home = observer(() => {
   const { warnStore } = useStores();
-
   return (
     <div className="container">
       <div className={styles.top}>掌上作战室</div>
@@ -18,9 +17,5 @@ const Home = observer(() => {
     </div>
   );
 });
-
-Home.getInitialProps = async () => {
-  return {};
-};
 
 export default Home;

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Flex } from "antd-mobile";
 import { Progress, Item, Card } from "@/components/WarnComponents/index";
+import { getCalculateTime } from "@/utils/utils";
 import styles from "./styles/index.less";
 
 const Warn = ({ onClick }) => (
@@ -9,7 +10,10 @@ const Warn = ({ onClick }) => (
     <div className={styles.top}>
       <Flex justify="between">
         <div className={styles.left}>姓名姓名姓名姓名姓名姓名姓名姓名姓名姓名</div>
-        <div className={styles.right}>20秒</div>
+        <div className={styles.right}>
+          <img src="/static/images/time.png" alt="" />
+          <span>{getCalculateTime(Date.now() - 190000000000)}</span>
+        </div>
       </Flex>
     </div>
     <div>
@@ -25,8 +29,12 @@ const Warn = ({ onClick }) => (
         />
         <div className={styles.right}>
           <div className={styles.desc}>
-            <Item desc="asdasdasd测试测试asdasdasd测试测试asdasdasd测试测试" />
-            <Item />
+            <Item src="/static/images/disposition.png" desc="王警官测试黑名单布控" />
+            <Item
+              src="/static/images/device.png"
+              desc="重庆市南岸区走马楼街道
+明网点网小区监控点"
+            />
           </div>
           <Progress percent={50} />
         </div>

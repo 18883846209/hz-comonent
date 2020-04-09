@@ -22,9 +22,11 @@ export const Progress = ({ percent = 0 }) => {
   );
 };
 
-export const Item = ({ desc = "", onClick }) => (
+export const Item = ({ desc = "", onClick, src }) => (
   <div className={styles.item} onClick={onClick}>
-    <div className={styles.left}>icon</div>
+    <div className={styles.left}>
+      <img className={styles.icon} alt="" src={src} />
+    </div>
     <div className={styles.desc}>{desc}</div>
   </div>
 );
