@@ -1,3 +1,10 @@
+/*
+ * @Aurhor: dengsha
+ * @Date: 2020-04-08 16:24:11
+ * @LastEditors: dengsha
+ * @Description: 关于页面
+ * @LastEditTime: 2020-04-09 10:36:01
+ */
 import React, { useState } from "react";
 import styles from "./styles/index.less";
 

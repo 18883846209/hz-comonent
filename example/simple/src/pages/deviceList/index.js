@@ -1,8 +1,16 @@
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import { List, WingBlank, WhiteSpace } from "antd-mobile";
 // import CarouselPage from "./CarouselPage";
-import CarouselPage from "@/components/CarouselPage/index";
+// import CarouselPage from "@/components/CarouselPage/index";
 import { getCalculateTime } from "../../utils/utils";
+
+import { PhotoProvider, PhotoConsumer, PhotoSlider } from "react-photo-view";
+import "react-photo-view/dist/index.css";
+
+const CarouselPage = dynamic(import("@/components/ImageViewer/index"), {
+  ssr: false
+});
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -14,17 +22,18 @@ const devices = [
 ];
 
 const images = [
-  { pic: "/static/images/logo.png" },
-  { pic: "/static/images/catchPic.png" },
-  { pic: "/static/images/logo.png" }
+    // "/static/images/logo.png", 
+"/static/images/catchPic.png",
+ "/static/images/logo.png"
 ];
 
 const DeviceList = () => {
   const [isVisible, setVisible] = useState(false);
+  const [photoIndex, setPhotoIndex] = React.useState(0);
   const cancle = () => {
     setVisible(false);
   };
-
+  console.log(isVisible, "props.visible");
   return (
     <div className="container">
       <main>
@@ -41,6 +50,7 @@ const DeviceList = () => {
               multipleLine
               onClick={() => {
                 setVisible(true);
+                console.log(isVisible, "11111");
               }}
             >
               Title
@@ -74,7 +84,18 @@ const DeviceList = () => {
             </Item>
           </List>
         </div>
-        {isVisible ? <CarouselPage cancle={cancle} sources={images} defaultIndex={1} /> : null}
+
+        {/* <PhotoSlider
+        images={images.map(item => ({ src: item.pic }))}
+        visible={isVisible}
+        onClose={() => setVisible(false)}
+        index={photoIndex}
+        onIndexChange={setPhotoIndex}
+      /> */}
+
+        <CarouselPage visible={isVisible} onClose={cancle} sources={images} defaultIndex={1} />
+
+        {/* {isVisible ? <CarouselPage visiblie={isVisible} cancle={cancle} sources={images} defaultIndex={1} /> : null} */}
       </main>
     </div>
   );
