@@ -2,8 +2,9 @@ import React, { createContext } from "react";
 import PropTypes from "prop-types";
 import { useStaticRendering } from "mobx-react";
 
-import CommonStore from "@/stores/commonStore";
-import ThemeStore from "@/stores/themeStore";
+// import CommonStore from "@/stores/commonStore";
+// import ThemeStore from "@/stores/themeStore";
+import WarnStore from "@/stores/warnStore";
 
 let store;
 const isServer = typeof window === "undefined";
@@ -13,8 +14,9 @@ export const StoreContext = createContext();
 
 export function initializeData(initialData = store || {}) {
   return {
-    commonStore: new CommonStore(initialData.commonStore),
-    themeStore: new ThemeStore(initialData.themeStore)
+    // commonStore: new CommonStore(initialData.commonStore),
+    // themeStore: new ThemeStore(initialData.themeStore),
+    warnStore: new WarnStore(initialData.warnStore)
   };
 }
 

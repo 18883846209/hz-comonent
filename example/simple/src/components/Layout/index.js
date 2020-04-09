@@ -2,6 +2,8 @@ import React from "react";
 import { useRouter } from "next/router";
 import propTypes from "prop-types";
 import { NavBar } from "antd-mobile";
+import { observer } from "mobx-react";
+import useStores from "@/hooks/useStores";
 import styles from "./styles/index.less";
 
 const routes = {
@@ -11,12 +13,13 @@ const routes = {
   "/devices": "布控区域",
   // "/deviceList": "布控区域",
   "/execute-control": "人像布控列表",
-  "/execute-details": "人像布控详情",
-  
+  "/execute-details": "人像布控详情"
 };
 
-const Base = ({ children, showRight = false, showBack = true }) => {
+const Base = observer(({ children, showRight = false, showBack = true }) => {
   const router = useRouter();
+  const { warnStore } = useStores();
+  console.log("++++++", warnStore.newsFlag);
   function onBack() {
     if (router.asPath !== "/") {
       router.back();
@@ -26,17 +29,23 @@ const Base = ({ children, showRight = false, showBack = true }) => {
   }
   const LeftContent = showBack && router.asPath !== "/" ? "返回" : null;
   const RightContent = showRight ? "..." : null;
+  const Title = () => (
+    <div className={styles.title}>
+      {routes[router.asPath] || ""}
+      {warnStore.newsFlag && router.asPath === "/warn-list" ? <span className={styles.flag}>●</span> : null}
+    </div>
+  );
   return (
     <>
       <NavBar mode="dark" leftContent={LeftContent} rightContent={RightContent} onLeftClick={onBack}>
-        {routes[router.asPath] || ""}
+        <Title />
       </NavBar>
       <div className={styles.main} style={{ height: "calc(100vh - 45px)" }}>
         {children}
       </div>
     </>
   );
-};
+});
 
 Base.propTypes = {
   children: propTypes.node,
