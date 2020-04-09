@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { List } from "antd-mobile";
 import PropTypes from "prop-types";
+import classnames from "classnames";
 import styles from "./styles/index.less";
 
 const { Item } = List;
@@ -23,9 +24,14 @@ function FilterList({ valList, visible, onClick, selected, title }) {
 }
 
 /** 头部 */
-function FilterTitle({ title, onClick }) {
-  return title.map(item => (
-    <div key={item.title} className={styles["title-item"]} onClick={() => onClick(item.title)}>
+function FilterTitle({ titles, onClick, visible, currentTitle }) {
+  const selectedTitle = classnames(styles["title-item"], styles.selected);
+  return titles.map(item => (
+    <div
+      key={item.title}
+      className={visible && currentTitle === item.title ? selectedTitle : styles["title-item"]}
+      onClick={() => onClick(item.title)}
+    >
       {item.title}
     </div>
   ));
@@ -72,11 +78,11 @@ function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => 
     <>
       <div className={styles.filter}>
         <div className={styles["filter-title"]} style={style}>
-          <FilterTitle title={filterDatas} onClick={titleOnClick} />
+          <FilterTitle titles={filterDatas} onClick={titleOnClick} currentTitle={title} visible={visible} />
         </div>
         <FilterList visible={visible} valList={valList} title={title} selected={selected} onClick={itemClick} />
       </div>
-      {visible ? <div className={styles.mask} style={{ height: 'calc(100% - 45px)' }} /> : null}
+      {visible ? <div className={styles.mask} style={{ height: "calc(100% - 45px)" }} /> : null}
       <div className={styles.height} />
     </>
   );
@@ -92,7 +98,9 @@ FilterList.prototype = {
 
 FilterTitle.prototype = {
   onClick: PropTypes.func,
-  title: PropTypes.string
+  titles: PropTypes.array,
+  visible: PropTypes.bool,
+  currentTitle: PropTypes.string,
 };
 
 Filter.prototype = {
