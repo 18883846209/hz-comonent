@@ -1,3 +1,5 @@
+@import "~@styles/themes/default.less";
+
 .container {
   position: relative;
   text-align: center;
@@ -6,11 +8,21 @@
   display: inline-block;
   vertical-align: top;
   .wrap {
+    position: relative;
     height: 150px;
-    line-height: 150px;
+    // line-height: 150px;
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5px);
     background-color: rosybrown;
+    .text {
+      padding-top: 50px;
+    }
+    .flag {
+      position: absolute;
+      right: 5px;
+      top: 0;
+      color: @brand-flag;
+    }
   }
   .icon {
     margin: 0 auto;
