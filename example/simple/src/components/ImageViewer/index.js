@@ -3,7 +3,7 @@
  * @Date: 2020-04-09 10:27:57
  * @LastEditors: dengsha
  * @Description: 图片浏览器
- * @LastEditTime: 2020-04-09 10:57:22
+ * @LastEditTime: 2020-04-09 14:55:06
  */
 
 
@@ -14,7 +14,7 @@
  })
  * 参数：
  * visible(boolen):是否显示图片浏览器 
- * defaultIndex(Number):默认显示的第几张图
+ * defaultIndex(Number):默认显示的第几张图,从0开始即数组下标(defaultIndex < sources.length)
  * sources([]):图片数据源
  * onClose(() => {}):关闭浏览器的回调方法
  */
@@ -22,7 +22,6 @@
 import React, { useState } from "react";
 import { PhotoProvider, PhotoConsumer, PhotoSlider } from 'react-photo-view';
 import 'react-photo-view/dist/index.css';
-// import Styles from "./styles/index.less";
 
 const ImageViewer = (props) => {
   const {visible, defaultIndex, sources} = props;

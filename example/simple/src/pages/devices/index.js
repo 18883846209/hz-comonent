@@ -1,3 +1,10 @@
+/*
+ * @Aurhor: dengsha
+ * @Date: 2020-04-08 16:48:29
+ * @LastEditors: dengsha
+ * @Description: 设备页面
+ * @LastEditTime: 2020-04-09 14:58:43
+ */
 import React, { useState } from "react";
 import styles from "./styles/index.less"
 import { Card, WhiteSpace, WingBlank } from "antd-mobile";
