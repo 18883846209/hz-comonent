@@ -52,9 +52,6 @@ const Detail = () => (
     </div>
   </div>
 );
-Detail.getInitialProps = async () => {
-  return {};
-};
 
 Item.propTypes = {
   name: PropTypes.string,

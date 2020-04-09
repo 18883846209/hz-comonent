@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import propTypes from "prop-types";
-import { NavBar } from "antd-mobile";
+import { NavBar, Icon } from "antd-mobile";
 import { observer } from "mobx-react";
 import useStores from "@/hooks/useStores";
 import styles from "./styles/index.less";
@@ -19,7 +19,7 @@ const routes = {
 const Base = observer(({ children, showRight = false, showBack = true }) => {
   const router = useRouter();
   const { warnStore } = useStores();
-  console.log("++++++", warnStore.newsFlag);
+  console.log(warnStore.newsFlag);
   function onBack() {
     if (router.asPath !== "/") {
       router.back();
@@ -27,7 +27,7 @@ const Base = observer(({ children, showRight = false, showBack = true }) => {
       router.replace("/");
     }
   }
-  const LeftContent = showBack && router.asPath !== "/" ? "返回" : null;
+  const LeftContent = showBack && router.asPath !== "/" ? <Icon type="left" /> : null;
   const RightContent = showRight ? "..." : null;
   const Title = () => (
     <div className={styles.title}>
