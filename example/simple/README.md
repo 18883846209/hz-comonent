@@ -313,4 +313,40 @@ class Main extends React.Component {
 }
 ```
 
+### 如何与 HZ—APP 相互调用、通信？
+
+已经封装规范方法，src/utils/withApp.js
+
+##### APP CALL H5
+
+```js
+import { register, registerOff } from "@/utils/withApp";
+
+// 在合适的生命周期中注册事件
+register("name", (obj, cb) => {
+  // ...
+});
+
+// 适当的生命周期销毁
+registerOff("name");
+```
+
+##### H5 CALL APP
+
+```js
+import { trigger } from "@/utils/withApp";
+
+// 在合适的生命周期中注册事件
+trigger(
+  "name",
+  {
+    // ...参数对象
+    callback: "xxx" // 如果存在回调
+  },
+  data => {
+    // ...回调方法
+  }
+);
+```
+
 ...

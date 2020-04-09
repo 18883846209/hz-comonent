@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "antd-mobile";
+import { Button, Modal } from "antd-mobile";
+import Link from "next/link";
 
 import { memoTransition } from "@/components/MemoTransition";
-import { register, trigger } from "@/utils/withApp";
+import { register, registerOff, trigger } from "@/utils/withApp";
 
 const TestPage = memoTransition(() => {
   const [num, setNum] = useState(0);
@@ -11,11 +12,28 @@ const TestPage = memoTransition(() => {
     register("tqtTestAppCall", () => {
       setNum(999);
     });
+    register("tqtTestObjAppCall", (obj, cb) => {
+      Modal.operation([{ text: "obj" }, { text: `${obj}---${cb}` }]);
+      if (cb) {
+        cb({
+          code: "0000"
+        });
+      }
+    });
+    return () => {
+      registerOff("tqtTestAppCall");
+      registerOff("tqtTestObjAppCall");
+    };
   }, []);
 
   return (
     <div className="container">
       <main>
+        <Link href="/">
+          <a>go home</a>
+        </Link>
+        <br />
+        <br />
         <div>测试APP call H5: num = {num}</div>
         <Button type="primary" onClick={() => setNum(pre => ++pre)}>
           H5 ++
@@ -34,12 +52,18 @@ const TestPage = memoTransition(() => {
         </Button>
         <Button
           onClick={() => {
-            trigger("hideNavigation", {
-              is_hide: false
-            });
+            trigger(
+              "hideNavigation",
+              {
+                is_hide: false
+              },
+              data => {
+                Modal.operation([{ text: "hideNavigation_cb" }, { text: `${data}---${data.tqt}` }]);
+              }
+            );
           }}
         >
-          status_bar_color: false
+          is_hide: false
         </Button>
       </main>
     </div>

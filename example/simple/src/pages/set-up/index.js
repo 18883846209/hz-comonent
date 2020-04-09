@@ -5,6 +5,7 @@ import { memoTransition } from "@/components/MemoTransition";
 
 // 使用 memoTransition，避免重复刷新
 const TestPage = memoTransition(() => {
+  // eslint-disable-next-line
   console.log("测试刷新次数");
   return (
     <div className="container">
