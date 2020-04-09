@@ -1,14 +1,53 @@
+@bg: #fff;
 .detail {
-  padding-top: 20px;
-  .name {
-    font-weight: bold;
-    font-size: 20px;
+  margin-top: 30px;
+  .top,
+  .bottom {
+    background-color: @bg;
   }
-  .similar {
-    margin: 10px;
+  .top {
+    padding-bottom: 30px;
+    .name {
+      font-size: 15px;
+      color: #333333;
+      height: 100px;
+      line-height: 100px;
+      padding: 0 30px;
+      border-bottom: 1px solid #dddddd;
+    }
+    .similar {
+      margin: 30px;
+    }
+    .full_wrap {
+      width: 323px;
+      .full_img {
+        width: 323px;
+        height: 182px;
+      }
+    }
+    .img {
+      margin-right: 47px;
+    }
   }
-  .desc {
-    margin: 10px 20px 0;
+  .bottom {
+    margin-top: 20px;
+    .wrap {
+      border-bottom: 1px solid #dddddd;
+      padding: 30px 20px 20px;
+      .name,
+      .value {
+        vertical-align: top;
+      }
+      .value {
+        max-width: 80%;
+        text-align: right;
+      }
+      :global {
+        .am-flexbox.am-flexbox-align-center {
+          align-items: start;
+        }
+      }
+    }
   }
   :global {
     .am-flexbox .am-flexbox-item {
