@@ -1,22 +1,41 @@
 @import "~@styles/mixins/main.less";
+@bg: #fff;
+.padding {
+  padding: 0 30px;
+}
 
 .warn_item {
+  background-color: @bg;
+  padding: 0 0 30px 0;
   &:not(:last-of-type) {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
   }
   .top {
-    margin: 10px;
+    height: 100px;
+    line-height: 100px;
+    border-bottom: 1px solid #dddddd;
+    .padding;
     .left {
       .overflow;
+      color: #333333;
       max-width: 80%;
-      font-size: 18px;
-      font-weight: bold;
+      font-size: 16px;
+    }
+    .right {
+      color: #999999;
     }
   }
   .bottom {
-    margin: 0 0 0 20px;
+    margin: 20px 0 0 0;
+    .padding;
     .right {
-      margin: 0 10px;
+      margin: 0 0 0 38px;
+      .desc {
+        height: 186px;
+      }
+    }
+    .img {
+      margin-right: 20px;
     }
   }
 }

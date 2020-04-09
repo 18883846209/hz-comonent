@@ -14,14 +14,21 @@ const Warn = ({ onClick }) => (
     </div>
     <div>
       <Flex className={styles.bottom}>
-        <Card style={{ marginRight: 10 }} text="抓拍照" />
-        <Card text="布控照" />
+        <Card
+          url="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg"
+          className={styles.img}
+          text="抓拍照"
+        />
+        <Card
+          url="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg"
+          text="布控照"
+        />
         <div className={styles.right}>
-          <div style={{ height: 100 }}>
+          <div className={styles.desc}>
             <Item desc="asdasdasd测试测试asdasdasd测试测试asdasdasd测试测试" />
             <Item />
           </div>
-          <Progress />
+          <Progress percent={50} />
         </div>
       </Flex>
     </div>

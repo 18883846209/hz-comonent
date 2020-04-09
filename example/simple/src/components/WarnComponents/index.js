@@ -1,20 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
+import classnames from "classnames";
 import styles from "./styles/index.less";
 
-export const Card = ({ url, text = "", style, width = 80, height = 100, position = "bottom" }) => (
-  <div className={styles.card} style={style}>
-    {position === "bottom" ? (
-      <>
-        <img src={url} width={width} height={height} alt="" />
-        <div className={styles.text}>{text}</div>
-      </>
-    ) : (
-      <>
-        <div className={styles.text}>{text}</div>
-        <img src={url} width={width} height={height} alt="" />
-      </>
-    )}
+export const Card = ({ url, text = "", className, imgClass }) => (
+  <div className={classnames(styles.card, className)}>
+    <div className={classnames(styles.img, imgClass)}>
+      <img src={url} alt="" />
+    </div>
+    <div className={styles.text}>{text}</div>
   </div>
 );
 
@@ -37,9 +31,8 @@ export const Item = ({ desc = "", onClick }) => (
 Card.propTypes = {
   url: PropTypes.string,
   text: PropTypes.string,
-  style: PropTypes.object,
-  width: PropTypes.number,
-  height: PropTypes.number
+  className: PropTypes.string,
+  imgClass: PropTypes.string
 };
 Progress.propTypes = {
   percent: PropTypes.number
