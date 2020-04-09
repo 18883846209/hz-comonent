@@ -336,12 +336,12 @@ registerOff("name");
 ```js
 import { trigger } from "@/utils/withApp";
 
-// 在合适的生命周期中注册事件
+// 在合适的生命周期中触发事件
 trigger(
   "name",
   {
     // ...参数对象
-    callback: "xxx" // 如果存在回调
+    callback: "xxx" // 如果存在触发回调
   },
   data => {
     // ...回调方法
