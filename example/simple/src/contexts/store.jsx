@@ -19,10 +19,43 @@ export function initializeData(initialData = store || {}) {
 }
 
 export const InjectStoreContext = ({ children, initialData }) => {
-  store = initializeData(initialData);
+  if (!store) {
+    store = initializeData(typeof window === "undefined" ? {} : initialData);
+  }
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
 };
 InjectStoreContext.propTypes = {
   children: PropTypes.node,
   initialData: PropTypes.object
 };
+
+export function inject(selector) {
+  return WrappedComponent => {
+    const NewComponent = ownProps => {
+      return (
+        <StoreContext.Consumer>
+          {value => {
+            let props;
+            if (Array.isArray(selector)) {
+              props = {
+                ...ownProps
+              };
+              selector.forEach(key => {
+                props[key] = value[key];
+              });
+            } else if (typeof selector === "string") {
+              props = {
+                ...ownProps,
+                [selector]: value[selector]
+              };
+            } else {
+              props = { ...props, ...selector({ store: value, ownProps }) };
+            }
+            return <WrappedComponent {...props} />;
+          }}
+        </StoreContext.Consumer>
+      );
+    };
+    return NewComponent;
+  };
+}

@@ -6,12 +6,12 @@ import Head from "next/head";
 import { PageTransition } from "next-page-transitions";
 import getConfig from "next/config";
 
-import { InjectStoreContext, initializeData } from "@/contexts/store";
+import { InjectStoreContext } from "@/contexts/store";
+import Loader from "@/components/Loader";
 
 import "@/styles/common/reset.less";
 import "@/styles/common/nprogress.less";
 import "@/styles/common/next-page-transitions.less";
-// import Layout from "@components/layout/base-layout";
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -22,29 +22,6 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 export default class extends App {
-  static async getInitialProps({ Component, ctx }) {
-    let pageProps = {};
-    const initialStoreData = initializeData();
-
-    // Provide the store to getInitialProps of pages
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps({ ...ctx, initialStoreData });
-    }
-
-    return {
-      pageProps,
-      initialStoreData
-    };
-  }
-
-  // constructor(props) {
-  //   super(props);
-
-  //   const { initialMobxState } = props;
-  //   const isServer = typeof window === "undefined";
-  //   this.mobxStores = isServer ? initialMobxState : initializeStore(initialMobxState);
-  // }
-
   componentDidMount() {
     window.hzConfig = publicRuntimeConfig;
 
@@ -67,8 +44,7 @@ export default class extends App {
   componentWillUnmount() {}
 
   render() {
-    const { Component, pageProps = {}, router, initialStoreData } = this.props;
-
+    const { Component, router, initialStoreData, pageProps } = this.props;
     return (
       <>
         <Head>
@@ -85,6 +61,10 @@ export default class extends App {
           />
           <link rel="shortcut icon" href={`${publicRuntimeConfig.cdn}/static/favicon.ico`} type="image/x-icon" />
           <link href={`${publicRuntimeConfig.cdn}/static/images/logo.png`} rel="apple-touch-icon-precomposed" />
+          {/* 下面代码为了解决dev模式下路由跳转时的缓存问题 */}
+          {process.env.NODE_ENV !== "production" && (
+            <link rel="stylesheet" type="text/css" href={`/_next/static/css/styles.chunk.css?v=${router.route}`} />
+          )}
           <script src={`${publicRuntimeConfig.cdn}/static/lib/rem/adaptive.min.js`} />
           <script src={`${publicRuntimeConfig.cdn}/static/lib/fastclick/1.0.6/fastclick.js`} />
           <script
@@ -101,11 +81,20 @@ if ('addEventListener' in document) {
           />
         </Head>
         <InjectStoreContext initialData={initialStoreData}>
-          {/* <Layout router={router}> */}
-          <PageTransition timeout={TIMEOUT} classNames="next-page-transitions">
+          <PageTransition
+            timeout={TIMEOUT}
+            classNames="next-page-transitions"
+            // skipInitialTransition
+            loadingDelay={500}
+            loadingComponent={<Loader />}
+            loadingTimeout={{
+              enter: TIMEOUT,
+              exit: 0
+            }}
+            loadingClassNames="next-page-transitions-loading"
+          >
             <Component {...pageProps} key={router.route} />
           </PageTransition>
-          {/* </Layout> */}
         </InjectStoreContext>
       </>
     );
