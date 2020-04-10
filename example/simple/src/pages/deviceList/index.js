@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
-import { List, WingBlank, WhiteSpace } from "antd-mobile";
-// import CarouselPage from "./CarouselPage";
-// import CarouselPage from "@/components/CarouselPage/index";
+import { List } from "antd-mobile";
 import { getCalculateTime } from "../../utils/utils";
-
-import { PhotoProvider, PhotoConsumer, PhotoSlider } from "react-photo-view";
-import "react-photo-view/dist/index.css";
 
 const CarouselPage = dynamic(import("@/components/ImageViewer/index"), {
   ssr: false
@@ -85,17 +80,8 @@ const DeviceList = () => {
           </List>
         </div>
 
-        {/* <PhotoSlider
-        images={images.map(item => ({ src: item.pic }))}
-        visible={isVisible}
-        onClose={() => setVisible(false)}
-        index={photoIndex}
-        onIndexChange={setPhotoIndex}
-      /> */}
+        <CarouselPage visible={isVisible} onClose={cancle} sources={images} defaultIndex={0} />
 
-        <CarouselPage visible={isVisible} onClose={cancle} sources={images} defaultIndex={1} />
-
-        {/* {isVisible ? <CarouselPage visiblie={isVisible} cancle={cancle} sources={images} defaultIndex={1} /> : null} */}
       </main>
     </div>
   );

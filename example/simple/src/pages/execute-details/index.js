@@ -1,4 +1,4 @@
-import { List, Flex, WingBlank } from "antd-mobile";
+import { List, Flex } from "antd-mobile";
 import styles from "@/styles/executeDetails/index.less";
 import router from "next/router";
 import classNames from "classnames";
@@ -31,39 +31,49 @@ function getContentList(data) {
 function ExecuteDetails({ id = "" }) {
   const contentList = getContentList(testData);
   return (
-    <div className={styles["execute-details"]}>
-      <WingBlank>
-        <div className={styles["title"]}>
-          <b className={styles["execute-name"]}>测试布控</b>
-          <span className={styles["execute-state"]}>布控中</span>
-        </div>
-        <div className={styles["brief"]}>admin 19-12-09 18:08:36</div>
+    <div className={styles["execute-details"]} style={{ height: "calc(100vh - 45px)" }}>
+      <div className={styles.title}>
+        <span className={styles["execute-name"]}>测试布控</span>
+        <span className={styles["execute-state"]}>布控中</span>
+      </div>
+      <div className={styles.body}>
+        <div className={styles.brief}>admin 19-12-09 18:08:36</div>
         {contentList.map(data => (
           <div className={styles["execute-content"]} key={data.key}>
             <div className={styles["content-title"]}>{data.key}</div>
             <div className={styles["content-value"]}>
-              {data.key === "区域" ? <u className={styles["link"]} onClick={() => router.push("/devices")}>{data.value}</u> : data.value}
+              {data.key === "区域" ? (
+                <u className={styles.link} onClick={() => router.push("/devices")}>
+                  {data.value}
+                </u>
+              ) : (
+                data.value
+              )}
             </div>
           </div>
         ))}
         <div className={styles["execute-content"]} key={1}>
-          <div className={classNames(styles["content-title"], styles["img-type"])}>目标</div>
+          <div className={styles["content-title"]}>目标</div>
           <div className={styles["content-img"]}>
-            <div className={styles["idcard"]}>
+            <div className={styles.idcard}>
               <div className={styles["idcard-details"]}>
-                <span>张三</span>
-                <span>男</span>
-                <div>居民身份证</div>
-                <div>50011219851212091X</div>
+                <div>
+                  <span>张三</span>
+                  <span className={styles.gender}>男</span>
+                </div>
+                <div>
+                  <div className={styles.idtype}>居民身份证</div>
+                  <div className={styles.id}>50011219851212091X</div>
+                </div>
               </div>
               <img className={styles["idcard-img"]} src={img} />
             </div>
           </div>
         </div>
-      </WingBlank>
-      <div className={styles["bottom"]}>
-        <img className={styles["img"]} src={img} />
       </div>
+      {/* <div className={styles.bottom}>
+        <img className={styles.img} src={img} />
+      </div> */}
     </div>
   );
 }
