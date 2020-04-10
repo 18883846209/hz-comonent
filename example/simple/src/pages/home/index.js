@@ -9,10 +9,29 @@ const Home = observer(() => {
   const { warnStore } = useStores();
   return (
     <div className="container">
-      <div className={styles.top}>掌上作战室</div>
+      <div className={styles.top}>
+        <img className={styles.about} onClick={() => router.push("/about")} src="/static/2x/about.png" alt="" />
+      </div>
       <div className={styles.content}>
-        <Item className={styles.item} text="人像布控" onClick={() => router.push("/execute-control")} />
-        <Item className={styles.item} flag={warnStore.newsFlag} text="告警" onClick={() => router.push("/warn-list")} />
+        <Item
+          icon="static/2x/disposition.png"
+          className={styles.item}
+          name="人像布控"
+          value="Portra"
+          onClick={() => router.push("/execute-control")}
+        />
+        <Item
+          icon="static/2x/warn.png"
+          className={styles.item}
+          flag={warnStore.newsFlag}
+          value="Alarm"
+          name="告警"
+          onClick={() => router.push("/warn-list")}
+        />
+      </div>
+      <div className={styles.bottom}>
+        <img className={styles.icon} src="/static/2x/more.png" alt="" />
+        <div className={styles.more}>更多内容,敬请期待</div>
       </div>
     </div>
   );

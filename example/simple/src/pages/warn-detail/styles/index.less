@@ -1,38 +1,52 @@
 @bg: #fff;
 .detail {
-  margin-top: 30px;
+  .bg {
+    background-color: #4d6cc1;
+    height: 90px;
+  }
   .top,
   .bottom {
     background-color: @bg;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 8px;
   }
   .top {
-    padding-bottom: 30px;
+    padding: 0 30px 30px 30px;
+    margin-top: -90px;
     .name {
-      font-size: 15px;
+      font-size: 16px;
       color: #333333;
-      height: 100px;
-      line-height: 100px;
-      padding: 0 30px;
-      border-bottom: 1px solid #dddddd;
+      padding: 30px 0;
     }
     .similar {
-      margin: 30px;
+      margin: 0 0 30px 0;
     }
-    .full_wrap {
-      width: 323px;
-      .full_img {
-        width: 323px;
-        height: 182px;
+    .center {
+      text-align: center;
+      white-space: nowrap;
+      .img,
+      .full_wrap {
+        display: inline-block;
       }
-    }
-    .img {
-      margin-right: 47px;
+      .full_wrap {
+        width: 323px;
+        .full_img {
+          width: 323px;
+          height: 182px;
+        }
+      }
+      .img {
+        margin-right: 28px;
+      }
     }
   }
   .bottom {
     margin-top: 20px;
+    height: calc(100vh - 442px - 32px - 20px - 32px);
+    overflow: auto;
     .wrap {
-      border-bottom: 1px solid #dddddd;
+      // border-bottom: 1px solid #dddddd;
       padding: 30px 20px 20px;
       .name,
       .value {

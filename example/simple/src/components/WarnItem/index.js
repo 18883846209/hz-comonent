@@ -11,7 +11,7 @@ const Warn = ({ onClick }) => (
       <Flex justify="between">
         <div className={styles.left}>姓名姓名姓名姓名姓名姓名姓名姓名姓名姓名</div>
         <div className={styles.right}>
-          <img src="/static/images/time.png" alt="" />
+          <img src="/static/2x/time.png" alt="" />
           <span>{getCalculateTime(Date.now() - 190000000000)}</span>
         </div>
       </Flex>
