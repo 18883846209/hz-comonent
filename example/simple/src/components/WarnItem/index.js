@@ -29,9 +29,9 @@ const Warn = ({ onClick }) => (
         />
         <div className={styles.right}>
           <div className={styles.desc}>
-            <Item src="/static/images/disposition.png" desc="王警官测试黑名单布控" />
+            <Item src="/static/3x/list_name.png" desc="王警官测试黑名单布控" />
             <Item
-              src="/static/images/device.png"
+              src="/static/3x/list_position.png"
               desc="重庆市南岸区走马楼街道
 明网点网小区监控点"
             />
