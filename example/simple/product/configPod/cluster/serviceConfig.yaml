@@ -1,0 +1,9 @@
+services:
+- name: mobile-war-room-fe
+  isNodePort: true
+  ports:
+   - name: mobile-war-room-fe-9999
+     nodePort: 9999
+     port: 8000
+     targetPort: 8000
+  servicePod: mobile-war-room-fe-pod 

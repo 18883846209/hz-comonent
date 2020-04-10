@@ -69,7 +69,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     ...envConfig,
     env: process.env.NODE_ENV || "development",
-    version: process.env.APP_VERSION || "local"
+    version: process.env.APP_VERSION || envConfig.version || "local"
   },
 
   generateBuildId: async () => {
@@ -105,7 +105,7 @@ const nextConfig = {
         config.plugins.push(
           new BundleAnalyzerPlugin({
             analyzerMode: "server",
-            analyzerPort: isServer ? 8888 : 8889, // 8888是ssr资源 、 8889是sap资源
+            analyzerPort: isServer ? 8888 : 8889, // 8888是SSR资源 、 8889是SPA资源
             openAnalyzer: true
           })
         );

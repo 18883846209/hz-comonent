@@ -1,0 +1,3 @@
+app_name=MG-WR
+internal_version=V100R001B01D010SP02T2003191531
+external_version=MBIZXX

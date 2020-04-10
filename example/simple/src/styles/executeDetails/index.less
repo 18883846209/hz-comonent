@@ -1,91 +1,129 @@
+@import "~@styles/themes/default.less";
+
 .execute-details {
-  background-color: #fff;
+  .bg {
+    background-color: @nav-bg;
+    height: 90px;
+  }
   .title {
-    height: 1.2rem;
-    border-bottom: 0.5px solid #ebebeb;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding: 0rem 0.4rem 0.3rem;
-    .execute-name {
-      font-size: 16px;
+    height: 12%;
+    justify-content: space-evenly;
+    flex-direction: column;
+    margin: -90px 3% 0;
+    border-radius: 10px;
+    padding: 0 3%;
+    background-color: #fff;
+    .name {
+      display: flex;
+      justify-content: space-between;
+      .execute-name {
+        font-size: 16px;
+      }
+      .execute-state {
+        display: inline-block;
+        width: 1.6rem;
+        height: 100%;
+        text-align: center;
+        color: #29b56d;
+        background-color: #dff6ea;
+        border-radius: 5px;
+      }
     }
-    .execute-state {
-      display: inline-block;
-      width: 1.6rem;
-      height: 0.6rem;
-      line-height: 0.6rem;
-      text-align: center;
-      color: #29b56d;
-      background-color: #dff6ea;
-      border-radius: 5px;
+    img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      margin-right: 14px;
+    }
+    .user {
+      padding-right: 30px;
     }
   }
   .body {
-    padding: 0rem 0.4rem;
-  }
-  .brief {
-    width: 100%;
-    padding-top: 0.5rem;
-    text-align: right;
-  }
-  .execute-content {
+    margin: 3% 0.3rem 0;
+    background-color: #fff;
+    border-radius: 0.13333rem;
+    height: 85%;
+    position: relative;
     display: flex;
-    padding: 30px 0px;
-    border-bottom: 0.5px solid #ebebeb;
-    width: auto;
-    .content-title {
-      width: 20%;
-    }
-    .content-value {
-      width: 80%;
-    }
-    .content-img {
-      background-color: #f6f6f6;
-      height: 215px;
-      width: 80%;
-      border-radius: 10px;
-      .idcard {
-        padding: 30px;
-        display: flex;
-        height: 100%;
-        .idcard-details {
-          flex-grow: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          .gender {
-            font-size: 12px;
-            padding-left: 40px;
-            color: #666;
-          }
-          .idtype {
-            padding: 10px 0px;
-            font-size: 12px;
-            color: #666;
-          }
-        }
-        .idcard-img {
-          width: 28%;
-          height: 100%;
-        }
-        .id {
-          font-size: 12px;
+    flex-direction: column;
+    .wrap {
+      padding: 30px 20px 20px;
+      .key {
+        img {
+          width: 32px;
+          height: 32px;
+          object-fit: contain;
+          margin-right: 30px;
         }
       }
-    }
-    .link {
-      color: #4d6cc1;
+      .value {
+        max-width: 80%;
+        text-align: right;
+      }
+      .link {
+        color: #4D6CC1;
+        text-decoration: underline;
+        cursor: pointer;
+      } 
+      .content-img {
+        background-color: #f6f6f6;
+        height: 215px;
+        width: 70%;
+        border-radius: 10px;
+        .idcard {
+          padding: 30px;
+          display: flex;
+          height: 100%;
+          .idcard-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            .gender {
+              font-size: 12px;
+              padding-left: 40px;
+              color: #666;
+            }
+            .idtype {
+              padding: 10px 0px;
+              font-size: 12px;
+              color: #666;
+            }
+          }
+          .idcard-img {
+            width: 28%;
+            height: 100%;
+          }
+          .id {
+            font-size: 12px;
+          }
+        }
+      }
+      :global {
+        .am-flexbox.am-flexbox-align-center {
+          align-items: start;
+        }
+      }
     }
   }
   .bottom {
     text-align: center;
-    position: absolute;
-    bottom: 75px;
     width: 100%;
-    .img {
-      width: 230px;
-      height: 230px;
+    flex-grow: 1;
+    .foot {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      .img {
+        width: 200px;
+        height: 200px;
+      }
+      .icontext {
+        padding-top: 40px;
+        color: #4D6CC1;
+      }
     }
   }
 }

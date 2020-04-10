@@ -1,0 +1,17 @@
+containers:
+- name: mobile-war-room-fe
+  image: mobile-war-room-fe:V100R001B01D010SP02T2003191531
+  volumes:
+    /web/config/evn:mobile-war-room-fe: configmap
+    /etc/localtime: hostpath
+    /data/logs: hostpath
+  resources:
+    cpu: [100,200]
+    memory: [100,500]
+  systemEnv:
+    pod_ip: PODIP
+    pod_name: PODNAME
+  ports:
+  - name: ""
+    containerPort: 8000
+
