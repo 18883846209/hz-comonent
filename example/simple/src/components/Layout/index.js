@@ -39,14 +39,14 @@ const Base = observer(({ children, showRight = false, showBack = true }) => {
   return home ? (
     <div className={styles.main}>{children}</div>
   ) : (
-    <>
+    <div className={styles.nav}>
       <NavBar mode="dark" leftContent={LeftContent} rightContent={RightContent} onLeftClick={onBack}>
         <Title />
       </NavBar>
       <div className={styles.main} style={{ height: "calc(100vh - 45px)" }}>
         {children}
       </div>
-    </>
+    </div>
   );
 });
 
