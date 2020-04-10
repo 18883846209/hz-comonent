@@ -1,0 +1,9 @@
+pods:
+- name: mobile-war-room-fe-pod
+  replicas: 1
+  containers:
+  - mobile-war-room-fe
+  stateful: false
+  onePerNode: false
+  hostnetwork: false 
+
