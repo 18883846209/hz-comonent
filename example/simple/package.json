@@ -10,7 +10,7 @@
     "analyze:size": "cross-env ANALYZE=SIZE next build",
     "lint": "npm run eslint && npm run stylelint",
     "eslint": "eslint --ext .jsx,.js src/",
-    "stylelint": "stylelint '**/*.less'",
+    "stylelint": "stylelint **/*.less",
     "prettier": "prettier --write '**/*.{js,jsx,md,json}'"
   },
   "dependencies": {

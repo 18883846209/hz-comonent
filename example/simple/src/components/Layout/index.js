@@ -19,15 +19,16 @@ const routes = {
 const Base = observer(({ children, showRight = false, showBack = true }) => {
   const router = useRouter();
   const { warnStore } = useStores();
+  const home = router.asPath === "/";
   console.log(warnStore.newsFlag);
   function onBack() {
-    if (router.asPath !== "/") {
+    if (!home) {
       router.back();
     } else {
       router.replace("/");
     }
   }
-  const LeftContent = showBack && router.asPath !== "/" ? <Icon type="left" /> : null;
+  const LeftContent = showBack && !home ? <Icon type="left" /> : null;
   const RightContent = showRight ? "..." : null;
   const Title = () => (
     <div className={styles.title}>
@@ -35,7 +36,9 @@ const Base = observer(({ children, showRight = false, showBack = true }) => {
       {warnStore.newsFlag && router.asPath === "/warn-list" ? <span className={styles.flag}>●</span> : null}
     </div>
   );
-  return (
+  return home ? (
+    <div className={styles.main}>{children}</div>
+  ) : (
     <>
       <NavBar mode="dark" leftContent={LeftContent} rightContent={RightContent} onLeftClick={onBack}>
         <Title />

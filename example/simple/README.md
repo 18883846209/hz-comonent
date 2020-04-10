@@ -217,15 +217,44 @@ mobx 类存放在 src/stores 目录下；
 
 实例存放在 src/contexts 目录下；
 
-默认情况下 src/contexts/store.jsx 为全局 mobx 的初始化文件
-
-公共的全局 mobx hooks 方法在 src/hooks/useStores.jsx
+默认情况下 src/contexts/store.jsx 为公共的全局 mobx 的初始化文件，并为其封装了 hooks 方法（在 src/hooks/useStores.jsx）、inject 方法。
 
 ### 六、工具类使用
 
 项目在 src/utils 下内置了 cookie、localStorage、request 等公共方法，务必统一使用
 
 ## 其他说明
+
+### 全局 mobx 的使用方法？
+
+#### 1.hooks 组件中使用方法：
+
+```jsx
+import { observer } from "mobx-react";
+
+import useStores from "@/hooks/useStores";
+
+export default observer(() => {
+  const { themeStore } = useStores();
+  // ... themeStore
+});
+```
+
+#### 2.class 组件中使用方式：
+
+注意：我们不推荐使用 inject，而是未来全部使用 hooks 方法！
+
+```jsx
+import { observer } from "mobx-react";
+
+import { inject } from "@/contexts/store";
+
+@inject("themeStore")
+@observer
+class Main extends React.Component {
+  // ... this.props.themeStore
+}
+```
 
 ### 如何启用 assetPrefix 资产前缀？
 
@@ -234,5 +263,90 @@ mobx 类存放在 src/stores 目录下；
 启用方式很简单，config/evn/client -> 修改配置 cdn，重新打包部署。
 
 注意：引用 public/\* 时，记得正确编写代码 `${publicRuntimeConfig.cdn}/*`！
+
+### 如何模拟 hover 效果？
+
+使用 [rmc-feedback](https://www.npmjs.com/package/rmc-feedback)
+
+下面实现一个简单的按钮：
+
+```jsx
+<TouchFeedback activeClassName={Styles["container-hover"]}>
+  <div className={Styles["container"]} onClick={handleMsgClick}>
+    <i />
+    <p>境外人员录入</p>
+  </div>
+</TouchFeedback>
+```
+
+```less
+.container {
+  display: flex;
+  align-items: center;
+  height: 102px;
+  margin-bottom: 16px;
+  padding: 0 48px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.13);
+  transition: all 300ms;
+
+  &-hover {
+    background-color: #e7e7e7;
+  }
+
+  i {
+    .bg-image("@/assets/images/home/icon-1");
+
+    width: 32px;
+    height: 44px;
+    margin-right: 26px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+
+  p {
+    color: #333;
+    font-weight: 500;
+    font-size: 17px;
+  }
+}
+```
+
+### 如何与 HZ—APP 相互调用、通信？
+
+已经封装规范方法，src/utils/withApp.js
+
+##### APP CALL H5
+
+```js
+import { register, registerOff } from "@/utils/withApp";
+
+// 在合适的生命周期中注册事件
+register("name", (obj, cb) => {
+  // ...
+});
+
+// 适当的生命周期销毁
+registerOff("name");
+```
+
+##### H5 CALL APP
+
+```js
+import { trigger } from "@/utils/withApp";
+
+// 在合适的生命周期中触发事件
+trigger(
+  "name",
+  {
+    // ...参数对象
+    callback: "xxx" // 如果存在触发回调
+  },
+  data => {
+    // ...回调方法
+  }
+);
+```
 
 ...

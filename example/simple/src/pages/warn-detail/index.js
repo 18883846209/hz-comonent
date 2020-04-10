@@ -15,12 +15,13 @@ const Item = ({ name, value }) => (
 
 const Detail = () => (
   <div className={styles.detail}>
+    <div className={styles.bg}></div>
     <div className={styles.top}>
       <div className={styles.name}>库尔班·热合曼·买买提</div>
       <div className={styles.similar}>
         <Progress percent={80} />
       </div>
-      <Flex justify="center">
+      <div className={styles.center}>
         <Card
           url="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg"
           text="布控照"
@@ -37,7 +38,7 @@ const Detail = () => (
           className={styles.full_wrap}
           imgClass={styles.full_img}
         />
-      </Flex>
+      </div>
     </div>
     <div className={styles.bottom}>
       <Item name="性别" value="男" />
