@@ -13,7 +13,8 @@ const routes = {
   "/devices": "布控区域",
   // "/deviceList": "布控区域",
   "/execute-control": "人像布控列表",
-  "/execute-details": "人像布控详情"
+  "/execute-details": "人像布控详情",
+  "/about": "关于"
 };
 
 const Base = observer(({ children, showRight = false, showBack = true }) => {
