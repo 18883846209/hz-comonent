@@ -7,7 +7,7 @@ import { observer } from "mobx-react";
 import useStores from "@/hooks/useStores";
 import img from "@/assets/images/test.jpg";
 import Filter from "@/components/Filter";
-import { filterDataList } from "./data";
+import { filterDataList } from "../../utils/data";
 
 const Item = List.Item;
 
