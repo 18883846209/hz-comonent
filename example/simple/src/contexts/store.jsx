@@ -15,8 +15,8 @@ export const StoreContext = createContext();
 
 export function initializeData(initialData = store || {}) {
   return {
-    // commonStore: new CommonStore(initialData.commonStore),
-    // themeStore: new ThemeStore(initialData.themeStore),
+    commonStore: new CommonStore(initialData.commonStore),
+    themeStore: new ThemeStore(initialData.themeStore),
     warnStore: new WarnStore(initialData.warnStore),
     executeStore: new ExecuteStore(initialData.executeStore)
   };
