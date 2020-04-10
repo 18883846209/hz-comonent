@@ -104,7 +104,7 @@ const nextConfig = {
         config.plugins.push(
           new BundleAnalyzerPlugin({
             analyzerMode: "server",
-            analyzerPort: isServer ? 8888 : 8889, // 8888是ssr资源 、 8889是sap资源
+            analyzerPort: isServer ? 8888 : 8889, // 8888是SSR资源 、 8889是SPA资源
             openAnalyzer: true
           })
         );
