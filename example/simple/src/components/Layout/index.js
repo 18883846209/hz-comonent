@@ -32,8 +32,8 @@ const Base = observer(({ children, showRight = false, showBack = true }) => {
   const RightContent = showRight ? "..." : null;
   const Title = () => (
     <div className={styles.title}>
-      {routes[router.asPath] || ""}
-      {newsFlag && router.asPath === "/warn-list" ? <span className={styles.flag}>●</span> : null}
+      {routes[router.pathname] || ""}
+      {newsFlag && router.pathname === "/warn-list" ? <span className={styles.flag}>●</span> : null}
     </div>
   );
   return home ? (

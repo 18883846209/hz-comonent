@@ -9,15 +9,25 @@ import styles from "./styles/index.less";
 const Index = observer(() => {
   const [refreshing, setRefreshing] = useState(false);
   const { warnStore } = useStores();
+  function goDetail(query) {
+    // console.log("====", query);
+    router.push({
+      pathname: "/warn-detail",
+      query
+    });
+  }
   return (
     <div className={styles.main}>
       <PullToRefresh
         damping={60}
         style={{
-          height: "calc(100vh - 55px)",
+          // height: "calc(100vh - 55px)",
+          height: "100%",
           overflow: "auto"
         }}
-        // indicator={{ activate: <div>laoddd</div> }}
+        // indicator={{
+        //   release: <img width={325} src="/static/images/pulldown.gif" />
+        // }}
         direction={"down"}
         refreshing={refreshing}
         onRefresh={() => {
@@ -25,18 +35,18 @@ const Index = observer(() => {
           setTimeout(() => {
             setRefreshing(false);
             warnStore.changeFlag(false);
-          }, 1000);
+          }, 2000);
         }}
       >
         {new Array(10).fill(1).map((item, index) => (
-          <Item onClick={() => router.push("/warn-detail")} key={index} value={item} />
+          <Item onClick={() => goDetail(item)} key={index} value={item} />
         ))}
       </PullToRefresh>
     </div>
   );
 });
 Index.getInitialProps = async () => {
-  return {};
+  return { test: 1 };
 };
 
 export default Index;
