@@ -14,7 +14,6 @@ const Item = List.Item;
 /** 蒙层 */
 const Mask = observer(() => {
   const { executeStore } = useStores();
-  console.log('executeStore', executeStore)
   return executeStore.isFirst ? (
     <div className={styles.mask} onClick={() => executeStore.click()}>
       <div className={styles["mask-content"]}>
@@ -43,9 +42,13 @@ function ExecuteList(props) {
                 <span className={styles.state}>布控中</span>
                 <div className={styles.date}>20-03-27 15:33 ~ 20-03-27 16:33</div>
                 <div className={styles.detail}>
+                  <img style={{ height: 14, width: 14, margin: '0 2% 1% 0' }} src="/static/2x/user.png" />
                   <span>admin</span>
+                  <img style={{ height: 14, width: 14, margin: '0 2% 1% 2%' }} src="/static/2x/time.png" />
                   <span>03-22 19:03</span>
-                  <span className={styles.operation}>XXX</span>
+                  <span className={styles.operation}>
+                    <img src="/static/2x/addSubscribe.png" style={{ height: 14, width: 14 }} />
+                  </span>
                 </div>
               </div>
             </Flex>
@@ -63,10 +66,14 @@ function ExecuteList(props) {
               <span className={styles.state}>布控中</span>
               <div className={styles.date}>20-03-27 15:33 ~ 20-03-27 16:33</div>
               <div className={styles.detail}>
-                <span>admin</span>
-                <span>03-22 19:03</span>
-                <span className={styles.operation}>XXX</span>
-              </div>
+                  <img style={{ height: 14, width: 14, margin: '0 2% 1% 0' }} src="/static/2x/user.png" />
+                  <span>admin</span>
+                  <img style={{ height: 14, width: 14, margin: '0 2% 1% 2%' }} src="/static/2x/time.png" />
+                  <span>03-22 19:03</span>
+                  <span className={styles.operation}>
+                    <img src="/static/2x/addSubscribe.png" style={{ height: 14, width: 14 }} />
+                  </span>
+                </div>
             </div>
           </Flex>
         </Item>

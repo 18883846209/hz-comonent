@@ -33,6 +33,13 @@ function FilterTitle({ titles, onClick, visible, currentTitle }) {
       onClick={() => onClick(item.title)}
     >
       {item.title}
+      <div
+        className={
+          visible && currentTitle === item.title
+            ? classnames(styles["title-icon-selected"], styles["title-icon"])
+            : styles["title-icon"]
+        }
+      />
     </div>
   ));
 }
@@ -100,7 +107,7 @@ FilterTitle.prototype = {
   onClick: PropTypes.func,
   titles: PropTypes.array,
   visible: PropTypes.bool,
-  currentTitle: PropTypes.string,
+  currentTitle: PropTypes.string
 };
 
 Filter.prototype = {
