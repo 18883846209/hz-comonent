@@ -83,8 +83,10 @@ function ExecuteDetails({ id = "" }) {
           </div>
         ))}
         <div className={styles.bottom}>
-          <img className={styles.img} src="/static/2x/subscribe.png" />
-          <div className={styles.icontext}>添加告警订阅</div>
+          <div className={styles.foot}>
+            <img className={styles.img} src="/static/2x/subscribe.png" />
+            <div className={styles.icontext}>添加告警订阅</div>
+          </div>
         </div>
       </div>
     </div>

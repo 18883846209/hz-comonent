@@ -46,6 +46,8 @@
     border-radius: 0.13333rem;
     height: 85%;
     position: relative;
+    display: flex;
+    flex-direction: column;
     .wrap {
       padding: 30px 20px 20px;
       .key {
@@ -108,16 +110,20 @@
   }
   .bottom {
     text-align: center;
-    position: absolute;
-    bottom: 2.5rem;
     width: 100%;
-    .img {
-      width: 200px;
-      height: 200px;
-    }
-    .icontext {
-      padding-top: 40px;
-      color: #4D6CC1;
+    flex-grow: 1;
+    .foot {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      .img {
+        width: 200px;
+        height: 200px;
+      }
+      .icontext {
+        padding-top: 40px;
+        color: #4D6CC1;
+      }
     }
   }
 }
