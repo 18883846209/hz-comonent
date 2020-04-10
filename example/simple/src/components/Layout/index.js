@@ -19,8 +19,8 @@ const routes = {
 const Base = observer(({ children, showRight = false, showBack = true }) => {
   const router = useRouter();
   const { warnStore } = useStores();
+  const { newsFlag } = warnStore;
   const home = router.asPath === "/";
-  console.log(warnStore.newsFlag);
   function onBack() {
     if (!home) {
       router.back();
@@ -33,7 +33,7 @@ const Base = observer(({ children, showRight = false, showBack = true }) => {
   const Title = () => (
     <div className={styles.title}>
       {routes[router.asPath] || ""}
-      {warnStore.newsFlag && router.asPath === "/warn-list" ? <span className={styles.flag}>●</span> : null}
+      {newsFlag && router.asPath === "/warn-list" ? <span className={styles.flag}>●</span> : null}
     </div>
   );
   return home ? (

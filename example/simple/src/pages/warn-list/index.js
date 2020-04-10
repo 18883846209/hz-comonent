@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import router from "next/router";
 import Item from "@/components/WarnItem/index";
 import { PullToRefresh } from "antd-mobile";
@@ -38,9 +37,6 @@ const Index = observer(() => {
 });
 Index.getInitialProps = async () => {
   return {};
-};
-Index.propTypes = {
-  timerNum: PropTypes.number
 };
 
 export default Index;
