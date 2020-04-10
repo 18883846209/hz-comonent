@@ -68,7 +68,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     ...envConfig,
     env: process.env.NODE_ENV || "development",
-    version: process.env.APP_VERSION || "local"
+    version: process.env.APP_VERSION || envConfig.version || "local"
   },
 
   generateBuildId: async () => {
