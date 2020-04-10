@@ -3,7 +3,7 @@
  * @Date: 2020-04-08 16:48:29
  * @LastEditors: dengsha
  * @Description: 设备页面
- * @LastEditTime: 2020-04-10 09:21:13
+ * @LastEditTime: 2020-04-10 16:04:52
  */
 import React, { useState } from "react";
 import styles from "./styles/index.less"
@@ -19,17 +19,22 @@ const devices = [
 const myImg = src => <img src={src} className="spe am-icon am-icon-md" alt="" />;
 
 const Devices = () => {
+
+  const reloadAction = () => {
+    console.log('1234567');
+  }
+
   return (
     <div>
-      <EmptyFailedPage />
+      <EmptyFailedPage reloadAction={reloadAction} />
       
       {/* {devices.map(item => (
         <div className={styles.cardDiv}>
           <div className={styles.titleDiv}>{item.title}</div>
           <div className={styles.contentDiv}>{item.subTitle}</div>
         </div>
-      ))} */}
-      {/* {devices.map(item => (
+      ))}
+      {devices.map(item => (
           <WingBlank size="sm">
           <WhiteSpace size="sm" />
         <Card>
