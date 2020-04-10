@@ -24,11 +24,9 @@ const images = [
 
 const DeviceList = () => {
   const [isVisible, setVisible] = useState(false);
-  const [photoIndex, setPhotoIndex] = React.useState(0);
   const cancle = () => {
     setVisible(false);
   };
-  console.log(isVisible, "props.visible");
   return (
     <div className="container">
       <main>
