@@ -2,8 +2,8 @@ import React, { createContext } from "react";
 import PropTypes from "prop-types";
 import { useStaticRendering } from "mobx-react";
 
-// import CommonStore from "@/stores/commonStore";
-// import ThemeStore from "@/stores/themeStore";
+import CommonStore from "@/stores/commonStore";
+import ThemeStore from "@/stores/themeStore";
 import WarnStore from "@/stores/warnStore";
 import ExecuteStore from "@/stores/executeStore";
 
