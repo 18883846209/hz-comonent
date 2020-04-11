@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import router from "next/router";
 import WarnItem from "@/components/WarnItem";
 import { EmptyNoDataPage } from "@/components/EmptyPage";
-import { PullToRefresh } from "antd-mobile";
+// import { PullToRefresh } from "antd-mobile";
 import { observer } from "mobx-react";
 import List from "@/components/List";
 // import request from "@/utils/request";
