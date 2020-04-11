@@ -5,9 +5,16 @@
       border: none;
     }
     .am-list-item {
-      border-bottom: 0.5px solid #ddd;
+      // border-bottom: 0.5px solid #ddd;
       border-radius: 10px;
-      margin: 20px;
+      &:not(:last-of-type) {
+        margin: 0 0 20px;
+      }
+    }
+    .am-list-item .am-list-line,
+    .am-list-item .am-list-line .am-list-content,
+    .am-list-item {
+      padding: 0 !important;
     }
     .am-list-item .am-list-line .am-list-content {
       font-size: 14px;

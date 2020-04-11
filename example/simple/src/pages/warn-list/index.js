@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import router from "next/router";
-import Item from "@/components/WarnItem";
+import WarnItem from "@/components/WarnItem";
 import { EmptyNoDataPage } from "@/components/EmptyPage";
 import { PullToRefresh } from "antd-mobile";
 import { observer } from "mobx-react";
-import List from "@/components/VirtualList";
+import List from "@/components/List";
 // import request from "@/utils/request";
 import useStores from "@/hooks/useStores";
 import styles from "./styles/index.less";
-
+const { Item } = List;
 const Index = observer(({ data }) => {
   const [refreshing, setRefreshing] = useState(false);
   const { warnStore } = useStores();
@@ -23,7 +23,7 @@ const Index = observer(({ data }) => {
     <EmptyNoDataPage />
   ) : (
     <div className={styles.main}>
-      <PullToRefresh
+      {/* <PullToRefresh
         damping={60}
         style={{
           height: "calc(100vh - 55px)",
@@ -38,11 +38,18 @@ const Index = observer(({ data }) => {
             warnStore.changeFlag(false);
           }, 2000);
         }}
-      >
-        {new Array(10).fill(1).map((item, index) => (
-          <Item onClick={() => goDetail(item)} key={index} value={item} />
+      > */}
+      {/* {new Array(1).fill({ name: "11" }).map((item, index) => (
+          <WarnItem onClick={() => goDetail(item)} key={index} item={item} />
+        ))} */}
+      <List>
+        {new Array(10).fill({ name: "nametest" }).map((item, index) => (
+          <Item multipleLine onClick={() => goDetail(item)} key={index}>
+            <WarnItem item={item} />
+          </Item>
         ))}
-      </PullToRefresh>
+      </List>
+      {/* </PullToRefresh> */}
     </div>
   );
 });
