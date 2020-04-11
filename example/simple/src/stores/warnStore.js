@@ -2,7 +2,7 @@ import { observable, action } from "mobx";
 
 export default class WarnStore {
   @observable
-  newsFlag = true;
+  newsFlag = false;
 
   @action
   changeFlag(flag) {

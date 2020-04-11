@@ -5,8 +5,8 @@ import { Progress, Item, Card } from "@/components/WarnComponents/index";
 import { getCalculateTime } from "@/utils/utils";
 import styles from "./styles/index.less";
 
-const Warn = ({ onClick, item = {} }) => (
-  <div className={styles.warn_item} onClick={onClick}>
+const Warn = ({ onClick, item = {}, style }) => (
+  <div className={styles.warn_item} style={style} onClick={onClick}>
     <div className={styles.top}>
       <Flex justify="between">
         <div className={styles.left}>{item.name}</div>
@@ -53,7 +53,8 @@ Warn.getInitialProps = async () => {
 
 Warn.propTypes = {
   onClick: PropTypes.func,
-  value: PropTypes.number
+  value: PropTypes.number,
+  style: PropTypes.object
 };
 
 export default Warn;
