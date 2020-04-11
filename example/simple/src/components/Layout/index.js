@@ -25,17 +25,17 @@ const Base = observer(({ children, showRight = false, showBack = true }) => {
   const home = router.asPath === "/";
   useEffect(() => {
     let stomp;
-    socket("http://192.168.109.177").then(stomp => {
+    socket("http://192.168.120.240:8080/endpointWisely").then(stomp => {
       stomp = stomp;
       stomp.connect({}, () => {
-        stomp.subscribe("", message => {
-          console.log(message);
+        stomp.subscribe("/user/123457/alarm_face", () => {
+          warnStore.changeFlag(true);
         });
       });
     });
 
     return () => {
-      !stomp && stomp.over();
+      stomp && stomp.over();
     };
   }, []);
   function onBack() {

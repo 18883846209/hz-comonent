@@ -16,8 +16,8 @@ const Warn = ({ onClick, item = {}, style }) => (
         </div>
       </Flex>
     </div>
-    <div>
-      <Flex className={styles.bottom}>
+    <div className={styles.bottom}>
+      <Flex>
         <Card
           url={
             item.captured_image_url ||
