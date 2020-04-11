@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import propTypes from "prop-types";
 import { NavBar, Icon } from "antd-mobile";
 import { observer } from "mobx-react";
 import useStores from "@/hooks/useStores";
+import socket from "@/utils/socket";
 import styles from "./styles/index.less";
 
 const routes = {
@@ -22,6 +23,21 @@ const Base = observer(({ children, showRight = false, showBack = true }) => {
   const { warnStore } = useStores();
   const { newsFlag } = warnStore;
   const home = router.asPath === "/";
+  useEffect(() => {
+    let stomp;
+    socket("http://192.168.109.177").then(stomp => {
+      stomp = stomp;
+      stomp.connect({}, () => {
+        stomp.subscribe("", message => {
+          console.log(message);
+        });
+      });
+    });
+
+    return () => {
+      !stomp && stomp.over();
+    };
+  }, []);
   function onBack() {
     if (!home) {
       router.back();

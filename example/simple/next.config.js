@@ -22,7 +22,7 @@ const polyfillsFile = "./src/utils/polyfills.js";
 
 const alias = {
   "@": path.join(__dirname, "src"),
-  '@styles':path.join(__dirname,'src/styles')
+  "@styles": path.join(__dirname, "src/styles")
 };
 
 const nextConfig = {
@@ -127,7 +127,10 @@ const nextConfig = {
     };
 
     config.resolve.extensions = [".js", ".jsx", ".json"];
-
+    config.resolve.externals = {
+      SockJS: "window.SockJS",
+      Stomp: "window.Stomp"
+    };
     config.resolve.alias = {
       ...config.resolve.alias,
       ...alias
