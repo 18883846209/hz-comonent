@@ -4,8 +4,7 @@ import Item from "@/components/WarnItem";
 import { EmptyNoDataPage } from "@/components/EmptyPage";
 import { PullToRefresh } from "antd-mobile";
 import { observer } from "mobx-react";
-// import List from "@/components/VirtualList";
-// import { List } from "react-virtualized";
+import List from "@/components/VirtualList";
 // import request from "@/utils/request";
 import useStores from "@/hooks/useStores";
 import styles from "./styles/index.less";
@@ -30,9 +29,6 @@ const Index = observer(({ data }) => {
           height: "calc(100vh - 55px)",
           overflow: "auto"
         }}
-        // indicator={{
-        //   release: <img width={325} src="/static/images/pulldown.gif" />
-        // }}
         direction={"down"}
         refreshing={refreshing}
         onRefresh={() => {
@@ -46,7 +42,6 @@ const Index = observer(({ data }) => {
         {new Array(10).fill(1).map((item, index) => (
           <Item onClick={() => goDetail(item)} key={index} value={item} />
         ))}
-        {/* <List list={new Array(100).fill({})} Item={() => <Item onClick={() => goDetail({})} />} /> */}
       </PullToRefresh>
     </div>
   );
