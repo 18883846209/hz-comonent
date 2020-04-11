@@ -3,7 +3,7 @@
 
 import { stringify } from "qs";
 import getConfig from "next/config";
-// import fetch from "isomorphic-unfetch";
+require("isomorphic-unfetch");
 
 import { getCookie } from "@/utils/cookie";
 
