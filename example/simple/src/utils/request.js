@@ -29,7 +29,7 @@ function parseResponse(response) {
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
-    return parseResponse(response);
+    return modelResponse(parseResponse(response));
   }
   return response;
 }
@@ -87,7 +87,7 @@ export function modelResponse(response = {}) {
   const { OK_CODE } = publicRuntimeConfig;
   if (!response.code || response.code.slice(-4) !== OK_CODE) {
     sendMsg.isSuccess = false;
-    sendMsg.msg = response.message;
+    sendMsg.msg = response.message || "请求失败";
   } else {
     sendMsg.res = response.data;
     sendMsg.isSuccess = true;
