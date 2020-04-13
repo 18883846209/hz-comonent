@@ -57,7 +57,7 @@ function ExecuteDetails({ id = "" }) {
               </div>
               {index !== 3 ? (
                 <div
-                  onClick={data.key === "区域" ? () => router.push("/devices") : () => {}}
+                  onClick={data.key === "区域" ? () => router.push("/deviceList") : () => {}}
                   className={data.key === "区域" ? classNames(styles.link, styles.value) : styles.value}
                 >
                   {data.value}
