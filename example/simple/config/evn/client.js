@@ -36,12 +36,12 @@ module.exports = {
   development: {
     ...base,
     host: "127.0.0.1",
-    wx_debug: false
-    // api: "http://192.168.111.16:8928"
+    wx_debug: false,
+    server: "http://192.168.100.127:8080"
   },
   production: {
     ...base,
-    host: "0.0.0.0"
-    // api: "http://192.168.111.16:8928"
+    host: "0.0.0.0",
+    server: "http://192.168.100.127:8080"
   }
 }[process.env.NODE_ENV || "development"];

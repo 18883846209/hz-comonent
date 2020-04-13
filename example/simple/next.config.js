@@ -127,10 +127,10 @@ const nextConfig = {
     };
 
     config.resolve.extensions = [".js", ".jsx", ".json"];
-    config.resolve.externals = {
-      SockJS: "window.SockJS",
-      Stomp: "window.Stomp"
-    };
+    // config.resolve.externals = {
+    //   SockJS: "window.SockJS",
+    //   Stomp: "window.Stomp"
+    // };
     config.resolve.alias = {
       ...config.resolve.alias,
       ...alias

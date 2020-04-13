@@ -3,7 +3,7 @@ import React from "react";
 import NProgress from "nprogress";
 import Router from "next/router";
 import Head from "next/head";
-import { PageTransition } from "next-page-transitions";
+// import { PageTransition } from "next-page-transitions";
 import getConfig from "next/config";
 
 import { InjectStoreContext } from "@/contexts/store";
@@ -20,20 +20,20 @@ const TIMEOUT = 400;
 
 const NEXT_CSS_FILE = "/_next/static/css/styles.chunk.css";
 
-Router.events.on("routeChangeStart", () => NProgress.start());
-Router.events.on("routeChangeComplete", () => {
-  // 下面代码为了解决dev模式下路由跳转时的缓存问题
-  if (process.env.NODE_ENV !== "production") {
-    const els = document.querySelectorAll(`link[href*="${NEXT_CSS_FILE}"][rel="stylesheet"]`);
-    const timestamp = new Date().valueOf();
-    if (els[0]) {
-      els[0].href = `${NEXT_CSS_FILE}?v=${timestamp}`;
-    }
-  }
+// Router.events.on("routeChangeStart", () => NProgress.start());
+// Router.events.on("routeChangeComplete", () => {
+//   // 下面代码为了解决dev模式下路由跳转时的缓存问题
+//   if (process.env.NODE_ENV !== "production") {
+//     const els = document.querySelectorAll(`link[href*="${NEXT_CSS_FILE}"][rel="stylesheet"]`);
+//     const timestamp = new Date().valueOf();
+//     if (els[0]) {
+//       els[0].href = `${NEXT_CSS_FILE}?v=${timestamp}`;
+//     }
+//   }
 
-  NProgress.done();
-});
-Router.events.on("routeChangeError", () => NProgress.done());
+//   NProgress.done();
+// });
+// Router.events.on("routeChangeError", () => NProgress.done());
 
 export default class extends App {
   componentDidMount() {
@@ -95,7 +95,7 @@ if ('addEventListener' in document) {
         </Head>
         <InjectStoreContext initialData={initialStoreData}>
           <Layout router={router}>
-            <PageTransition
+            {/* <PageTransition
               timeout={TIMEOUT}
               classNames="next-page-transitions"
               // skipInitialTransition
@@ -106,9 +106,9 @@ if ('addEventListener' in document) {
                 exit: 0
               }}
               loadingClassNames="next-page-transitions-loading"
-            >
-              <Component {...pageProps} key={router.route} />
-            </PageTransition>
+            > */}
+            <Component {...pageProps} key={router.route} />
+            {/* </PageTransition> */}
           </Layout>
         </InjectStoreContext>
       </>

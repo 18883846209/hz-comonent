@@ -12,20 +12,13 @@ const Warn = ({ onClick, item = {}, style }) => (
         <div className={styles.left}>{item.name}</div>
         <div className={styles.right}>
           <img src="/static/2x/time.png" alt="" />
-          <span>{getCalculateTime(Date.now() - 190000000000)}</span>
+          <span>{getCalculateTime(Number(item.notification_time))}</span>
         </div>
       </Flex>
     </div>
     <div className={styles.bottom}>
       <Flex>
-        <Card
-          url={
-            item.captured_image_url ||
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg"
-          }
-          className={styles.img}
-          text="抓拍照"
-        />
+        <Card url={item.captured_image_url} className={styles.img} text="抓拍照" />
         <Card
           url={
             item.target_image_url ||
@@ -35,21 +28,15 @@ const Warn = ({ onClick, item = {}, style }) => (
         />
         <div className={styles.right}>
           <div className={styles.desc}>
-            <Item src="/static/3x/list_name.png" desc={item.face_library_name || "王警官测试黑名单布控"} />
-            <Item
-              src="/static/3x/list_position.png"
-              desc={item.notification_place || "重庆市南岸区走马楼街道明网点网小区监控点"}
-            />
+            <Item src="/static/3x/list_name.png" desc={item.face_library_name || ""} />
+            <Item src="/static/3x/list_position.png" desc={item.device_name || ""} />
           </div>
-          <Progress percent={item.alarm_score || 70} />
+          <Progress percent={item.alarm_score || 0} />
         </div>
       </Flex>
     </div>
   </div>
 );
-Warn.getInitialProps = async () => {
-  return {};
-};
 
 Warn.propTypes = {
   onClick: PropTypes.func,
