@@ -3,7 +3,7 @@
  * @Date: 2020-04-11 10:20:00
  * @LastEditors: zhangjie
  * @Description: 下拉、上拉加载
- * @LastEditTime: 2020-04-13 17:18:23
+ * @LastEditTime: 2020-04-13 19:05:03
  */
 import React, { useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
@@ -17,7 +17,8 @@ import styles from "./styles/index.less";
  */
 export const PullDownRefresh = props => {
   const { refreshing, onRefresh, direction } = props;
-  const [height, setHeight] = useState(document.documentElement.clientHeight);
+  // const [height, setHeight] = useState(document.documentElement.clientHeight);
+  const [height, setHeight] = useState("100vh");
   const dateRef = useRef();
   useEffect(() => {
     setTimeout(() => {

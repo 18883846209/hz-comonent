@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from "react";
 import router from "next/router";
+import dynamic from "next/dynamic";
 import { Toast } from "antd-mobile";
 import WarnItem from "@/components/WarnItem";
 import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
-import { PullDownRefresh } from "@/components/PullToRefresh";
+// import { PullDownRefresh } from "@/components/PullToRefresh";
 import { memoTransition } from "@/components/MemoTransition";
 import { observer } from "mobx-react";
-import List from "@/components/List";
+// import List from "@/components/List";
 import request from "@/utils/request";
 import useStores from "@/hooks/useStores";
 import styles from "./styles/index.less";
-const { Item } = List;
+const Lists = dynamic(import("@/components/List"), {
+  ssr: false
+});
 const Index = observer(() => {
   const [refreshing, setRefreshing] = useState(false);
-  const [data, setData] = useState([]);
+  const [footLoading, onEndReached] = useState(false);
+  const [data, setData] = useState(new Array(5).fill({}));
   const [loading, setLoading] = useState(true);
   const { warnStore } = useStores();
   useEffect(() => {
-    getList().then(data => {
-      setData(data);
-    });
+    // getList().then(data => {
+    //   setData(ds.cloneWithRows(data));
+    // });
     return () => {
       Toast.hide();
     };
@@ -47,30 +51,42 @@ const Index = observer(() => {
   }
   function refresh() {
     setRefreshing(true);
-    getList().then(data => {
+    // getList().then(data => {
+    //   setRefreshing(false);
+    //   setData(data);
+    //   warnStore.changeFlag(false);
+    // });
+    setTimeout(() => {
       setRefreshing(false);
-      setData(data);
+      // setData(data);
       warnStore.changeFlag(false);
-    });
+    }, 1000);
   }
-  return loading ? (
+  function endReached() {
+    onEndReached(true);
+    setTimeout(() => {
+      onEndReached(false);
+      setData(new Array(15).fill({}));
+    }, 1500);
+  }
+  function renderRow(item) {
+    return <WarnItem item={item} onClick={() => goDetail(item)} key={JSON.stringify(item)} />;
+  }
+  return !loading ? (
     <LoadingPage />
+  ) : !data.length ? (
+    <EmptyNoDataPage />
   ) : (
-    <PullDownRefresh direction="down" refreshing={refreshing} onRefresh={refresh}>
-      {!data.length ? (
-        <EmptyNoDataPage />
-      ) : (
-        <div className={styles.main}>
-          <List>
-            {(data || []).map((item, index) => (
-              <Item multipleLine onClick={() => goDetail(item)} key={index}>
-                <WarnItem item={item} />
-              </Item>
-            ))}
-          </List>
-        </div>
-      )}
-    </PullDownRefresh>
+    <div className={styles.main}>
+      <Lists
+        data={data}
+        loading={footLoading}
+        onEndReached={endReached}
+        refresh={refreshing}
+        onRefresh={refresh}
+        renderRow={renderRow}
+      ></Lists>
+    </div>
   );
 });
 
