@@ -3,7 +3,7 @@
  * @Date: 2020-04-09 17:20:49
  * @LastEditors: dengsha
  * @Description: 为空处理页
- * @LastEditTime: 2020-04-11 10:21:02
+ * @LastEditTime: 2020-04-13 15:53:27
  */
 import React from "react";
 import { Button } from "antd-mobile";
@@ -16,7 +16,7 @@ import styles from "./styles/index.less";
  */
 export const EmptyFailedPage = props => {
   return (
-    <div className={styles.empty_mainDiv}>
+    <div className={styles.empty_mainDiv} style={{height:"calc(100vh - 45px)"}}>
       <div className={styles.messageDiv}>
         <div style={{ textAlign: "center" }}>
           <img src="/static/2x/empty_failed.png" width={294} height={165} />
@@ -39,7 +39,7 @@ export const EmptyFailedPage = props => {
  */
 export const EmptyNoDataPage = () => {
   return (
-    <div className={styles.empty_mainDiv}>
+    <div className={styles.empty_mainDiv} style={{height:"calc(100vh - 45px)"}}>
       <div className={styles.messageDiv}>
         <div style={{ textAlign: "center" }}>
           <img src="/static/2x/empty_noData.png" width={294} height={165} />
@@ -57,7 +57,7 @@ export const EmptyNoDataPage = () => {
  */
 export const LoadingPage = () => {
   return (
-    <div className={styles.empty_mainDiv}>
+    <div className={styles.empty_mainDiv} style={{height:"calc(100vh - 45px)"}}>
       <div className={styles.messageDiv}>
         <div style={{ textAlign: "center" }}>
           <img src="/static/images/loading.gif" width={55} height={55} />

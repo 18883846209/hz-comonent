@@ -60,7 +60,7 @@ const Base = observer(({ children, showRight = false, showBack = true }) => {
       <NavBar mode="dark" leftContent={LeftContent} rightContent={RightContent} onLeftClick={onBack}>
         <Title />
       </NavBar>
-      <div className={styles.main} style={{ height: "calc(100vh - 45px)", position:"relative" }}>
+      <div className={styles.main} style={{ height: "calc(100vh - 45px)" }}>
         {children}
       </div>
     </div>
