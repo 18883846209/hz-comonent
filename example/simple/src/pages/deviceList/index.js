@@ -1,36 +1,9 @@
 import React, { useState, useEffect } from "react";
 import router from "next/router";
-import dynamic from "next/dynamic";
-import Link from 'next/link'
-import { List, ListView } from "antd-mobile";
+import { ListView } from "antd-mobile";
 import request from "@/utils/request";
-// import { getCalculateTime } from "../../utils/utils";
 import styles from "./styles/index.less";
-// import { PullDownRefresh, PullUpRefresh } from "@/components/PullToRefresh";
 import { EmptyFailedPage, EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage/index";
-
-const CarouselPage = dynamic(import("@/components/ImageViewer/index"), {
-  ssr: false
-});
-
-const PullToRefresh = dynamic(import("antd-mobile"), {
-  ssr: false
-});
-
-const Item = List.Item;
-const Brief = Item.Brief;
-
-const devices = [
-  { title: "监控点1", subTitle: "ADN<洪湖东路<渝北区<重庆市<本域" },
-  { title: "监控点2", subTitle: "ADN<洪湖东路<渝北区<重庆市<本域" },
-  { title: "监控点3", subTitle: "ADN<洪湖东路<渝北区<重庆市<本域" }
-];
-
-const images = [
-  // "/static/images/logo.png",
-  "/static/images/catchPic.png",
-  "/static/images/logo.png"
-];
 
 // 虚拟数据
 const dataItem = {
@@ -45,43 +18,41 @@ for (let i = 0; i < 15; i++) {
   data.push(dataItem);
 }
 
+var params = {}
+
 const DeviceList = (props) => {
   const ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2
   });
   const [datas, setData] = useState(data);
-  const [dataSource, setDataSource] = useState(ds.cloneWithRows(datas));
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
+  // const [params, setParams] = useState({});
   
   useEffect(() => {
-    console.log(router.query, '11111')
+    params = router.query
     getData();
   }, []);
 
-  console.log(props, 'props')
-
   const getData = () => {
+    const { server } = window.hzConfig;
     setLoading(true);
-    request("http://192.168.111.231:8080//disposition/devices", { method: "POST" }).then(res => {
-      console.log(res);
+    //http://192.168.111.231:8080/
+    request(`${'http://192.168.111.231:8080'}/disposition/devices`, { method: "POST", body:{ disposition_id: "330100654321012020041009171800001", device_ids:"33010000051191000001" } }).then(res => {
+      console.log(res, params);
       setLoading(false);
-      if (res.isSuccess) {
-        setSuccess(true);
+      if (!res.code || res.code.slice(-4) != '0000') {
+        setSuccess(false);
       } else {
         setSuccess(true);
+        setData(res.data);
       }
     });
   };
 
-  // const reloadAction = () => {
-    
-  // };
-
   //获取item进行展示
   const renderRow = (item, i) => {
     let imgPic = '';
-    console.log(item, 'item');
     if (item.status == 1) {
       imgPic = "/static/2x/device_on.png";
     } else {
@@ -104,6 +75,7 @@ const DeviceList = (props) => {
   return (
     // {console.log('1111')}
     <div className={styles.container}>
+    {console.log('1111', datas, success)}
       {loading ? (
         <LoadingPage />
       ) : success ? (
@@ -113,7 +85,7 @@ const DeviceList = (props) => {
               height: "100%",
               overflow: "auto"
             }}
-            dataSource={dataSource}
+            dataSource={ds.cloneWithRows(datas)}
             renderRow={renderRow}
             initialListSize={10}
             pageSize={10}
@@ -166,3 +138,4 @@ export default DeviceList;
           useBodyScroll={true}
         /> */
 }
+

@@ -56,7 +56,18 @@ const ExecuteDetails = () => {
               </div>
               {index !== 3 ? (
                 <div
-                  onClick={data.key === "区域" ? () => router.push({ pathname: '/deviceList', query: { id: 1 } }) : () => {}}
+                  onClick={
+                    data.key === "区域"
+                      ? () =>
+                          router.push({
+                            pathname: "/deviceList",
+                            query: {
+                              disposition_id: "330100654321012020041009171800001",
+                              device_ids: "33010000051191000001"
+                            }
+                          })
+                      : () => {}
+                  }
                   className={data.key === "区域" ? classNames(styles.link, styles.value) : styles.value}
                 >
                   {data.value}
@@ -90,7 +101,7 @@ const ExecuteDetails = () => {
       </div>
     </div>
   );
-}
+};
 
 ExecuteDetails.getInitialProps = async () => {
   return {};

@@ -3,7 +3,7 @@
  * @Date: 2020-04-09 17:20:49
  * @LastEditors: dengsha
  * @Description: 为空处理页
- * @LastEditTime: 2020-04-13 15:53:27
+ * @LastEditTime: 2020-04-13 19:10:55
  */
 import React from "react";
 import { Button } from "antd-mobile";
@@ -57,8 +57,8 @@ export const EmptyNoDataPage = () => {
  */
 export const LoadingPage = () => {
   return (
-    <div className={styles.empty_mainDiv} style={{height:"calc(100vh - 45px)"}}>
-      <div className={styles.messageDiv}>
+    <div className={styles.empty_mainDiv} style={{height:"calc(100vh - 45px)", backgroundColor: '#f4f4f4'}}>
+      <div className={styles.messageDiv} style={{backgroundColor: '#f4f4f4'}}>
         <div style={{ textAlign: "center" }}>
           <img src="/static/images/loading.gif" width={55} height={55} />
         </div>
