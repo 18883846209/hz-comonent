@@ -67,11 +67,11 @@ export function isBrowser() {
 }
 
 //value:可传时间戳/时间格式的字符串  isStringTime:默认是false，代表是时间戳；穿true时间格式的字符串
-export const getCalculateTime = (value, isStringTime = false) => {
-  const time = isStringTime ? 
-  (new Date().getTime() - moment(value, "YYYY-MM-DD HH:mm:ss").valueOf()) / 1000
-  :
-  (new Date().getTime() - value) / 1000;
+export const getCalculateTime = (value, isStringTime = false, needTranslate = true) => {
+  const time = isStringTime
+    ? (new Date().getTime() - moment(value, "YYYY-MM-DD HH:mm:ss").valueOf()) / 1000
+    : (new Date().getTime() - value) / 1000;
+  if (!needTranslate) return moment(Number(value)).format("YYYY-MM-DD HH:mm:ss");
   //当天日期
   const today = moment(new Date().getTime()).format("YYYY-MM-DD");
   //前一天的日期

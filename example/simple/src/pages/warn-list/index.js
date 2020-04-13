@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import router from "next/router";
+import { Toast } from "antd-mobile";
 import WarnItem from "@/components/WarnItem";
-import { EmptyNoDataPage } from "@/components/EmptyPage";
-// import { PullToRefresh } from "antd-mobile";
+import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
+import { PullDownRefresh } from "@/components/PullToRefresh";
 import { observer } from "mobx-react";
 import List from "@/components/List";
-// import request from "@/utils/request";
+import request from "@/utils/request";
 import useStores from "@/hooks/useStores";
 import styles from "./styles/index.less";
 const { Item } = List;
-const Index = observer(({ data }) => {
+const Index = observer(() => {
   const [refreshing, setRefreshing] = useState(false);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { warnStore } = useStores();
+  useEffect(() => {
+    getList().then(data => {
+      setData(data);
+    });
+  }, []);
   function goDetail(query) {
     router.push({
       pathname: "/warn-detail",
@@ -19,17 +27,28 @@ const Index = observer(({ data }) => {
     });
   }
 
-  return data.length ? (
+  async function getList() {
+    const { server = "" } = window.hzConfig;
+    const res = await request(`${server}/notification/face/list`, {
+      headers: {
+        User: 123456
+      }
+    });
+    setLoading(false);
+    if (res.code !== "0000") {
+      Toast.info(res.message, 2, null);
+    }
+    if (!res.data) return [];
+    return res.data.face_notification_res || [];
+  }
+  return loading ? (
+    <LoadingPage />
+  ) : !data.length ? (
     <EmptyNoDataPage />
   ) : (
     <div className={styles.main}>
-      {/* <PullToRefresh
-        damping={60}
-        style={{
-          height: "calc(100vh - 55px)",
-          overflow: "auto"
-        }}
-        direction={"down"}
+      <PullDownRefresh
+        direction="down"
         refreshing={refreshing}
         onRefresh={() => {
           setRefreshing(true);
@@ -38,32 +57,17 @@ const Index = observer(({ data }) => {
             warnStore.changeFlag(false);
           }, 2000);
         }}
-      > */}
-      {/* {new Array(1).fill({ name: "11" }).map((item, index) => (
-          <WarnItem onClick={() => goDetail(item)} key={index} item={item} />
-        ))} */}
-      <List>
-        {new Array(10).fill({ name: "nametest" }).map((item, index) => (
-          <Item multipleLine onClick={() => goDetail(item)} key={index}>
-            <WarnItem item={item} />
-          </Item>
-        ))}
-      </List>
-      {/* </PullToRefresh> */}
+      >
+        <List>
+          {(data || []).map((item, index) => (
+            <Item multipleLine onClick={() => goDetail(item)} key={index}>
+              <WarnItem item={item} />
+            </Item>
+          ))}
+        </List>
+      </PullDownRefresh>
     </div>
   );
 });
-Index.getInitialProps = async () => {
-  // const res = await request("http://192.168.100.127:8080/notification/face/list", {
-  //   method: "POST",
-  //   headers: {
-  //     User: 1
-  //   },
-  //   body: {}
-  // });
-  // // const data = await res.data;
-  // console.log(res.data);
-  return { data: [] };
-};
 
 export default Index;
