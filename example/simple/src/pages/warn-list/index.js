@@ -4,6 +4,7 @@ import { Toast } from "antd-mobile";
 import WarnItem from "@/components/WarnItem";
 import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
 import { PullDownRefresh } from "@/components/PullToRefresh";
+import { memoTransition } from "@/components/MemoTransition";
 import { observer } from "mobx-react";
 import List from "@/components/List";
 import request from "@/utils/request";
@@ -19,6 +20,9 @@ const Index = observer(() => {
     getList().then(data => {
       setData(data);
     });
+    return () => {
+      Toast.hide();
+    };
   }, []);
   function goDetail(query) {
     router.push({
@@ -35,39 +39,39 @@ const Index = observer(() => {
       }
     });
     setLoading(false);
-    if (res.code !== "0000") {
+    if (res.message !== "success") {
       Toast.info(res.message, 2, null);
     }
     if (!res.data) return [];
     return res.data.face_notification_res || [];
   }
+  function refresh() {
+    setRefreshing(true);
+    getList().then(data => {
+      setRefreshing(false);
+      setData(data);
+      warnStore.changeFlag(false);
+    });
+  }
   return loading ? (
     <LoadingPage />
-  ) : !data.length ? (
-    <EmptyNoDataPage />
   ) : (
     <div className={styles.main}>
-      <PullDownRefresh
-        direction="down"
-        refreshing={refreshing}
-        onRefresh={() => {
-          setRefreshing(true);
-          setTimeout(() => {
-            setRefreshing(false);
-            warnStore.changeFlag(false);
-          }, 2000);
-        }}
-      >
-        <List>
-          {(data || []).map((item, index) => (
-            <Item multipleLine onClick={() => goDetail(item)} key={index}>
-              <WarnItem item={item} />
-            </Item>
-          ))}
-        </List>
+      <PullDownRefresh direction="down" refreshing={refreshing} onRefresh={refresh}>
+        {data.length ? (
+          <EmptyNoDataPage />
+        ) : (
+          <List>
+            {new Array(1).fill({}).map((item, index) => (
+              <Item multipleLine onClick={() => goDetail(item)} key={index}>
+                <WarnItem item={item} />
+              </Item>
+            ))}
+          </List>
+        )}
       </PullDownRefresh>
     </div>
   );
 });
 
-export default Index;
+export default memoTransition(Index);

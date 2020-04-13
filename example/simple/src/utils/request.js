@@ -87,7 +87,7 @@ export function modelResponse(response = {}) {
   const { OK_CODE } = publicRuntimeConfig;
   if (!response.code || response.code.slice(-4) !== OK_CODE) {
     sendMsg.isSuccess = false;
-    sendMsg.msg = response.message;
+    sendMsg.msg = response.message || "请求失败";
   } else {
     sendMsg.res = response.data;
     sendMsg.isSuccess = true;

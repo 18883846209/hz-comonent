@@ -1,6 +1,7 @@
 import React from "react";
 import router from "next/router";
 import Item from "@/components/IndexItem/index";
+import { memoTransition } from "@/components/MemoTransition";
 import { observer } from "mobx-react";
 import { inject } from "@/contexts/store";
 import styles from "./styles/index.less";
@@ -41,4 +42,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default memoTransition(Home);
