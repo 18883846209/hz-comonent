@@ -3,7 +3,7 @@
  * @Date: 2020-04-08 16:48:29
  * @LastEditors: dengsha
  * @Description: 设备页面
- * @LastEditTime: 2020-04-11 15:53:39
+ * @LastEditTime: 2020-04-13 15:53:57
  */
 import React, { useState, useEffect } from "react";
 import request from "@/utils/request"
@@ -63,7 +63,8 @@ const Devices = () => {
           }, 2000);
         }}
       >
-        {devices.map(item => (
+      <EmptyNoDataPage />
+        {/* {devices.map(item => (
           <div className={styles.cardDiv}>
             <div className={styles.topDiv}>
               <div style={{ display: "inline-block" }}>
@@ -75,7 +76,7 @@ const Devices = () => {
             <div className={styles.contentDiv}>{item.subTitle}</div>
           </div>
         ))}
-        <WhiteSpace size="sm" />
+        <WhiteSpace size="sm" /> */}
       </PullDownRefresh>
 
       {/* {devices.map(item => (

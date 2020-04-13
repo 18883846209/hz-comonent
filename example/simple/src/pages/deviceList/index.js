@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import router from "next/router";
 import dynamic from "next/dynamic";
+import Link from 'next/link'
 import { List, ListView } from "antd-mobile";
 import request from "@/utils/request";
 // import { getCalculateTime } from "../../utils/utils";
@@ -43,7 +45,7 @@ for (let i = 0; i < 15; i++) {
   data.push(dataItem);
 }
 
-const DeviceList = () => {
+const DeviceList = (props) => {
   const ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2
   });
@@ -51,9 +53,13 @@ const DeviceList = () => {
   const [dataSource, setDataSource] = useState(ds.cloneWithRows(datas));
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
+  
   useEffect(() => {
+    console.log(router.query, '11111')
     getData();
   }, []);
+
+  console.log(props, 'props')
 
   const getData = () => {
     setLoading(true);

@@ -17,6 +17,7 @@ const Index = observer(() => {
   const [loading, setLoading] = useState(true);
   const { warnStore } = useStores();
   useEffect(() => {
+    console.log(document.getElementsByClassName("main"));
     getList().then(data => {
       setData(data);
     });
@@ -56,21 +57,21 @@ const Index = observer(() => {
   return loading ? (
     <LoadingPage />
   ) : (
-    <div className={styles.main}>
-      <PullDownRefresh direction="down" refreshing={refreshing} onRefresh={refresh}>
-        {data.length ? (
-          <EmptyNoDataPage />
-        ) : (
+    <PullDownRefresh direction="down" refreshing={refreshing} onRefresh={refresh}>
+      {!data.length ? (
+        <EmptyNoDataPage />
+      ) : (
+        <div className={styles.main}>
           <List>
-            {new Array(1).fill({}).map((item, index) => (
+            {new Array(10).fill({}).map((item, index) => (
               <Item multipleLine onClick={() => goDetail(item)} key={index}>
                 <WarnItem item={item} />
               </Item>
             ))}
           </List>
-        )}
-      </PullDownRefresh>
-    </div>
+        </div>
+      )}
+    </PullDownRefresh>
   );
 });
 

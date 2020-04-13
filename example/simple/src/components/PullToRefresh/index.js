@@ -3,9 +3,10 @@
  * @Date: 2020-04-11 10:20:00
  * @LastEditors: zhangjie
  * @Description: 下拉、上拉加载
- * @LastEditTime: 2020-04-13 16:03:23
+ * @LastEditTime: 2020-04-13 17:16:57
  */
 import React, { useState, useRef } from "react";
+// import ReactDOM from "react-dom";
 import { PullToRefresh } from "antd-mobile";
 import styles from "./styles/index.less";
 
@@ -16,16 +17,20 @@ import styles from "./styles/index.less";
  */
 export const PullDownRefresh = props => {
   const { refreshing, onRefresh, direction } = props;
-  // const [refreshing, setRefreshing] = useState(false);
-  // const hei =  - ReactDOM.findDOMNode(this.ptr).offsetTop;
-  const [hei, setHei] = useState("calc(100vh - 45px)");
+  const [height, setHeight] = useState(document.documentElement.clientHeight);
   const dateRef = useRef();
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     // console.log(height, ReactDOM.findDOMNode(dateRef.current).offsetTop);
+  //     // setHeight(height - ReactDOM.findDOMNode(dateRef.current).offsetTop);
+  //   }, 0);
+  // }, []);
   return (
     <div className={styles.pulldown}>
       <PullToRefresh
         damping={60}
         style={{
-          // height: "100%",
+          height,
           overflow: "auto"
         }}
         direction={direction}
