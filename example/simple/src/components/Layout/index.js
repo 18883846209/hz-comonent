@@ -24,8 +24,9 @@ const Base = observer(({ children, showRight = false, showBack = true }) => {
   const { newsFlag } = warnStore;
   const home = router.asPath === "/";
   useEffect(() => {
+    const { server = "" } = window.hzConfig;
     let stomp;
-    socket("http://192.168.120.240:8080/endpointWisely").then(stomp => {
+    socket(`${server}/endpointWisely`).then(stomp => {
       stomp = stomp;
       stomp.connect({}, () => {
         stomp.subscribe("/user/123457/alarm_face", () => {
@@ -60,7 +61,7 @@ const Base = observer(({ children, showRight = false, showBack = true }) => {
       <NavBar mode="dark" leftContent={LeftContent} rightContent={RightContent} onLeftClick={onBack}>
         <Title />
       </NavBar>
-      <div className={styles.main} style={{ height: "calc(100vh - 45px)", position:"relative" }}>
+      <div className={styles.main} style={{ height: "calc(100vh - 45px)", position: "relative" }}>
         {children}
       </div>
     </div>

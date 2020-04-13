@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import styles from "./styles/index.less";
 
-export const Card = ({ url, text = "", className, imgClass }) => (
-  <div className={classnames(styles.card, className)}>
+export const Card = ({ url, text = "", className, imgClass, onClick }) => (
+  <div className={classnames(styles.card, className)} onClick={onClick}>
     <div className={classnames(styles.img, imgClass)}>
       <img src={url} alt="" />
     </div>
@@ -34,7 +34,8 @@ Card.propTypes = {
   url: PropTypes.string,
   text: PropTypes.string,
   className: PropTypes.string,
-  imgClass: PropTypes.string
+  imgClass: PropTypes.string,
+  onClick: PropTypes.func
 };
 Progress.propTypes = {
   percent: PropTypes.number

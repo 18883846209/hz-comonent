@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Flex } from "antd-mobile";
 import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
-import { Progress, Card } from "@/components/WarnComponents/index";
+import { Progress, Card } from "@/components/WarnComponents";
+import ImageViewer from "@/components/ImageViewer";
 import { getCalculateTime } from "@/utils/utils";
 import styles from "./styles/index.less";
 
@@ -26,9 +27,16 @@ const changeSex = str => {
 
 const Detail = ({ item = {} }) => {
   const [loading, setLoading] = useState(true);
+  const [imageVisible, setImageVisible] = useState(false);
+  const [defaultIndex, setdefaultIndex] = useState(0);
+  const sources = [item.target_image_url, item.captured_image_url, item.captured_full_image];
   useEffect(() => {
     setLoading(false);
   }, []);
+  function viewImage(index) {
+    setImageVisible(true);
+    setdefaultIndex(index);
+  }
   return loading ? (
     <LoadingPage />
   ) : !Object.keys(item).length ? (
@@ -36,15 +44,22 @@ const Detail = ({ item = {} }) => {
   ) : (
     <div className={styles.detail}>
       <div className={styles.bg}></div>
+      <ImageViewer
+        onClose={() => setImageVisible(false)}
+        visible={imageVisible}
+        defaultIndex={defaultIndex}
+        sources={sources}
+      />
       <div className={styles.top}>
         <div className={styles.name}>{item.name || ""}</div>
         <div className={styles.similar}>
           <Progress percent={Number(item.alarm_score) || 0} />
         </div>
         <div className={styles.center}>
-          <Card url={item.target_image_url} text="布控照" className={styles.img} />
-          <Card url={item.captured_image_url} text="抓拍照" className={styles.img} />
+          <Card onClick={() => viewImage(0)} url={item.target_image_url} text="布控照" className={styles.img} />
+          <Card onClick={() => viewImage(1)} url={item.captured_image_url} text="抓拍照" className={styles.img} />
           <Card
+            onClick={() => viewImage(2)}
             url={
               item.captured_full_image ||
               "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg"

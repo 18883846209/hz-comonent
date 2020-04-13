@@ -37,7 +37,8 @@ module.exports = {
     ...base,
     host: "127.0.0.1",
     wx_debug: false,
-    server: "http://192.168.100.127:8080"
+    server: "http://192.168.100.127:8080",
+    websocket: "http://192.168.120.240:8080"
   },
   production: {
     ...base,
