@@ -28,9 +28,9 @@ function FilterTitle({ titles, onClick, visible, currentTitle }) {
   const selectedTitle = classnames(styles["title-item"], styles.selected);
   return titles.map(item => (
     <div
-      key={item.title}
+      key={item.key}
       className={visible && currentTitle === item.title ? selectedTitle : styles["title-item"]}
-      onClick={() => onClick(item.title)}
+      onClick={() => onClick(item.key, item.title)}
     >
       {item.title}
       <div
@@ -52,15 +52,17 @@ function Selected() {
 function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => {} }) {
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
+  const [key, setKey] = useState("");
   const [valList, setValList] = useState([]);
   const [selected, setSelected] = useState({});
 
   /** 头部点击方法 */
-  const titleOnClick = title => {
+  const titleOnClick = (key, title) => {
     const filterData = filterDatas.find(data => data.title === title);
     const valueList = filterData ? filterData.valList : [];
     setValList(valueList);
     setTitle(title);
+    setKey(key);
     setVisible(visible => !visible);
   };
 
@@ -78,18 +80,18 @@ function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => 
       return valueList;
     });
     setVisible(visible => !visible);
-    callback(value);
+    callback({ key, value });
   };
 
   return (
     <>
       <div className={styles.filter}>
-        <div className={styles["filter-title"]} style={style}>
+        <div className={styles["filter-title"]} style={{ ...style, lineHeight: "45px", height: "45px" }}>
           <FilterTitle titles={filterDatas} onClick={titleOnClick} currentTitle={title} visible={visible} />
         </div>
         <FilterList visible={visible} valList={valList} title={title} selected={selected} onClick={itemClick} />
       </div>
-      {visible ? <div className={styles.mask} style={{ height: "calc(100% - 45px)" }} /> : null}
+      {visible ? <div className={styles.mask} style={{ height: "100%" }} /> : null}
       <div className={styles.height} />
     </>
   );

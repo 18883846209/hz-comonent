@@ -2,7 +2,6 @@ import { List, Flex } from "antd-mobile";
 import styles from "@/styles/executeDetails/index.less";
 import router from "next/router";
 import classNames from "classnames";
-import img from "@/assets/images/test.jpg";
 
 const testData = {
   timeIcon: "20-03-26 15:26 ~ 20-03-26 15:26",
@@ -28,7 +27,7 @@ function getContentList(data) {
   });
 }
 
-function ExecuteDetails({ id = "" }) {
+const ExecuteDetails = () => {
   const contentList = getContentList(testData);
   return (
     <div className={styles["execute-details"]} style={{ height: "calc(100vh - 45px)" }}>
@@ -75,7 +74,7 @@ function ExecuteDetails({ id = "" }) {
                         <div className={styles.id}>50011219851212091X</div>
                       </div>
                     </div>
-                    <img className={styles["idcard-img"]} src={img} />
+                    {/* <img className={styles["idcard-img"]}  /> */}
                   </div>
                 </div>
               )}
