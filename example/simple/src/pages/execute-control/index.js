@@ -177,6 +177,7 @@ function ExecuteList(props) {
             refresh={refreshing}
             onRefresh={refresh}
             renderRow={renderRow}
+            wrapHeight={document.documentElement.clientHeight - 90}
           ></Lists>
         </div>
       ) : (
