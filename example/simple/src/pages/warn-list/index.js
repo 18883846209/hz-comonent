@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from "react";
 import router from "next/router";
 import dynamic from "next/dynamic";
-import { Toast } from "antd-mobile";
+// import { Toast } from "antd-mobile";
 import WarnItem from "@/components/WarnItem";
 import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
-// import { PullDownRefresh } from "@/components/PullToRefresh";
 import { memoTransition } from "@/components/MemoTransition";
 import { observer } from "mobx-react";
-// import List from "@/components/List";
 import request from "@/utils/request";
 import useStores from "@/hooks/useStores";
 import styles from "./styles/index.less";
-const Lists = dynamic(import("@/components/List"), {
+const List = dynamic(import("@/components/List"), {
   ssr: false
 });
+const pageSize = 15;
 const Index = observer(() => {
   const [refreshing, setRefreshing] = useState(false);
   const [footLoading, onEndReached] = useState(false);
-  const [data, setData] = useState(new Array(5).fill({}));
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  let [page, setPage] = useState(1);
   const { warnStore } = useStores();
   useEffect(() => {
-    // getList().then(data => {
-    //   setData(ds.cloneWithRows(data));
-    // });
-    return () => {
-      Toast.hide();
-    };
+    getList().then(res => {
+      setData(res.data || []);
+    });
+    // return () => {
+    //   Toast.hide();
+    // };
   }, []);
   function goDetail(query) {
     router.push({
@@ -35,57 +35,64 @@ const Index = observer(() => {
     });
   }
 
-  async function getList() {
+  async function getList(page_num = 1, page_size = pageSize) {
     const { server = "" } = window.hzConfig;
-    const res = await request(`${server}/notification/face/list`, {
-      headers: {
-        User: 123456
-      }
-    });
-    setLoading(false);
-    if (res.message !== "success") {
-      Toast.info(res.message, 2, null);
+    try {
+      const res = await request(`${server}/notification/face/list`, {
+        method: "POST",
+        body: {
+          page_num,
+          page_size
+        }
+      });
+      setLoading(false);
+      // if (!res || res.message !== "success") {
+      //   Toast.info(res.message || "未获取到服务", 2, null);
+      // }
+      if (!res || !res.data) return {};
+      return res.data;
+    } catch (e) {
+      setData([]);
+      setLoading(false);
     }
-    if (!res.data) return [];
-    return res.data.face_notification_res || [];
   }
   function refresh() {
     setRefreshing(true);
-    // getList().then(data => {
-    //   setRefreshing(false);
-    //   setData(data);
-    //   warnStore.changeFlag(false);
-    // });
-    setTimeout(() => {
+    getList().then(res => {
+      setPage(1);
+      setData(res.data || []);
       setRefreshing(false);
-      // setData(data);
       warnStore.changeFlag(false);
-    }, 1000);
+    });
   }
   function endReached() {
     onEndReached(true);
-    setTimeout(() => {
+    // console.log("+++", page);
+    getList(page + 1).then(res => {
+      setData(data.concat(res.data || []));
       onEndReached(false);
-      setData(new Array(15).fill({}));
-    }, 1500);
+      if (res.has_next) {
+        setPage(page + 1);
+      }
+    });
   }
   function renderRow(item) {
-    return <WarnItem item={item} onClick={() => goDetail(item)} key={JSON.stringify(item)} />;
+    return <WarnItem item={item} onClick={() => goDetail(item)} key={item.record_id} />;
   }
-  return !loading ? (
+  return loading ? (
     <LoadingPage />
   ) : !data.length ? (
     <EmptyNoDataPage />
   ) : (
     <div className={styles.main}>
-      <Lists
+      <List
         data={data}
         loading={footLoading}
         onEndReached={endReached}
         refresh={refreshing}
         onRefresh={refresh}
         renderRow={renderRow}
-      ></Lists>
+      ></List>
     </div>
   );
 });

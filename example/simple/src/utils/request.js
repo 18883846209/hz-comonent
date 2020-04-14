@@ -43,7 +43,8 @@ const initOptions = {
 function getHeaders() {
   return {
     token: getCookie("token") || publicRuntimeConfig.token,
-    "Content-Type": "application/json;charset=UTF-8"
+    "Content-Type": "application/json;charset=UTF-8",
+    User: getCookie("userCode") || 123456
   };
 }
 

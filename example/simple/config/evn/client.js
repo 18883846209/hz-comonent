@@ -13,7 +13,7 @@
  */
 const base = {
   title: "hz-react-m-simple",
-  cookiePrefix: "hz_m_simple_",
+  cookiePrefix: "",
   localStoragePrefix: "hz_m_simple_",
   OK_CODE: "0000",
   cdn: "",
