@@ -37,21 +37,8 @@ const DeviceList = (props) => {
   const getData = () => {
     const { server } = window.hzConfig;
     setLoading(true);
-    //http://192.168.111.231:8080/
-    // request(`${server}/disposition/devices`, { method: "POST", body:{ disposition_id: "330100654321012020041009171800001", device_ids:"33010000051191000001" } }).then(res => {
-    //   console.log(res, params);
-    //   setLoading(false);
-    //   if (!res.code || res.code.slice(-4) != '0000') {
-    //     setSuccess(false);
-    //   } else {
-    //     setSuccess(true);
-    //     setData(res.data);
-    //   }
-    // });
-
-
     console.log(params, 'params')
-    getDevices({ disposition_id: "330100654321012020041009171800001", device_ids:"33010000051191000001" }).then(res => {
+    getDevices(params).then(res => {
       setLoading(false);
       if (!res.code || res.code.slice(-4) != '0000') {
         setSuccess(false);
