@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import router from "next/router";
 import dynamic from "next/dynamic";
-// import { Toast } from "antd-mobile";
+import { Toast } from "antd-mobile";
 import WarnItem from "@/components/WarnItem";
 import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
 import { memoTransition } from "@/components/MemoTransition";
@@ -13,6 +13,10 @@ const List = dynamic(import("@/components/List"), {
   ssr: false
 });
 const pageSize = 15;
+const parseData = res => {
+  if (!res || !res.data) return [];
+  return res.data;
+};
 const Index = observer(() => {
   const [refreshing, setRefreshing] = useState(false);
   const [footLoading, onEndReached] = useState(false);
@@ -22,11 +26,11 @@ const Index = observer(() => {
   const { warnStore } = useStores();
   useEffect(() => {
     getList().then(res => {
-      setData(res.data || []);
+      setData(parseData(res));
     });
-    // return () => {
-    //   Toast.hide();
-    // };
+    return () => {
+      Toast.hide();
+    };
   }, []);
   function goDetail(query) {
     router.push({
@@ -46,9 +50,9 @@ const Index = observer(() => {
         }
       });
       setLoading(false);
-      // if (!res || res.message !== "success") {
-      //   Toast.info(res.message || "未获取到服务", 2, null);
-      // }
+      if (!res || res.message !== "success") {
+        Toast.info(res.message || "未获取到数据", 2, null);
+      }
       if (!res || !res.data) return {};
       return res.data;
     } catch (e) {
@@ -60,16 +64,15 @@ const Index = observer(() => {
     setRefreshing(true);
     getList().then(res => {
       setPage(1);
-      setData(res.data || []);
+      setData(parseData(res));
       setRefreshing(false);
       warnStore.changeFlag(false);
     });
   }
   function endReached() {
     onEndReached(true);
-    // console.log("+++", page);
     getList(page + 1).then(res => {
-      setData(data.concat(res.data || []));
+      setData(data.concat(parseData(res)));
       onEndReached(false);
       if (res.has_next) {
         setPage(page + 1);

@@ -4,8 +4,19 @@
 }
 
 .warn_item {
+  position: relative;
   padding: 0 0 30px 0;
   background-color: #fff;
+  .mask {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 11;
+    border-radius: 8px;
+  }
   &:not(:last-of-type) {
     margin-bottom: 20px;
   }
