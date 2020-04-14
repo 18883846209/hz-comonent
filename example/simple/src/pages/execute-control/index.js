@@ -93,7 +93,7 @@ function ExecuteList(props) {
 
   /** 获取布控列表 */
   const queryExecuteList = (params, isDown) => {
-    !isDown && setLoading(true);
+    // !isDown && setLoading(true);
     getExecuteList(params).then(result => {
       setLoading(false);
       const { data: dataObj, code, message } = result;
