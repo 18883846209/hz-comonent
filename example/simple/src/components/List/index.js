@@ -38,11 +38,7 @@ const VirtualizedList = props => {
       renderRow={renderRow}
       initialListSize={size}
       renderFooter={() =>
-        renderFooter ? (
-          renderFooter
-        ) : (
-          <div style={{ height: 10, textAlign: "center" }}>{loading ? "加载中..." : null}</div>
-        )
+        renderFooter ? renderFooter : <div style={{ textAlign: "center" }}>{loading ? "加载中..." : null}</div>
       }
       onEndReached={onEndReached}
       onEndReachedThreshold={10}
