@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import router from "next/router";
 import { ListView } from "antd-mobile";
-import request from "@/utils/request";
 import styles from "./styles/index.less";
+import { getDevices } from "@/services/executeControl";
 import { EmptyFailedPage, EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage/index";
 
 // 虚拟数据
@@ -38,8 +38,20 @@ const DeviceList = (props) => {
     const { server } = window.hzConfig;
     setLoading(true);
     //http://192.168.111.231:8080/
-    request(`${'http://192.168.111.231:8080'}/disposition/devices`, { method: "POST", body:{ disposition_id: "330100654321012020041009171800001", device_ids:"33010000051191000001" } }).then(res => {
-      console.log(res, params);
+    // request(`${server}/disposition/devices`, { method: "POST", body:{ disposition_id: "330100654321012020041009171800001", device_ids:"33010000051191000001" } }).then(res => {
+    //   console.log(res, params);
+    //   setLoading(false);
+    //   if (!res.code || res.code.slice(-4) != '0000') {
+    //     setSuccess(false);
+    //   } else {
+    //     setSuccess(true);
+    //     setData(res.data);
+    //   }
+    // });
+
+
+    console.log(params, 'params')
+    getDevices({ disposition_id: "330100654321012020041009171800001", device_ids:"33010000051191000001" }).then(res => {
       setLoading(false);
       if (!res.code || res.code.slice(-4) != '0000') {
         setSuccess(false);
@@ -47,7 +59,7 @@ const DeviceList = (props) => {
         setSuccess(true);
         setData(res.data);
       }
-    });
+    })
   };
 
   //获取item进行展示
@@ -73,13 +85,11 @@ const DeviceList = (props) => {
   };
 
   return (
-    // {console.log('1111')}
     <div className={styles.container}>
-    {console.log('1111', datas, success)}
       {loading ? (
         <LoadingPage />
       ) : success ? (
-        data.length > 0 ? (
+        datas.length > 0 ? (
           <ListView
             style={{
               height: "100%",
