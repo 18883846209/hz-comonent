@@ -3,7 +3,12 @@ import router from "next/router";
 import { ListView } from "antd-mobile";
 import styles from "./styles/index.less";
 import { getDevices } from "@/services/executeControl";
+import dynamic from "next/dynamic";
 import { EmptyFailedPage, EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage/index";
+
+const List = dynamic(import("@/components/List"), {
+  ssr: false
+});
 
 // 虚拟数据
 const dataItem = {
@@ -35,18 +40,23 @@ const DeviceList = (props) => {
   }, []);
 
   const getData = () => {
-    const { server } = window.hzConfig;
     setLoading(true);
-    console.log(params, 'params')
-    getDevices(params).then(res => {
+    if (params.device_ids) {
+      getDevices(params).then(res => {
+        setLoading(false);
+        if (!res.code || res.code.slice(-4) != '0000') {
+          setSuccess(false);
+        } else {
+          setSuccess(true);
+          setData(res.data);
+        }
+      })
+    } else {
       setLoading(false);
-      if (!res.code || res.code.slice(-4) != '0000') {
-        setSuccess(false);
-      } else {
-        setSuccess(true);
-        setData(res.data);
-      }
-    })
+      setSuccess(true);
+      setData([]);
+    }
+    
   };
 
   //获取item进行展示
@@ -77,25 +87,38 @@ const DeviceList = (props) => {
         <LoadingPage />
       ) : success ? (
         datas.length > 0 ? (
-          <ListView
-            style={{
-              height: "100%",
-              overflow: "auto"
-            }}
-            dataSource={ds.cloneWithRows(datas)}
-            renderRow={renderRow}
-            initialListSize={10}
-            pageSize={10}
-            renderFooter={() => (
-              <div style={{ height: 10, textAlign: "center" }}>{/* {upLoading ? '加载中' : '加载完成'} */}</div>
-            )}
-            // onEndReached={() => this.onEndReached(list.pageNum, list.totalPage)}
-            // onEndReachedThreshold={10}
-            useBodyScroll={true}
-            // pageSize={4} // 每次渲染的行数
-            scrollRenderAheadDistance={500} // 当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-            scrollEventThrottle={20} // 控制在滚动过程中，scroll事件被调用的频率
-            // onEndReached={() => { upLoading}} // 上拉加载事件
+          <List
+            // style={{
+            //   height: "100%",
+            //   overflow: "auto"
+            // }}
+            // dataSource={ds.cloneWithRows(datas)}
+            // renderRow={renderRow}
+            // initialListSize={10}
+            // pageSize={10}
+            // renderFooter={() => (
+            //   <div style={{ height: 10, textAlign: "center" }}>{/* {upLoading ? '加载中' : '加载完成'} */}</div>
+            // )}
+            // // onEndReached={() => this.onEndReached(list.pageNum, list.totalPage)}
+            // // onEndReachedThreshold={10}
+            // useBodyScroll={true}
+            // // pageSize={4} // 每次渲染的行数
+            // scrollRenderAheadDistance={500} // 当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+            // scrollEventThrottle={20} // 控制在滚动过程中，scroll事件被调用的频率
+            // // onEndReached={() => { upLoading}} // 上拉加载事件
+
+
+            data={datas}
+        // loading={footLoading}
+        // onEndReached={endReached}
+        refresh={false}
+        // onRefresh={refresh}
+        isRefresh={false}
+        renderFooter={(
+          <div style={{ height: 10, textAlign: "center" }}>{/* {upLoading ? '加载中' : '加载完成'} */}</div>
+        )}
+        wrapHeight={"calc(100vh - 45px)"}
+        renderRow={renderRow}
           />
         ) : (
           <EmptyNoDataPage />
