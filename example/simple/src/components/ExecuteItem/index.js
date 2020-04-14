@@ -18,13 +18,25 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
   };
 
   /** 时间处理 */
-  const getTime = (start = moment(), end = moment()) => {
+  const getTime = (start, end) => {
     return `${moment(start).format("YY-MM-DD HH:mm:ss")} ~ ${moment(end).format("YY-MM-DD HH:mm:ss")}`;
   };
 
+  /** 跳转 */
+  const toDetails = query => {
+    router.push({
+      pathname: "/execute-details",
+      query: {
+        ...query,
+        tabs: query.tabs.map(tab => tab.tab_name).join(","),
+        timeIcon: getTime(item.start_time, item.end_time)
+      }
+    });
+  };
+
   return (
-    <Item multipleLine onClick={() => router.push("/execute-details")} key={item.disposition_id}>
-      <Flex className={styles["list-item"]}>
+    <div className={styles.item} onClick={() => toDetails(item)} key={item.disposition_id}>
+      <Flex className={styles["list-item"]} key={item.disposition_id}>
         <div
           className={
             item.disposition_target_type === 1
@@ -48,9 +60,9 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
           <div className={styles.card}>
             <div className={styles.date}>{getTime(item.start_time, item.end_time)}</div>
             <div className={styles.detail}>
-              <img style={{ height: 14, width: 14, margin: "0 2% 1% 0" }} src="/static/2x/user.png" />
+              <img style={{ height: 14, width: 14, marginRight: "2%", verticalAlign: "bottom" }} src="/static/2x/user.png" />
               <span>{item.owner}</span>
-              <img style={{ height: 14, width: 14, margin: "0 2% 1% 2%" }} src="/static/2x/time.png" />
+              <img style={{ height: 14, width: 14, margin: "0 2%", verticalAlign: "bottom" }} src="/static/2x/time.png" />
               <span>{getCalculateTime(item.create_time)}</span>
               <span
                 className={styles.operation}
@@ -60,7 +72,7 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
                   src={
                     currentId === item.disposition_id
                       ? `/static/2x/${imgUrl}`
-                      : `/static/2x/${changeImgUrl(item.subscribe_status)}`
+                      : `/static/2x/${changeImgUrl(Number(item.subscribe_status))}`
                   }
                   style={{ height: 18, width: 16 }}
                 />
@@ -69,7 +81,7 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
           </div>
         </div>
       </Flex>
-    </Item>
+    </div>
   );
 };
 

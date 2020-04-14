@@ -7,16 +7,16 @@ import styles from "./styles/index.less";
 const { Item } = List;
 
 /** 列表 */
-function FilterList({ valList, visible, onClick, selected, title }) {
+function FilterList({ valList, visible, onClick, selected, currentKey }) {
   return visible ? (
     <div className={styles.list}>
       {valList.map(item => (
         <Item
-          extra={selected[title] === item.value ? <Selected /> : ""}
+          extra={selected[currentKey] === item.value ? <Selected /> : ""}
           key={item.key}
-          onClick={() => onClick(item.value)}
+          onClick={() => onClick(item.key, item.value)}
         >
-          <span className={selected[title] === item.value ? styles.selected : ""}>{item.key}</span>
+          <span className={selected[currentKey] === item.value ? styles.selected : ""}>{item.key}</span>
         </Item>
       ))}
     </div>
@@ -24,18 +24,18 @@ function FilterList({ valList, visible, onClick, selected, title }) {
 }
 
 /** 头部 */
-function FilterTitle({ titles, onClick, visible, currentTitle }) {
+function FilterTitle({ titles, onClick, visible, currentKey }) {
   const selectedTitle = classnames(styles["title-item"], styles.selected);
   return titles.map(item => (
     <div
       key={item.key}
-      className={visible && currentTitle === item.title ? selectedTitle : styles["title-item"]}
+      className={visible && currentKey === item.key ? selectedTitle : styles["title-item"]}
       onClick={() => onClick(item.key, item.title)}
     >
       {item.title}
       <div
         className={
-          visible && currentTitle === item.title
+          visible && currentKey === item.key
             ? classnames(styles["title-icon-selected"], styles["title-icon"])
             : styles["title-icon"]
         }
@@ -50,6 +50,7 @@ function Selected() {
 }
 
 function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => {} }) {
+  const [filterList, setFilterList] = useState(filterDatas);
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [key, setKey] = useState("");
@@ -57,21 +58,23 @@ function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => 
   const [selected, setSelected] = useState({});
 
   /** 头部点击方法 */
-  const titleOnClick = (key, title) => {
-    const filterData = filterDatas.find(data => data.title === title);
+  const titleOnClick = (key, titleClick) => {
+    const filterData = filterList.find(data => data.key === key);
     const valueList = filterData ? filterData.valList : [];
     setValList(valueList);
-    setTitle(title);
+    setTitle(titleClick);
     setKey(key);
-    setVisible(visible => !visible);
+    if (title === titleClick || !visible) setVisible(visible => !visible);
   };
 
   /** 列表点击方法 */
-  const itemClick = value => {
+  const itemClick = (itemKey, value) => {
+    let filterData = filterList.find(data => data.key === key);
+    filterData.title = itemKey;
     setSelected(selected => {
       return {
         ...selected,
-        [title]: value
+        [key]: value
       };
     });
     setValList(valueList => {
@@ -80,6 +83,7 @@ function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => 
       return valueList;
     });
     setVisible(visible => !visible);
+    setFilterList(filterList);
     callback({ key, value });
   };
 
@@ -87,11 +91,13 @@ function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => 
     <>
       <div className={styles.filter}>
         <div className={styles["filter-title"]} style={{ ...style, lineHeight: "45px", height: "45px" }}>
-          <FilterTitle titles={filterDatas} onClick={titleOnClick} currentTitle={title} visible={visible} />
+          <FilterTitle titles={filterList} onClick={titleOnClick} currentKey={key} visible={visible} />
         </div>
-        <FilterList visible={visible} valList={valList} title={title} selected={selected} onClick={itemClick} />
+        <FilterList visible={visible} valList={valList} currentKey={key} selected={selected} onClick={itemClick} />
       </div>
-      {visible ? <div className={styles.mask} style={{ height: "100%" }} /> : null}
+      {visible ? (
+        <div className={styles.mask} onClick={() => setVisible(!visible)} style={{ height: "calc(100vh - 45px)" }} />
+      ) : null}
       <div className={styles.height} />
     </>
   );
@@ -102,14 +108,14 @@ FilterList.prototype = {
   visible: PropTypes.bool,
   onClick: PropTypes.func,
   selected: PropTypes.object,
-  title: PropTypes.string
+  currentKey: PropTypes.number
 };
 
 FilterTitle.prototype = {
   onClick: PropTypes.func,
   titles: PropTypes.array,
   visible: PropTypes.bool,
-  currentTitle: PropTypes.string
+  currentKey: PropTypes.string
 };
 
 Filter.prototype = {
