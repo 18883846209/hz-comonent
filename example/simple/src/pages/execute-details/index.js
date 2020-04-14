@@ -24,7 +24,7 @@ const getTime = (start, end) => {
 
 /** 布控区域 */
 const executeArea = (ids = "") => {
-  const list = ids ? ids.split(",") : [];
+  const list = ids ? ids.split(";") : [];
   return list.length;
 };
 
@@ -115,8 +115,8 @@ const ExecuteDetails = ({ item }) => {
                           router.push({
                             pathname: "/deviceList",
                             query: {
-                              disposition_id: "330100654321012020041009171800001",
-                              device_ids: "33010000051191000001"
+                              disposition_id: item.disposition_id,
+                              device_ids: item.device_ids
                             }
                           })
                       : () => {}

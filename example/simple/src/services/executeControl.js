@@ -35,6 +35,7 @@ export async function subscribe(params = {}) {
 
 /** 设备查询 */
 export async function getDevices(params = {}) {
+  //192.168.111.231:8080
   return request(`http://192.168.111.231:8080/disposition/devices`, {
     method: "POST",
     body: params,
