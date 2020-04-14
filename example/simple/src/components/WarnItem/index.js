@@ -28,7 +28,7 @@ const Warn = ({ onClick, item = {}, style }) => (
         />
         <div className={styles.right}>
           <div className={styles.desc}>
-            <Item src="/static/3x/list_name.png" desc={item.face_library_name || ""} />
+            <Item src="/static/3x/list_name.png" desc={item.face_disposition_name || ""} />
             <Item src="/static/3x/list_position.png" desc={item.device_name || ""} />
           </div>
           <Progress percent={item.alarm_score || 0} />

@@ -22,7 +22,7 @@ const Item = ({ name, value, src }) => (
 );
 
 const changeSex = str => {
-  return str === "0" ? "男" : "女";
+  return str === "1" ? "男" : str === "2" ? "女" : str === "9" ? "未说明" : "未知";
 };
 
 const Detail = ({ item = {} }) => {
@@ -60,10 +60,7 @@ const Detail = ({ item = {} }) => {
           <Card onClick={() => viewImage(1)} url={item.captured_image_url} text="抓拍照" className={styles.img} />
           <Card
             onClick={() => viewImage(2)}
-            url={
-              item.captured_full_image ||
-              "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg"
-            }
+            url={item.captured_full_image}
             text="全景照"
             className={styles.full_wrap}
             imgClass={styles.full_img}

@@ -13,6 +13,7 @@ export const Card = ({ url, text = "", className, imgClass, onClick }) => (
 );
 
 export const Progress = ({ percent = 0 }) => {
+  percent = isNaN(percent) ? 0 : Number.isInteger(percent) ? percent : Number(percent).toFixed(1);
   const num = `${percent}%`;
   return (
     <div className={styles.progress}>
