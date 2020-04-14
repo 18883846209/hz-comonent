@@ -1,16 +1,12 @@
 import { List, Flex } from "antd-mobile";
 import styles from "@/styles/executeDetails/index.less";
+import moment from "moment";
 import router from "next/router";
+import { getRedirectStatus, getRedirectType } from "@/utils/common";
+import { getCalculateTime } from "@/utils/utils";
+import { subscribe } from "@/services/executeControl";
 import classNames from "classnames";
-
-const testData = {
-  timeIcon: "20-03-26 15:26 ~ 20-03-26 15:26",
-  position: "63个监控点",
-  types: "人员布控",
-  target: "******黑名单1，********黑名单2，******黑名单3",
-  threshold: "≥75%",
-  remarks: "啦啦啦啦啦，哈哈哈哈哈哈。"
-};
+import { useState } from "react";
 
 const TITLE = [
   { key: "时段", value: "timeIcon" },
@@ -21,32 +17,89 @@ const TITLE = [
   { key: "备注", value: "remarks" }
 ];
 
+/** 时间处理 */
+const getTime = (start, end) => {
+  return `${moment(start).format("YY-MM-DD HH:mm:ss")} ~ ${moment(end).format("YY-MM-DD HH:mm:ss")}`;
+};
+
+/** 布控区域 */
+const executeArea = (ids = "") => {
+  const list = ids ? ids.split(",") : [];
+  return list.length;
+};
+
+/** 布控类型 */
+const executeType = (type = 1) => {
+  let typeStr = "名单库布控";
+  switch (type) {
+    case 1:
+      typeStr = "名单库布控";
+      break;
+    case 2:
+      typeStr = "单人布控";
+      break;
+    case 3:
+      typeStr = "民族布控";
+      break;
+    default:
+      break;
+  }
+  return typeStr;
+};
+
+/** 布控目标 */
+const executeTarget = (nameList = []) => {
+  const names = nameList.map(data => data.tab_name);
+  const nameStr = names.join(",");
+  return nameStr;
+};
+
 function getContentList(data) {
+  const { device_ids, disposition_target_type, tabs, describe } = data;
+  const oData = {
+    ...data,
+    position: `${executeArea(device_ids)}个监控点`,
+    types: executeType(disposition_target_type),
+    target: tabs,
+    remarks: describe
+  };
+
   return TITLE.map(item => {
-    return { key: item.key, value: data[item.value], img: item.value };
+    return { key: item.key, value: oData[item.value], img: item.value };
   });
 }
 
-const ExecuteDetails = () => {
-  const contentList = getContentList(testData);
+const ExecuteDetails = ({ item }) => {
+  const [imgUrl, setImgUrl] = useState(`${item.subscribe_status}` === "0" ? "subscribe" : "cancel_subscribed");
+
+  const subscribeHandler = action => {
+    subscribe({
+      action,
+      disposition_id: item.disposition_id
+    }).then(result => {
+      setImgUrl(action ? "cancel_subscribed" : "subscribe");
+    });
+  };
+
+  const contentList = getContentList(item);
   return (
     <div className={styles["execute-details"]} style={{ height: "calc(100vh - 45px)" }}>
       <div className={styles.bg}></div>
       <div className={styles.title}>
         <div className={styles.name}>
-          <span className={styles["execute-name"]}>测试布控</span>
-          <span className={styles["execute-state"]}>布控中</span>
+          <span className={styles["execute-name"]}>{item.title}</span>
+          <span className={styles["execute-state"]}>{getRedirectStatus(item.disposition_status)}</span>
         </div>
         <div>
           <img src={`/static/2x/user.png`} alt="" />
-          <span className={styles.user}>admin</span>
+          <span className={styles.user}>{item.owner}</span>
           <img src={`/static/2x/time.png`} alt="" />
-          19-12-09 18:08:36
+          {getCalculateTime(item.create_time)}
         </div>
       </div>
       <div className={styles.body}>
         {contentList.map((data, index) => (
-          <div className={styles.wrap}>
+          <div className={styles.wrap} key={index}>
             <Flex justify="between">
               <div className={styles.key}>
                 <Flex>
@@ -54,7 +107,7 @@ const ExecuteDetails = () => {
                   <div>{data.key}</div>
                 </Flex>
               </div>
-              {index !== 3 ? (
+              {index !== 3 || `${item.disposition_target_type}` === "1" ? (
                 <div
                   onClick={
                     data.key === "区域"
@@ -77,15 +130,15 @@ const ExecuteDetails = () => {
                   <div className={styles.idcard}>
                     <div className={styles["idcard-details"]}>
                       <div>
-                        <span>张三</span>
-                        <span className={styles.gender}>男</span>
+                        <span>{item.name}</span>
+                        <span className={styles.gender}>{item.gender}</span>
                       </div>
                       <div>
-                        <div className={styles.idtype}>居民身份证</div>
-                        <div className={styles.id}>50011219851212091X</div>
+                        <div className={styles.idtype}>{getRedirectType(item.certificate_type)}</div>
+                        <div className={styles.id}>{item.certificate_id}</div>
                       </div>
                     </div>
-                    {/* <img className={styles["idcard-img"]}  /> */}
+                    <img className={styles["idcard-img"]} src={item.image} />
                   </div>
                 </div>
               )}
@@ -93,9 +146,9 @@ const ExecuteDetails = () => {
           </div>
         ))}
         <div className={styles.bottom}>
-          <div className={styles.foot}>
-            <img className={styles.img} src="/static/2x/subscribe.png" />
-            <div className={styles.icontext}>添加告警订阅</div>
+          <div className={styles.foot} onClick={() => subscribeHandler(imgUrl === "subscribe" ? 1 : 0)}>
+            <img className={styles.img} src={`/static/2x/${imgUrl}.png`} />
+            <div className={styles.icontext}>{imgUrl === "subscribe" ? "添加告警订阅" : "取消告警订阅"}</div>
           </div>
         </div>
       </div>
@@ -107,4 +160,7 @@ ExecuteDetails.getInitialProps = async () => {
   return {};
 };
 
+ExecuteDetails.getInitialProps = async ({ query }) => {
+  return { item: query };
+};
 export default ExecuteDetails;

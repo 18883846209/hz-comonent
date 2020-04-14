@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { PullToRefresh } from "antd-mobile";
+import { PullToRefresh, Toast } from "antd-mobile";
 import styles from "@/styles/executeControl/index.less";
 import Filter from "@/components/Filter";
 import { filterDataList } from "@/utils/data";
 import { getExecuteList, subscribe } from "@/services/executeControl";
-import List from "@/components/List";
-import { EmptyNoDataPage } from "@/components/EmptyPage";
+import Lists from "@/components/List";
+import { EmptyFailedPage, EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
 import Item from "@/components/ExecuteItem";
 
 /** 蒙层 */
@@ -35,26 +35,28 @@ const Mask = () => {
 };
 
 function ExecuteList(props) {
+  const [refreshing, setRefreshing] = useState(false);
+  const [footLoading, onEndReached] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [imgUrl, setImgUrl] = useState("addSubscribe.png");
   const [showImg, setShowImg] = useState(false);
   const [executeList, setExecuteList] = useState([]);
   const [currentId, setCurrentId] = useState("");
   const [params, setParams] = useState({
-    req: {
-      disposition_status: null, // 布控状态： 0 布控中，1 已撤控，2 已到期，9 未开始，不限传空
-      disposition_target_type: null, // 布控目标类型：1 名单库布控，2 单人布控，3 民族布控，不限传空
-      subscribe_status: null // 订阅状态： 0 未订阅，1 已订阅，不限传空
-    }
+    disposition_status: null, // 布控状态： 0 布控中，1 已撤控，2 已到期，9 未开始，不限传空
+    disposition_target_type: null, // 布控目标类型：1 名单库布控，2 单人布控，3 民族布控，不限传空
+    subscribe_status: null // 订阅状态： 0 未订阅，1 已订阅，不限传空
   });
 
   useEffect(() => {
-    queryExecuteList();
-  }, [params]);
+    queryExecuteList(params);
+  }, []);
 
   /** 获取过滤参数 */
   const getFilterVal = (obj = { key: "", value: "" }) => {
     setParams(params => {
-      params.req[obj.key] = obj.value;
+      params[obj.key] = obj.value;
+      queryExecuteList(params);
       return params;
     });
   };
@@ -66,25 +68,28 @@ function ExecuteList(props) {
     setCurrentId(id);
     setImgUrl(changeImgUrl(action ? 2 : 3));
     subscribe({
-      req: {
-        action,
-        disposition_id: id
-      }
-    }).then(() => {
+      action,
+      disposition_id: id
+    }).then(result => {
+      // const { isSuccess, msg, res } = result;
+      // if (!isSuccess) return Toast(msg, 2, null);
       setShowImg(true);
       setCurrentId("");
       setImgUrl("addSubscribe.png");
       setTimeout(() => setShowImg(false), 1000);
+      queryExecuteList(params);
     });
   };
 
   /** 获取布控列表 */
   const queryExecuteList = () => {
+    setLoading(true);
     getExecuteList(params).then(result => {
-      const { isSuccess, msg, res } = result;
-      if (!isSuccess) return msg
-      const { data: dataObj } = res
-      const { data, paging } = dataObj;
+      setLoading(false);
+      // const { isSuccess, msg, res } = result;
+      // if (!isSuccess) return Toast(msg, 2, null);
+      const { data: dataObj } = result;
+      const { data = [], paging } = dataObj;
       setExecuteList(data);
     });
   };
@@ -114,25 +119,55 @@ function ExecuteList(props) {
     return imgUrl;
   };
 
+  function renderRow(item) {
+    return (
+      <Item
+        item={item}
+        imgUrl={imgUrl}
+        changeImgUrl={changeImgUrl}
+        subscribeHandler={subscribeHandler}
+        currentId={currentId}
+      />
+    );
+  }
+
+  function refresh() {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }
+
+  function endReached() {
+    onEndReached(true);
+    setTimeout(() => {
+      onEndReached(false);
+      setExecuteList(new Array(15).fill({}));
+    }, 1500);
+  }
+
   return (
     <>
       <Mask />
       <Filter filterDatas={filterDataList} callback={getFilterVal} />
       <PullToRefresh>
-        {executeList.length ? (
-          <List className={styles["execute-list"]}>
-            {executeList.map(item => (
-              <Item
-                item={item}
-                imgUrl={imgUrl}
-                changeImgUrl={changeImgUrl}
-                subscribeHandler={subscribeHandler}
-                currentId={currentId}
-              />
-            ))}
-          </List>
+        {loading ? (
+          <LoadingPage />
+        ) : executeList.length ? (
+          <div className={styles.lists}>
+            <Lists
+              data={executeList}
+              loading={footLoading}
+              onEndReached={endReached}
+              refresh={refreshing}
+              onRefresh={refresh}
+              renderRow={renderRow}
+            ></Lists>
+          </div>
         ) : (
-          <EmptyNoDataPage />
+          <div style={{ height: "calc(100vh - 90px)" }}>
+            <EmptyNoDataPage />
+          </div>
         )}
       </PullToRefresh>
       <div className={styles.result}>
