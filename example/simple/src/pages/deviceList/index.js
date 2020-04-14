@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import router from "next/router";
-import { ListView } from "antd-mobile";
 import styles from "./styles/index.less";
-import { getDevices } from "@/services/executeControl";
+import request from "@/utils/request";
 import dynamic from "next/dynamic";
 import { EmptyFailedPage, EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage/index";
 
@@ -14,8 +13,8 @@ const List = dynamic(import("@/components/List"), {
 const dataItem = {
   device_name: "Meet hotel",
   hierarchy_name: "不是所有的兼职汪都需要风吹日晒",
-  status: 2,//在线状态：0：登录中; 1：在线/启用; 2:离线/停用: 9:其他
-  device_id:'1'
+  status: 2, //在线状态：0：登录中; 1：在线/启用; 2:离线/停用: 9:其他
+  device_id: "1"
 };
 const data = [];
 for (let i = 0; i < 15; i++) {
@@ -23,45 +22,45 @@ for (let i = 0; i < 15; i++) {
   data.push(dataItem);
 }
 
-var params = {}
+var params = {};
 
-const DeviceList = (props) => {
-  const ds = new ListView.DataSource({
-    rowHasChanged: (row1, row2) => row1 !== row2
-  });
+const DeviceList = () => {
   const [datas, setData] = useState(data);
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
-  // const [params, setParams] = useState({});
-  
+
   useEffect(() => {
-    params = router.query
+    params = router.query;
     getData();
   }, []);
 
-  const getData = () => {
+  async function getData() {
     setLoading(true);
+    const { server = "" } = window.hzConfig;
+    const object = {
+      body: params,
+      method: "POST"
+    };
     if (params.device_ids) {
-      getDevices(params).then(res => {
+      request(`${server}/disposition/devices`, object).then(res => {
         setLoading(false);
-        if (!res.code || res.code.slice(-4) != '0000') {
+        if (!res.code || res.code.slice(-4) != "0000") {
           setSuccess(false);
         } else {
           setSuccess(true);
           setData(res.data);
         }
-      })
+      });
     } else {
       setLoading(false);
       setSuccess(true);
       setData([]);
     }
-    
-  };
+  }
 
   //获取item进行展示
   const renderRow = (item, i) => {
-    let imgPic = '';
+    let imgPic = "";
     if (item.status == 1) {
       imgPic = "/static/2x/device_on.png";
     } else {
@@ -71,7 +70,7 @@ const DeviceList = (props) => {
       <div className={styles.cardDiv}>
         <div className={styles.topDiv}>
           <div style={{ display: "inline-block" }}>
-            <img src= {imgPic} width={21} height={13}></img>
+            <img src={imgPic} width={21} height={13}></img>
           </div>
           <div className={styles.titleDiv}>{item.device_name}</div>
         </div>
@@ -88,37 +87,14 @@ const DeviceList = (props) => {
       ) : success ? (
         datas.length > 0 ? (
           <List
-            // style={{
-            //   height: "100%",
-            //   overflow: "auto"
-            // }}
-            // dataSource={ds.cloneWithRows(datas)}
-            // renderRow={renderRow}
-            // initialListSize={10}
-            // pageSize={10}
-            // renderFooter={() => (
-            //   <div style={{ height: 10, textAlign: "center" }}>{/* {upLoading ? '加载中' : '加载完成'} */}</div>
-            // )}
-            // // onEndReached={() => this.onEndReached(list.pageNum, list.totalPage)}
-            // // onEndReachedThreshold={10}
-            // useBodyScroll={true}
-            // // pageSize={4} // 每次渲染的行数
-            // scrollRenderAheadDistance={500} // 当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-            // scrollEventThrottle={20} // 控制在滚动过程中，scroll事件被调用的频率
-            // // onEndReached={() => { upLoading}} // 上拉加载事件
-
-
             data={datas}
-        // loading={footLoading}
-        // onEndReached={endReached}
-        refresh={false}
-        // onRefresh={refresh}
-        isRefresh={false}
-        renderFooter={(
-          <div style={{ height: 10, textAlign: "center" }}>{/* {upLoading ? '加载中' : '加载完成'} */}</div>
-        )}
-        wrapHeight={"calc(100vh - 45px)"}
-        renderRow={renderRow}
+            refresh={false}
+            isRefresh={false}
+            renderFooter={
+              <div style={{ height: 10, textAlign: "center" }} />
+            }
+            wrapHeight={"calc(100vh - 45px)"}
+            renderRow={renderRow}
           />
         ) : (
           <EmptyNoDataPage />
@@ -158,4 +134,3 @@ export default DeviceList;
           useBodyScroll={true}
         /> */
 }
-
