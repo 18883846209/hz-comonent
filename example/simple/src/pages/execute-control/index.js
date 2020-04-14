@@ -6,6 +6,7 @@ import { memoTransition } from "@/components/MemoTransition";
 import { filterDataList } from "@/utils/data";
 import { getExecuteList, subscribe } from "@/services/executeControl";
 import Lists from "@/components/List";
+import Loading from '@/components/PullLoading';
 import { EmptyFailedPage, EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
 import Item from "@/components/ExecuteItem";
 
@@ -182,7 +183,7 @@ function ExecuteList(props) {
         </div>
       ) : (
         <div style={{ height: "calc(100vh - 90px)", overflow: "hidden" }}>
-          <PullToRefresh onRefresh={refresh} refreshing={refreshing}>
+          <PullToRefresh onRefresh={refresh} damping={30} indicator={{ release: <Loading /> }}>
             <EmptyNoDataPage />
           </PullToRefresh>
         </div>
