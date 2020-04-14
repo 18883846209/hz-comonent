@@ -93,6 +93,7 @@ function ExecuteList(props) {
 
   /** 获取布控列表 */
   const queryExecuteList = (params, isDown) => {
+    !isDown && setLoading(true);
     getExecuteList(params).then(result => {
       setLoading(false);
       const { data: dataObj, code, message } = result;
@@ -101,6 +102,7 @@ function ExecuteList(props) {
       setExecuteList(dataList => {
         return isDown ? dataList.concat(data) : data;
       });
+      setRefreshing(false);
       isDown && onEndReached(false);
     });
   };
@@ -179,7 +181,9 @@ function ExecuteList(props) {
         </div>
       ) : (
         <div style={{ height: "calc(100vh - 90px)", overflow: "hidden" }}>
-          <EmptyNoDataPage />
+          <PullToRefresh onRefresh={refresh} refreshing={refreshing}>
+            <EmptyNoDataPage />
+          </PullToRefresh>
         </div>
       )}
       <div className={styles.result}>
