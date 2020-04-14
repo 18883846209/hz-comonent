@@ -58,6 +58,8 @@ const Index = observer(() => {
     } catch (e) {
       setData([]);
       setLoading(false);
+      setRefreshing(false);
+      onEndReached(false);
     }
   }
   function refresh() {

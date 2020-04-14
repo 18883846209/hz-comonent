@@ -25,15 +25,17 @@ const VirtualizedList = props => {
   useEffect(() => {
     setData(ds.cloneWithRows(data));
     setTimeout(() => {
-      setHeight(document.documentElement.clientHeight);
+      const h = document.documentElement.clientHeight;
+      setHeight(h);
     }, 0);
   }, [data]);
+  const style = {
+    height: wrapHeight ? wrapHeight : height - 45 - 20,
+    overflow: "auto"
+  };
   return (
     <ListView
-      style={{
-        height: wrapHeight ? wrapHeight : height - 45 - 20,
-        overflow: "auto"
-      }}
+      style={style}
       dataSource={dataSource}
       renderRow={renderRow}
       initialListSize={size}
