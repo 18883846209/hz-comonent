@@ -17,11 +17,6 @@ const TITLE = [
   { key: "备注", value: "remarks" }
 ];
 
-/** 时间处理 */
-const getTime = (start, end) => {
-  return `${moment(start).format("YY-MM-DD HH:mm:ss")} ~ ${moment(end).format("YY-MM-DD HH:mm:ss")}`;
-};
-
 /** 布控区域 */
 const executeArea = (ids = "") => {
   const list = ids ? ids.split(";") : [];
@@ -47,13 +42,6 @@ const executeType = (type = 1) => {
   return typeStr;
 };
 
-/** 布控目标 */
-const executeTarget = (nameList = []) => {
-  const names = nameList.map(data => data.tab_name);
-  const nameStr = names.join(",");
-  return nameStr;
-};
-
 function getContentList(data) {
   const { device_ids, disposition_target_type, tabs, describe } = data;
   const oData = {
@@ -61,11 +49,12 @@ function getContentList(data) {
     position: `${executeArea(device_ids)}个监控点`,
     types: executeType(disposition_target_type),
     target: tabs,
-    remarks: describe
+    remarks: describe,
+    showLink: `${executeArea(device_ids)}` !== "0"
   };
 
   return TITLE.map(item => {
-    return { key: item.key, value: oData[item.value], img: item.value };
+    return { key: item.key, value: oData[item.value], img: item.value, showLink: oData.showLink };
   });
 }
 
@@ -121,7 +110,9 @@ const ExecuteDetails = ({ item }) => {
                           })
                       : () => {}
                   }
-                  className={data.key === "区域" ? classNames(styles.link, styles.value) : styles.value}
+                  className={
+                    data.key === "区域" && data.showLink ? classNames(styles.link, styles.value) : styles.value
+                  }
                 >
                   {data.value}
                 </div>
