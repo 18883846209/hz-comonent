@@ -43,13 +43,14 @@ const executeType = (type = 1) => {
 };
 
 function getContentList(data) {
-  const { device_ids, disposition_target_type, tabs, describe } = data;
+  const { device_ids, disposition_target_type, tabs, describe, threshold } = data;
   const oData = {
     ...data,
     position: `${executeArea(device_ids)}个监控点`,
     types: executeType(disposition_target_type),
     target: tabs,
     remarks: describe,
+    threshold: `≥${threshold}%`,
     showLink: `${executeArea(device_ids)}` !== "0"
   };
 
@@ -62,10 +63,11 @@ const ExecuteDetails = ({ item }) => {
   const [imgUrl, setImgUrl] = useState(`${item.subscribe_status}` === "0" ? "subscribe" : "cancel_subscribed");
 
   const subscribeHandler = action => {
+    const { server = "" } = window.hzConfig;
     subscribe({
       action,
       disposition_id: item.disposition_id
-    }).then(result => {
+    }, server).then(result => {
       setImgUrl(action ? "cancel_subscribed" : "subscribe");
     });
   };
@@ -105,7 +107,7 @@ const ExecuteDetails = ({ item }) => {
                             pathname: "/deviceList",
                             query: {
                               disposition_id: item.disposition_id,
-                              device_ids: item.device_ids
+                              device_ids: item.device_ids.split(';')
                             }
                           })
                       : () => {}

@@ -38,7 +38,8 @@ const Devices = () => {
   const [data, seetData] = useState([]);
 
   useEffect(() => {
-    request("http://192.168.111.231:8080//disposition/devices", {method: "POST"}).then(res => {
+    const { server = "" } = window.hzConfig;
+    request(`${server}/disposition/devices`, {method: "POST"}).then(res => {
       console.log(res);
     })
   });

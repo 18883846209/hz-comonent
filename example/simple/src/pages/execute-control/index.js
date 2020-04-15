@@ -67,6 +67,7 @@ function ExecuteList(props) {
 
   /** 添加取消订阅 action(0：取消订阅，1：订阅) */
   const subscribeHandler = (id, action, e) => {
+    const { server = "" } = window.hzConfig;
     if (e && e.stopPropagation) e.stopPropagation();
     else window.event.cancelBubble = true;
     setCurrentId(id);
@@ -74,7 +75,7 @@ function ExecuteList(props) {
     subscribe({
       action,
       disposition_id: id
-    }).then(result => {
+    }, server).then(result => {
       action && setShowImg(true);
       action && setTimeout(() => setShowImg(false), 1000);
       const j = executeList.length;
@@ -95,7 +96,8 @@ function ExecuteList(props) {
   /** 获取布控列表 */
   const queryExecuteList = (params, isDown) => {
     // !isDown && setLoading(true);
-    getExecuteList(params).then(result => {
+    const { server = "" } = window.hzConfig;
+    getExecuteList(params, server).then(result => {
       setLoading(false);
       const { data: dataObj, code, message } = result;
       if (code !== "0000") return Toast.info(message, 2, null);
@@ -183,7 +185,7 @@ function ExecuteList(props) {
         </div>
       ) : (
         <div style={{ height: "calc(100vh - 90px)", overflow: "hidden" }}>
-          <PullToRefresh onRefresh={refresh} damping={30} indicator={{ release: <Loading /> }}>
+          <PullToRefresh onRefresh={refresh} damping={30}>
             <EmptyNoDataPage />
           </PullToRefresh>
         </div>
