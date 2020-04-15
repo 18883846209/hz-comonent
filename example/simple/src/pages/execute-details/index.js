@@ -43,13 +43,14 @@ const executeType = (type = 1) => {
 };
 
 function getContentList(data) {
-  const { device_ids, disposition_target_type, tabs, describe } = data;
+  const { device_ids, disposition_target_type, tabs, describe, threshold } = data;
   const oData = {
     ...data,
     position: `${executeArea(device_ids)}个监控点`,
     types: executeType(disposition_target_type),
     target: tabs,
     remarks: describe,
+    threshold: `≥${threshold}%`,
     showLink: `${executeArea(device_ids)}` !== "0"
   };
 
