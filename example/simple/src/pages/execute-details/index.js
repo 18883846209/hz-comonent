@@ -62,10 +62,11 @@ const ExecuteDetails = ({ item }) => {
   const [imgUrl, setImgUrl] = useState(`${item.subscribe_status}` === "0" ? "subscribe" : "cancel_subscribed");
 
   const subscribeHandler = action => {
+    const { server = "" } = window.hzConfig;
     subscribe({
       action,
       disposition_id: item.disposition_id
-    }).then(result => {
+    }, server).then(result => {
       setImgUrl(action ? "cancel_subscribed" : "subscribe");
     });
   };

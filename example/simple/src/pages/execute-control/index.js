@@ -185,7 +185,7 @@ function ExecuteList(props) {
         </div>
       ) : (
         <div style={{ height: "calc(100vh - 90px)", overflow: "hidden" }}>
-          <PullToRefresh onRefresh={refresh} damping={30} indicator={{ release: <Loading /> }}>
+          <PullToRefresh onRefresh={refresh} damping={30}>
             <EmptyNoDataPage />
           </PullToRefresh>
         </div>

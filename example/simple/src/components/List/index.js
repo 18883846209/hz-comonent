@@ -49,7 +49,7 @@ const VirtualizedList = props => {
       pageSize={size}
       scrollRenderAheadDistance={500} // 当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
       scrollEventThrottle={20} // 控制在滚动过程中，scroll事件被调用的频率
-      pullToRefresh={!isRefresh ? null : <PullToRefresh indicator={{ release: <Loading /> }} damping={30} refreshing={refreshing} onRefresh={onRefresh} />}
+      pullToRefresh={!isRefresh ? null : <PullToRefresh damping={30} refreshing={refreshing} onRefresh={onRefresh} />}
     />
   );
   return <List className={classnames(styles.list, className)}>{children}</List>;
