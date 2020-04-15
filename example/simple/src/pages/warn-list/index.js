@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import router from "next/router";
 import dynamic from "next/dynamic";
-import { Toast } from "antd-mobile";
+import { Toast, PullToRefresh } from "antd-mobile";
 import WarnItem from "@/components/WarnItem";
 import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
 import { memoTransition } from "@/components/MemoTransition";
@@ -58,6 +58,8 @@ const Index = observer(() => {
     } catch (e) {
       setData([]);
       setLoading(false);
+      setRefreshing(false);
+      onEndReached(false);
     }
   }
   function refresh() {
@@ -85,7 +87,9 @@ const Index = observer(() => {
   return loading ? (
     <LoadingPage />
   ) : !data.length ? (
-    <EmptyNoDataPage />
+    <PullToRefresh damping={30} refreshing={refreshing} onRefresh={refresh}>
+      <EmptyNoDataPage />
+    </PullToRefresh>
   ) : (
     <div className={styles.main}>
       <List

@@ -22,19 +22,21 @@ const VirtualizedList = props => {
     rowHasChanged: (row1, row2) => row1 !== row2
   });
   const [dataSource, setData] = useState(ds.cloneWithRows(data));
-  const [height, setHeight] = useState(document.documentElement.clientHeight);
+  const [height, setHeight] = useState(602);
   useEffect(() => {
     setData(ds.cloneWithRows(data));
-    // setTimeout(() => {
-    //   setHeight(height - ReactDOM.findDOMNode(listRef.current).offsetTop);
-    // }, 50);
+    setTimeout(() => {
+      const h = document.documentElement.clientHeight;
+      setHeight(h);
+    }, 0);
   }, [data]);
+  const style = {
+    height: wrapHeight ? wrapHeight : height - 45 - 20,
+    overflow: "auto"
+  };
   return (
     <ListView
-      style={{
-        height: wrapHeight ? wrapHeight : height - 45 - 20,
-        overflow: "auto"
-      }}
+      style={style}
       dataSource={dataSource}
       renderRow={renderRow}
       initialListSize={size}
