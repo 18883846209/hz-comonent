@@ -105,7 +105,7 @@ const ExecuteDetails = ({ item }) => {
                             pathname: "/deviceList",
                             query: {
                               disposition_id: item.disposition_id,
-                              device_ids: item.device_ids
+                              device_ids: item.device_ids.split(';')
                             }
                           })
                       : () => {}
