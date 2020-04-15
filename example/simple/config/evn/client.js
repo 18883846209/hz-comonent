@@ -29,20 +29,19 @@ const base = {
   appConfig: {
     callName: "hzAppCallFn",
     callAndroid: "android"
-  }
+  },
+  server: "http://192.168.111.231:8080",
+  websocket: "http://192.168.120.240:8080"
 };
 
 module.exports = {
   development: {
     ...base,
     host: "127.0.0.1",
-    wx_debug: false,
-    server: "http://192.168.100.127:8080",
-    websocket: "http://192.168.120.240:8080"
+    wx_debug: false
   },
   production: {
     ...base,
-    host: "0.0.0.0",
-    server: "http://192.168.100.127:8080"
+    host: "0.0.0.0"
   }
 }[process.env.NODE_ENV || "development"];
