@@ -1,9 +1,9 @@
 /*
  * @Aurhor: dengsha
  * @Date: 2020-04-09 10:27:57
- * @LastEditors: zhangjie
+ * @LastEditors: dengsha
  * @Description: 图片浏览器
- * @LastEditTime: 2020-04-13 14:34:50
+ * @LastEditTime: 2020-04-16 10:22:23
  */
 
 /**
@@ -21,6 +21,7 @@
 import React, { useState, useEffect } from "react";
 import { PhotoSlider } from "react-photo-view";
 import "react-photo-view/dist/index.css";
+import PropTypes from "prop-types";
 
 const ImageViewer = props => {
   const { visible, defaultIndex, sources } = props;
@@ -37,6 +38,13 @@ const ImageViewer = props => {
       onIndexChange={setPhotoIndex}
     />
   );
+};
+
+ImageViewer.propTypes = {
+  sources: PropTypes.array,//图片数据源
+  defaultIndex: PropTypes.number, //默认打开图片的index
+  visible: PropTypes.bool,//是否打开图片浏览器
+  onClose: PropTypes.func, //关闭的回调方法
 };
 
 export default ImageViewer;
