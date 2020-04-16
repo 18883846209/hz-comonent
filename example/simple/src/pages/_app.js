@@ -21,18 +21,18 @@ const TIMEOUT = 400;
 const NEXT_CSS_FILE = "/_next/static/css/styles.chunk.css";
 
 // Router.events.on("routeChangeStart", () => NProgress.start());
-// Router.events.on("routeChangeComplete", () => {
-//   // 下面代码为了解决dev模式下路由跳转时的缓存问题
-//   if (process.env.NODE_ENV !== "production") {
-//     const els = document.querySelectorAll(`link[href*="${NEXT_CSS_FILE}"][rel="stylesheet"]`);
-//     const timestamp = new Date().valueOf();
-//     if (els[0]) {
-//       els[0].href = `${NEXT_CSS_FILE}?v=${timestamp}`;
-//     }
-//   }
+Router.events.on("routeChangeComplete", () => {
+  // 下面代码为了解决dev模式下路由跳转时的缓存问题
+  if (process.env.NODE_ENV !== "production") {
+    const els = document.querySelectorAll(`link[href*="${NEXT_CSS_FILE}"][rel="stylesheet"]`);
+    const timestamp = new Date().valueOf();
+    if (els[0]) {
+      els[0].href = `${NEXT_CSS_FILE}?v=${timestamp}`;
+    }
+  }
 
-//   NProgress.done();
-// });
+  //   NProgress.done();
+});
 // Router.events.on("routeChangeError", () => NProgress.done());
 
 export default class extends App {
