@@ -4,6 +4,7 @@ import styles from "@/styles/executeControl/index.less";
 import Filter from "@/components/Filter";
 import { memoTransition } from "@/components/MemoTransition";
 import { filterDataList } from "@/utils/data";
+import { setStore, getStore } from "@/utils/localStorage"
 import { getExecuteList, subscribe } from "@/services/executeControl";
 import Lists from "@/components/List";
 import Loading from '@/components/PullLoading';
@@ -15,12 +16,12 @@ const Mask = () => {
   const [isFirst, setIsFirst] = useState(false);
 
   useEffect(() => {
-    const first = window.localStorage.getItem("isFirst");
-    if (first === "1") {
+    const first = getStore("isFirst")
+    if (first === 1) {
       setIsFirst(false);
     } else {
       setIsFirst(true);
-      window.localStorage.setItem("isFirst", "1");
+      setStore("isFirst", 1);
     }
   }, []);
 
@@ -40,7 +41,7 @@ function ExecuteList(props) {
   const [refreshing, setRefreshing] = useState(false);
   const [footLoading, onEndReached] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [imgUrl, setImgUrl] = useState("addSubscribe.png");
+  const [imgUrl, setImgUrl] = useState("add_subscribe.png");
   const [showImg, setShowImg] = useState(false);
   const [executeList, setExecuteList] = useState([]);
   const [currentId, setCurrentId] = useState("");
@@ -86,10 +87,8 @@ function ExecuteList(props) {
           break;
         }
       }
-      console.log(executeList);
       setExecuteList(executeList);
       setCurrentId("");
-      // queryExecuteList(params);
     });
   };
 
@@ -112,10 +111,10 @@ function ExecuteList(props) {
 
   /** 点击图处理 status(0: 已订阅 1：未订阅 2：订阅动画 3：取消动画 4: 订阅失败) */
   const changeImgUrl = status => {
-    let imgUrl = "addSubscribe.png";
+    let imgUrl = "add_subscribe.png";
     switch (status) {
       case 0:
-        imgUrl = "addSubscribe.png";
+        imgUrl = "add_subscribe.png";
         break;
       case 1:
         imgUrl = "subscribed_small.png";

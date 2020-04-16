@@ -5,6 +5,7 @@ import router from "next/router";
 import { getRedirectStatus, getRedirectType } from "@/utils/common";
 import { getCalculateTime } from "@/utils/utils";
 import { subscribe } from "@/services/executeControl";
+import PropTypes from "prop-types";
 import classNames from "classnames";
 import { useState } from "react";
 
@@ -149,11 +150,11 @@ const ExecuteDetails = ({ item }) => {
   );
 };
 
-ExecuteDetails.getInitialProps = async () => {
-  return {};
-};
-
 ExecuteDetails.getInitialProps = async ({ query }) => {
   return { item: query };
+};
+
+ExecuteDetails.propTypes = {
+  item: PropTypes.object
 };
 export default ExecuteDetails;
