@@ -68,7 +68,6 @@ const DeviceList = () => {
         datas.length > 0 ? (
           <List
             data={datas}
-            refresh={false}
             isRefresh={false}
             renderFooter={
               <div style={{ height: 10, textAlign: "center" }} />
