@@ -12,7 +12,7 @@ class Home extends React.Component {
   render() {
     const { warnStore } = this.props;
     return (
-      <div className="container">
+      <div className={styles.container}>
         <div className={styles.top}>
           <img className={styles.about} onClick={() => router.push("/about")} src="/static/2x/about.png" alt="" />
         </div>

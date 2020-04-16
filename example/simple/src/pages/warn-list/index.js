@@ -99,7 +99,7 @@ const Index = observer(() => {
         refresh={refreshing}
         onRefresh={refresh}
         renderRow={renderRow}
-      ></List>
+      />
     </div>
   );
 });

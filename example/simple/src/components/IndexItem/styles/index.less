@@ -2,7 +2,8 @@
 
 .wrap {
   position: relative;
-  width: calc(50vw - 37.5px);
+  // width: calc(50vw - 37.5px);
+  width: calc((100vw - 60px - 15px) / 2);
   text-align: center;
   height: 191px;
   background: #ffffff;
@@ -45,35 +46,5 @@
       color: #999999;
       font-size: 12px;
     }
-  }
-}
-
-.container {
-  position: relative;
-  text-align: center;
-  width: 50%;
-  overflow: auto;
-  display: inline-block;
-  vertical-align: top;
-  .wrap {
-    position: relative;
-    height: 191px;
-    background: #ffffff;
-    border: 1px solid #e6e6e6;
-    box-shadow: 0 0 14px 0 rgba(176, 207, 255, 0.5);
-    border-radius: 6px;
-    .text {
-      padding-top: 50px;
-    }
-    .flag {
-      position: absolute;
-      right: 5px;
-      top: 10px;
-      color: @brand-flag;
-      font-size: 10px;
-    }
-  }
-  .icon {
-    margin: 0 auto;
   }
 }
