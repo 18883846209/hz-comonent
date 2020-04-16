@@ -30,7 +30,7 @@ const DeviceList = () => {
     };
     request(`${server}/disposition/devices`, object).then(res => {
       setLoading(false);
-      if (!res.code || res.code.slice(-4) != "0000") {
+      if (!res.code || res.code != "0000") {
         setSuccess(false);
       } else {
         setSuccess(true);
