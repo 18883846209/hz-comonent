@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { PullToRefresh, ListView } from "antd-mobile";
-// import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
-import Loading from '@/components/PullLoading';
+import Loading from "@/components/PullLoading";
 import styles from "./styles/index.less";
 
 const VirtualizedList = props => {
@@ -40,8 +39,8 @@ const VirtualizedList = props => {
       dataSource={dataSource}
       renderRow={renderRow}
       initialListSize={size}
-      renderFooter={() =>
-        renderFooter ? renderFooter : <div style={{ textAlign: "center" }}>{loading ? "加载中..." : null}</div>
+      renderFooter={
+        renderFooter ? renderFooter : () => <div style={{ textAlign: "center" }}>{loading ? "加载中..." : null}</div>
       }
       onEndReached={onEndReached}
       onEndReachedThreshold={10}
@@ -49,7 +48,16 @@ const VirtualizedList = props => {
       pageSize={size}
       scrollRenderAheadDistance={500} // 当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
       scrollEventThrottle={20} // 控制在滚动过程中，scroll事件被调用的频率
-      pullToRefresh={!isRefresh ? null : <PullToRefresh damping={30} refreshing={refreshing} onRefresh={onRefresh} />}
+      pullToRefresh={
+        !isRefresh ? null : (
+          <PullToRefresh
+            indicator={{ activate: <Loading />, release: <Loading /> }}
+            damping={30}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        )
+      }
     />
   );
   return <List className={classnames(styles.list, className)}>{children}</List>;
