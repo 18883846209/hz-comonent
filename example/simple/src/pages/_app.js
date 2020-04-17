@@ -1,13 +1,10 @@
 import App from "next/app";
 import React from "react";
-import NProgress from "nprogress";
 import Router from "next/router";
 import Head from "next/head";
-// import { PageTransition } from "next-page-transitions";
 import getConfig from "next/config";
 
 import { InjectStoreContext } from "@/contexts/store";
-import Loader from "@/components/Loader";
 
 import "@/styles/common/reset.less";
 import "@/styles/common/nprogress.less";
@@ -16,11 +13,8 @@ import Layout from "@/components/Layout";
 
 const { publicRuntimeConfig } = getConfig();
 
-const TIMEOUT = 400;
-
 const NEXT_CSS_FILE = "/_next/static/css/styles.chunk.css";
 
-// Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => {
   // 下面代码为了解决dev模式下路由跳转时的缓存问题
   if (process.env.NODE_ENV !== "production") {
@@ -30,10 +24,7 @@ Router.events.on("routeChangeComplete", () => {
       els[0].href = `${NEXT_CSS_FILE}?v=${timestamp}`;
     }
   }
-
-  //   NProgress.done();
 });
-// Router.events.on("routeChangeError", () => NProgress.done());
 
 export default class extends App {
   componentDidMount() {
@@ -95,20 +86,7 @@ if ('addEventListener' in document) {
         </Head>
         <InjectStoreContext initialData={initialStoreData}>
           <Layout router={router}>
-            {/* <PageTransition
-              timeout={TIMEOUT}
-              classNames="next-page-transitions"
-              // skipInitialTransition
-              loadingDelay={500}
-              loadingComponent={<Loader />}
-              loadingTimeout={{
-                enter: TIMEOUT,
-                exit: 0
-              }}
-              loadingClassNames="next-page-transitions-loading"
-            > */}
             <Component {...pageProps} key={router.route} />
-            {/* </PageTransition> */}
           </Layout>
         </InjectStoreContext>
       </>

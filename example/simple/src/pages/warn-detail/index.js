@@ -74,7 +74,7 @@ const Detail = ({ item = {} }) => {
         <Item
           src="/static/3x/detail_time.png"
           name="时间"
-          value={getCalculateTime(Number(item.notification_time), false, false)}
+          value={getCalculateTime(item.notification_time, false, false)}
         />
         <Item src="/static/3x/detail_position.png" name="位置" value={item.device_name || ""} />
       </div>

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import router from "next/router";
 import dynamic from "next/dynamic";
 import { Toast, PullToRefresh } from "antd-mobile";
-import WarnItem from "@/components/WarnItem";
-import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
-import { memoTransition } from "@/components/MemoTransition";
 import { observer } from "mobx-react";
 import request from "@/utils/request";
 import useStores from "@/hooks/useStores";
+import WarnItem from "@/components/WarnItem";
+import globalConfig from "@/utils/getConfig";
+import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
 import styles from "./styles/index.less";
 const List = dynamic(import("@/components/List"), {
   ssr: false
@@ -40,7 +40,7 @@ const Index = observer(() => {
   }
 
   async function getList(page_num = 1, page_size = pageSize) {
-    const { server = "" } = window.hzConfig;
+    const { server = "" } = globalConfig;
     try {
       const res = await request(`${server}/notification/face/list`, {
         method: "POST",
@@ -104,4 +104,4 @@ const Index = observer(() => {
   );
 });
 
-export default memoTransition(Index);
+export default Index;
