@@ -43,9 +43,9 @@ const DeviceList = () => {
   const renderRow = (item, i) => {
     let imgPic = "";
     if (item.status == 1) {
-      imgPic = "/static/2x/device_on.png";
+      imgPic = "/static/3x/device_on.png";
     } else {
-      imgPic = "/static/2x/deivce_off.png";
+      imgPic = "/static/3x/device_off.png";
     }
     return (
       <div className={styles.cardDiv}>
