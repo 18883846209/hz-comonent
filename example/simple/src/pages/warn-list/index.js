@@ -8,7 +8,7 @@ import useStores from "@/hooks/useStores";
 import WarnItem from "@/components/WarnItem";
 import globalConfig from "@/utils/getConfig";
 import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
-import styles from "./styles/index.less";
+import styles from "@/styles/warn/list.less";
 const List = dynamic(import("@/components/List"), {
   ssr: false
 });

@@ -5,7 +5,7 @@ import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
 import { Progress, Card } from "@/components/WarnComponents";
 import ImageViewer from "@/components/ImageViewer";
 import { getCalculateTime } from "@/utils/utils";
-import styles from "./styles/index.less";
+import styles from "@/styles/warn/detail.less";
 
 const Item = ({ name, value, src }) => (
   <div className={styles.wrap}>
@@ -68,15 +68,15 @@ const Detail = ({ item = {} }) => {
         </div>
       </div>
       <div className={styles.bottom}>
-        <Item src="/static/3x/detail_sex.png" name="性别" value={changeSex(item.gender)} />
-        <Item src="/static/3x/detail_card.png" name="身份证号" value={item.certificate_id || ""} />
-        <Item src="/static/3x/detail_disposition.png" name="布控名单" value={item.face_library_name || ""} />
+        <Item src="/static/warn/detail_sex@3x.png" name="性别" value={changeSex(item.gender)} />
+        <Item src="/static/warn/detail_card@3x.png" name="身份证号" value={item.certificate_id || ""} />
+        <Item src="/static/warn/detail_disposition@3x.png" name="布控名单" value={item.face_library_name || ""} />
         <Item
-          src="/static/3x/detail_time.png"
+          src="/static/warn/detail_time@3x.png"
           name="时间"
           value={getCalculateTime(item.notification_time, false, false)}
         />
-        <Item src="/static/3x/detail_position.png" name="位置" value={item.device_name || ""} />
+        <Item src="/static/warn/detail_position@3x.png" name="位置" value={item.device_name || ""} />
       </div>
     </div>
   );

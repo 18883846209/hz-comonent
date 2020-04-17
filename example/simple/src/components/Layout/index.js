@@ -19,11 +19,22 @@ const routes = {
   "/about": "关于"
 };
 
-const Base = observer(({ children, showBack = true }) => {
-  const router = useRouter();
+const isHome = router => {
+  return router.pathname === "/";
+};
+
+const goBack = router => {
+  if (!isHome(router)) {
+    router.back();
+  } else {
+    router.replace("/");
+  }
+};
+
+const Base = observer(({ children }) => {
   const { warnStore } = useStores();
   const { newsFlag } = warnStore;
-  const home = router.pathname === "/";
+  const router = useRouter();
   useEffect(() => {
     const { websocket = "" } = globalConfig;
     let stomp;
@@ -40,25 +51,18 @@ const Base = observer(({ children, showBack = true }) => {
       stomp && stomp.over();
     };
   }, []);
-  function onBack() {
-    if (!home) {
-      router.back();
-    } else {
-      router.replace("/");
-    }
-  }
-  const LeftContent = showBack && !home ? <Icon type="left" /> : null;
+  const LeftContent = !isHome(router) ? <Icon type="left" /> : null;
   const Title = () => (
     <div className={styles.title}>
       {routes[router.pathname] || ""}
       {newsFlag && router.pathname === "/warn-list" ? <span className={styles.flag}>●</span> : null}
     </div>
   );
-  return home ? (
+  return isHome(router) ? (
     <div className={styles.main}>{children}</div>
   ) : (
     <div className={styles.nav}>
-      <NavBar mode="dark" leftContent={LeftContent} onLeftClick={onBack}>
+      <NavBar mode="dark" leftContent={LeftContent} onLeftClick={() => goBack(router)}>
         <Title />
       </NavBar>
       <div className={styles.main} style={{ height: "calc(100vh - 45px)" }}>
