@@ -59,7 +59,7 @@ const Base = observer(({ children }) => {
     </div>
   );
   return isHome(router) ? (
-    <div className={styles.main}>{children}</div>
+    <div>{children}</div>
   ) : (
     <div className={styles.nav}>
       <NavBar mode="dark" leftContent={LeftContent} onLeftClick={() => goBack(router)}>

@@ -15,18 +15,23 @@ const Home = observer(() => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <img className={styles.about} onClick={() => routeChange(routes.about)} src="/static/2x/about.png" alt="" />
+        <img
+          className={styles.about}
+          onClick={() => routeChange(routes.about)}
+          src="/static/images/home/about@3x.png"
+          alt=""
+        />
       </div>
       <div className={styles.content}>
         <Item
-          icon="static/2x/disposition.png"
+          icon="static/images/home/disposition@3x.png"
           className={styles.item}
           name="人像布控"
           value="Portra"
           onClick={() => routeChange(routes.executeControl)}
         />
         <Item
-          icon="static/2x/warn.png"
+          icon="static/images/home/warn@3x.png"
           className={styles.item}
           flag={newsFlag}
           value="Alarm"
@@ -35,7 +40,7 @@ const Home = observer(() => {
         />
       </div>
       <div className={styles.bottom}>
-        <img className={styles.icon} src="/static/2x/more.png" alt="" />
+        <img className={styles.icon} src="/static/images/home/more@3x.png" alt="" />
         <div className={styles.more}>更多内容,敬请期待</div>
       </div>
     </div>

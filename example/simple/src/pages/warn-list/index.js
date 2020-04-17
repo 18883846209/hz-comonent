@@ -50,11 +50,12 @@ const Index = observer(() => {
         }
       });
       setLoading(false);
-      if (!res || res.message !== "success") {
-        Toast.info(res.message || "未获取到数据", 2, null);
+      console.log(res);
+      if (!res.isSuccess || res.res.message) {
+        Toast.info(res.res.message || "未获取到数据", 2, null);
+        return {};
       }
-      if (!res || !res.data) return {};
-      return res.data;
+      return res.res.data;
     } catch (e) {
       setData([]);
       setLoading(false);
