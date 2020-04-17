@@ -25,9 +25,9 @@ const Base = observer(({ children, showBack = true }) => {
   const { newsFlag } = warnStore;
   const home = router.pathname === "/";
   useEffect(() => {
-    const { server = "" } = globalConfig;
+    const { websocket = "" } = globalConfig;
     let stomp;
-    socket(`${server}/endpointWisely`).then(stomp => {
+    socket(`${websocket}/endpointWisely`).then(stomp => {
       stomp = stomp;
       stomp.connect({}, () => {
         stomp.subscribe(`/user/${getCookie("userCode")}/alarm_face`, () => {
