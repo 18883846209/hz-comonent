@@ -4,6 +4,7 @@ import moment from "moment";
 import router from "next/router";
 import { getRedirectStatus, getRedirectType } from "@/utils/common";
 import { getCalculateTime } from "@/utils/utils";
+import routes from "@/routes";
 import { subscribe } from "@/services/executeControl";
 import PropTypes from "prop-types";
 import classNames from "classnames";
@@ -105,7 +106,7 @@ const ExecuteDetails = ({ item }) => {
                     data.key === "区域"
                       ? () =>
                           router.push({
-                            pathname: "/deviceList",
+                            pathname: routes.deviceList.path,
                             query: {
                               disposition_id: item.disposition_id,
                               device_ids: item.device_ids.split(';')
