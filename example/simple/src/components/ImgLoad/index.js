@@ -23,6 +23,7 @@ const LoadImg = ({ src, width = 160, height = 160 }) => {
   const initUrl = map[`ratio_${getRatio(width, height)}_load`];
   const errorUrl = map[`ratio_${getRatio(width, height)}_error`];
   const [url, setUrl] = useState(initUrl);
+  console.log(url);
   useEffect(() => {
     const img = new Image();
     img.onload = () => {

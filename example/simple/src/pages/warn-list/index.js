@@ -26,7 +26,8 @@ const Index = observer(() => {
   const { warnStore } = useStores();
   useEffect(() => {
     getList().then(res => {
-      setData(parseData(res));
+      // setData(parseData(res));
+      setData([{}, {}]);
     });
     return () => {
       Toast.hide();

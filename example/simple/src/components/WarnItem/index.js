@@ -21,8 +21,8 @@ const Warn = ({ onClick, item = {}, style }) => {
         </div>
         <div className={styles.bottom}>
           <Flex>
-            <Card url={item.captured_image_url} className={styles.img} text="抓拍照" />
-            <Card url={item.target_image_url} text="布控照" />
+            <Card url={item.captured_image_url} width={136} height={182} className={styles.img} text="抓拍照" />
+            <Card url={item.target_image_url} width={136} height={182} text="布控照" />
             <div className={styles.right}>
               <div className={styles.desc}>
                 <Item src="/static/warn/list_name@3x.png" desc={item.face_disposition_name || ""} />
