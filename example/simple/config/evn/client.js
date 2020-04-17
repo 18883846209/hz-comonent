@@ -31,7 +31,7 @@ const base = {
     callAndroid: "android"
   },
   server: "http://192.168.111.231:8080",
-  websocket: "http://192.168.120.240:8080"
+  websocket: "http://192.168.111.231:8080"
 };
 
 module.exports = {
