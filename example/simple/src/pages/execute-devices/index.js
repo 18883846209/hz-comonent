@@ -4,6 +4,8 @@ import styles from "@/styles/executeDevices/index.less";
 import request from "@/utils/request";
 import globalConfig from "@/utils/getConfig";
 import dynamic from "next/dynamic";
+import device_on from "@/assets/images/execute/device_on@3x.png";
+import device_off from "@/assets/images/execute/device_off@3x.png";
 import { EmptyFailedPage, EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage/index";
 
 const List = dynamic(import("@/components/List"), {
@@ -31,11 +33,11 @@ const DeviceList = () => {
     };
     request(`${server}/disposition/devices`, object).then(res => {
       setLoading(false);
-      if (!res.code || res.code != "0000") {
-        setSuccess(false);
-      } else {
+      if (res.isSuccess) {
         setSuccess(true);
-        setData(res.data);
+        setData(res.res || []);
+      } else {
+        setSuccess(false);
       }
     });
   }
@@ -44,9 +46,9 @@ const DeviceList = () => {
   const renderRow = (item, i) => {
     let imgPic = "";
     if (item.status == 1) {
-      imgPic = "/static/3x/device_on.png";
+      imgPic = device_on;
     } else {
-      imgPic = "/static/3x/device_off.png";
+      imgPic = device_off;
     }
     return (
       <div className={styles.cardDiv}>

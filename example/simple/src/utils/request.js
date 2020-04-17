@@ -27,12 +27,12 @@ function parseResponse(response) {
   throw new Error("请定义返回数据类型");
 }
 
-function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return parseResponse(response);
-  }
-  return response;
-}
+// function checkStatus(response) {
+//   if (response.status >= 200 && response.status < 300) {
+//     return parseResponse(response);
+//   }
+//   return response;
+// }
 
 const initOptions = {
   // 跨域设置 cors, no-cors, same-origin, navigate
@@ -76,6 +76,45 @@ export default function request(url, options = {}) {
       throw error;
     });
 }
+
+// 根据返回HTTP代码来分组返回数据
+const checkStatus = response => {
+  const responseData = {};
+  if (response.status >= 200 && response.status < 300) {
+    return new Promise(resolve => {
+      // 成功
+      response.text().then(text => {
+        responseData.isSuccess = true;
+        if (text) {
+          try {
+            const JsonData = JSON.parse(text);
+            responseData.res = JsonData;
+            resolve(responseData);
+          } catch (error) {
+            responseData.isSuccess = false;
+            responseData.res = { message: '接口数据错误' };
+            resolve(responseData);
+          }
+        } else {
+          resolve(responseData);
+        }
+      });
+    });
+  }
+  return new Promise(resolve => {
+    // 失败
+    responseData.isSuccess = false;
+    try {
+      response.json().then(err => {
+        responseData.res = err;
+        resolve(responseData);
+      });
+    } catch (error) {
+      responseData.res = error;
+      resolve(responseData);
+    }
+  });
+};
 
 // hz java 接口处理
 export function modelResponse(response = {}) {

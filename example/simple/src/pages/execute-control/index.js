@@ -98,14 +98,27 @@ function ExecuteList(props) {
     const { server = "" } = window.hzConfig;
     getExecuteList(params, server).then(result => {
       setLoading(false);
-      const { data: dataObj, code, message } = result;
-      if (code !== "0000") return Toast.info(message, 2, null);
-      const { data = [], paging } = dataObj;
-      setExecuteList(dataList => {
-        return isDown ? dataList.concat(data) : data;
-      });
-      setRefreshing(false);
-      isDown && onEndReached(false);
+      const { res } = result;
+      if (result.isSuccess) {
+        const { data = [], paging } = res;
+        setExecuteList(dataList => {
+          return isDown ? dataList.concat(data) : data;
+        });
+        setRefreshing(false);
+        isDown && onEndReached(false);
+      } else {
+        return Toast.info(res.message, 2, null);
+      }
+
+
+      // const { data: dataObj, code, message } = result;
+      // if (code !== "0000") return Toast.info(message, 2, null);
+      // const { data = [], paging } = dataObj;
+      // setExecuteList(dataList => {
+      //   return isDown ? dataList.concat(data) : data;
+      // });
+      // setRefreshing(false);
+      // isDown && onEndReached(false);
     });
   };
 
