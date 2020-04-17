@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import router from "next/router";
 import styles from "./styles/index.less";
 import request from "@/utils/request";
+import globalConfig from "@/utils/getConfig";
 import dynamic from "next/dynamic";
 import { EmptyFailedPage, EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage/index";
 
@@ -23,7 +24,7 @@ const DeviceList = () => {
 
   async function getData() {
     setLoading(true);
-    const { server = "" } = window.hzConfig;
+    const { server = "" } = globalConfig;
     const object = {
       body: params,
       method: "POST"
@@ -36,7 +37,7 @@ const DeviceList = () => {
         setSuccess(true);
         setData(res.data);
       }
-    }); 
+    });
   }
 
   //获取item进行展示
@@ -69,9 +70,7 @@ const DeviceList = () => {
           <List
             data={datas}
             isRefresh={false}
-            renderFooter={
-              <div style={{ height: 10, textAlign: "center" }} />
-            }
+            renderFooter={() => <div style={{ height: 10, textAlign: "center" }} />}
             wrapHeight={"calc(100vh - 45px)"}
             renderRow={renderRow}
           />
@@ -86,3 +85,4 @@ const DeviceList = () => {
 };
 
 export default DeviceList;
+
