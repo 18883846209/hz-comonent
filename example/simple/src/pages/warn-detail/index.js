@@ -56,27 +56,47 @@ const Detail = ({ item = {} }) => {
           <Progress percent={Number(item.alarm_score) || 0} />
         </div>
         <div className={styles.center}>
-          <Card onClick={() => viewImage(0)} url={item.target_image_url} text="布控照" className={styles.img} />
-          <Card onClick={() => viewImage(1)} url={item.captured_image_url} text="抓拍照" className={styles.img} />
+          <Card
+            onClick={() => viewImage(0)}
+            width={136}
+            height={182}
+            url={item.target_image_url}
+            text="布控照"
+            className={styles.img}
+          />
+          <Card
+            onClick={() => viewImage(1)}
+            width={136}
+            height={182}
+            url={item.captured_image_url}
+            text="抓拍照"
+            className={styles.img}
+          />
           <Card
             onClick={() => viewImage(2)}
             url={item.captured_full_image}
             text="全景照"
+            width={43}
+            height={24}
             className={styles.full_wrap}
             imgClass={styles.full_img}
           />
         </div>
       </div>
       <div className={styles.bottom}>
-        <Item src="/static/warn/detail_sex@3x.png" name="性别" value={changeSex(item.gender)} />
-        <Item src="/static/warn/detail_card@3x.png" name="身份证号" value={item.certificate_id || ""} />
-        <Item src="/static/warn/detail_disposition@3x.png" name="布控名单" value={item.face_library_name || ""} />
+        <Item src="/static/images/warn/detail_sex@3x.png" name="性别" value={changeSex(item.gender)} />
+        <Item src="/static/images/warn/detail_card@3x.png" name="身份证号" value={item.certificate_id || ""} />
         <Item
-          src="/static/warn/detail_time@3x.png"
+          src="/static/images/warn/detail_disposition@3x.png"
+          name="布控名单"
+          value={item.face_library_name || ""}
+        />
+        <Item
+          src="/static/images/warn/detail_time@3x.png"
           name="时间"
           value={getCalculateTime(item.notification_time, false, false)}
         />
-        <Item src="/static/warn/detail_position@3x.png" name="位置" value={item.device_name || ""} />
+        <Item src="/static/images/warn/detail_position@3x.png" name="位置" value={item.device_name || ""} />
       </div>
     </div>
   );
