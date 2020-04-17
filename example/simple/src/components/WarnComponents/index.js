@@ -1,12 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+import LoadImg from "@/components/ImgLoad";
 import styles from "./styles/index.less";
 
-export const Card = ({ url, text = "", className, imgClass, onClick }) => (
+export const Card = ({ url, text = "", width, height, className, imgClass, onClick }) => (
   <div className={classnames(styles.card, className)} onClick={onClick}>
     <div className={classnames(styles.img, imgClass)}>
-      <img src={url} alt="" />
+      {/* <img src={url} alt="" /> */}
+      <LoadImg src={url} width={width} height={height} />
     </div>
     <div className={styles.text}>{text}</div>
   </div>
