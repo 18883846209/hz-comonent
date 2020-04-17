@@ -16,7 +16,7 @@ export default {
     name: "人像布控列表"
   },
   deviceList: {
-    path: "/deviceList",
+    path: "/execute-devices",
     name: "布控区域"
   },
   executeDetails: {
