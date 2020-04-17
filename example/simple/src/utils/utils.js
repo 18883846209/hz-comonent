@@ -2,8 +2,8 @@
 /* eslint-env browser */
 import moment from "moment";
 
-export function ptToRem(pt) {
-  return `${pt / 50}rem`;
+export function pxToRem(px) {
+  return `${px / 100}rem`;
 }
 
 export function getImg(require1, require2) {

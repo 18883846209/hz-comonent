@@ -1,13 +1,15 @@
+@import "~@styles/mixins/main.less";
 .top {
   position: relative;
   width: 100%;
   height: 527px;
-  background: url("/static/2x/home.png") no-repeat;
+  .bg-image("/static/images/home/home");
+  background-repeat: no-repeat;
   background-size: 100% 100%;
   .about {
     position: absolute;
-    right: 40px;
     top: 40px;
+    right: 40px;
     width: 40px;
     height: 40px;
   }
@@ -21,16 +23,15 @@
   }
 }
 .bottom {
-  text-align: center;
-  margin: 15px 30px 0;
   height: calc(100vh - 527px - 22px - 15px - 191px - 15px);
+  margin: 15px 30px 0;
+  padding-top: calc((100vh - 527px - 22px - 15px - 191px - 15px - 129px - 41px - 20px) / 2);
+  overflow: auto;
+  text-align: center;
   background: #ffffff;
   border: 1px solid #e6e6e6;
-  box-shadow: 0 0 14px 0 rgba(176, 207, 255, 0.5);
   border-radius: 6px;
-  // padding-top: 142px;
-  overflow: auto;
-  padding-top: calc((100vh - 527px - 22px - 15px - 191px - 15px - 129px - 41px - 20px) / 2);
+  box-shadow: 0 0 14px 0 rgba(176, 207, 255, 0.5);
   img {
     width: 129px;
     height: 129px;
@@ -38,7 +39,7 @@
     object-fit: contain;
   }
   .more {
-    font-size: 16px;
     color: #dcdee3;
+    font-size: 16px;
   }
 }
