@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import router from "next/router";
-import styles from "./styles/index.less";
+import styles from "@/styles/executeDevices/index.less";
 import request from "@/utils/request";
 import globalConfig from "@/utils/getConfig";
 import dynamic from "next/dynamic";
