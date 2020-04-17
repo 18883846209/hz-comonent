@@ -9,12 +9,12 @@
   background-color: #fff;
   .mask {
     position: absolute;
-    left: 0;
+    top: 0;
     right: 0;
     bottom: 0;
-    top: 0;
-    background-color: rgba(0, 0, 0, 0.1);
+    left: 0;
     z-index: 11;
+    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 8px;
   }
   &:not(:last-of-type) {
@@ -22,20 +22,20 @@
   }
   .top {
     padding: 30px 30px;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #ddd;
     .left {
       .overflow;
-      color: #333333;
       max-width: 55%;
+      color: #333;
       font-size: 16px;
     }
     .right {
-      color: #999999;
       position: relative;
+      color: #999;
       img {
         position: absolute;
-        left: -40px;
         top: 3px;
+        left: -40px;
         width: 28px;
         height: 28px;
         object-fit: contain;
@@ -46,10 +46,10 @@
     margin: 20px 0 0 0;
     .padding;
     .right {
-      margin: 0 0 0 38px;
-      white-space: normal;
-      line-height: 1.2em;
       flex: 1;
+      margin: 0 0 0 38px;
+      line-height: 1.2em;
+      white-space: normal;
       .desc {
         height: 186px;
       }

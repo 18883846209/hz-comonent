@@ -2,14 +2,14 @@
 @progressBg: #e2e9f1;
 @cardBg: #d8d8d8;
 @textColor: #fff;
-@color: #333333;
+@color: #333;
 .height {
   height: 32px;
   line-height: 32px;
 }
 .card {
-  font-size: 0;
   width: 136px;
+  font-size: 0;
   .img {
     width: 136px;
     height: 182px;
@@ -21,20 +21,20 @@
   }
   .text {
     .height;
-    background-color: @cardBg;
-    text-align: center;
     color: @color;
     font-size: 10px;
+    text-align: center;
+    background-color: @cardBg;
   }
 }
 .progress {
   position: relative;
   width: 100%;
-  background-color: @progressBg;
+  overflow: hidden;
   color: @textColor;
   text-align: center;
+  background-color: @progressBg;
   border-radius: 4px;
-  overflow: hidden;
   .height;
   .num {
     position: absolute;
@@ -67,8 +67,8 @@
     }
   }
   .desc {
-    padding: 0 0 0 1em;
     margin-left: 20px;
+    padding: 0 0 0 1em;
     .overflow-clamps;
   }
 }

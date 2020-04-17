@@ -65,9 +65,7 @@ const Base = observer(({ children }) => {
       <NavBar mode="dark" leftContent={LeftContent} onLeftClick={() => goBack(router)}>
         <Title />
       </NavBar>
-      <div className={styles.main} style={{ height: "calc(100vh - 45px)" }}>
-        {children}
-      </div>
+      <div className={styles.main}>{children}</div>
     </div>
   );
 });
