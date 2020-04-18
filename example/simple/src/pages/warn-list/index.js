@@ -57,8 +57,7 @@ const Index = observer(() => {
   }
   useEffect(() => {
     getList().then(res => {
-      // setData(parseData(res));
-      setData([{}, {}, {}, {}, {}]);
+      setData(parseData(res));
     });
     return () => {
       Toast.hide();
