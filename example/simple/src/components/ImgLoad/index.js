@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./styles/index.less";
@@ -23,7 +24,6 @@ const LoadImg = ({ src, width = 160, height = 160 }) => {
   const initUrl = map[`ratio_${getRatio(width, height)}_load`];
   const errorUrl = map[`ratio_${getRatio(width, height)}_error`];
   const [url, setUrl] = useState(initUrl);
-  console.log(url);
   useEffect(() => {
     const img = new Image();
     img.onload = () => {

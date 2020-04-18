@@ -38,8 +38,8 @@ const Base = observer(({ children }) => {
   useEffect(() => {
     const { websocket = "" } = globalConfig;
     let stomp;
-    socket(`${websocket}/endpointWisely`).then(stomp => {
-      stomp = stomp;
+    socket(`${websocket}/endpointWisely`).then(sock => {
+      stomp = sock;
       stomp.connect({}, () => {
         stomp.subscribe(`/user/${getCookie("userCode")}/alarm_face`, () => {
           warnStore.changeFlag(true);
@@ -48,7 +48,7 @@ const Base = observer(({ children }) => {
     });
 
     return () => {
-      stomp && stomp.over();
+      if (stomp) stomp.over();
     };
   }, []);
   const LeftContent = !isHome(router) ? <Icon type="left" /> : null;

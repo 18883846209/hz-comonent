@@ -40,7 +40,8 @@ const Warn = ({ onClick, item = {}, style }) => {
 Warn.propTypes = {
   onClick: PropTypes.func,
   value: PropTypes.number,
-  style: PropTypes.object
+  style: PropTypes.object,
+  item: PropTypes.object
 };
 
 export default Warn;

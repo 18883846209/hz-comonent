@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import router from "next/router";
 import dynamic from "next/dynamic";
-import { Toast, PullToRefresh } from "antd-mobile";
+import { Toast } from "antd-mobile";
 import { observer } from "mobx-react";
 import request from "@/utils/request";
 import useStores from "@/hooks/useStores";
 import WarnItem from "@/components/WarnItem";
 import globalConfig from "@/utils/getConfig";
-import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
+import Empty from "@/components/Empty";
+import routes from "@/routes";
 import styles from "@/styles/warn/list.less";
+
 const List = dynamic(import("@/components/List"), {
   ssr: false
 });
@@ -17,28 +19,19 @@ const parseData = res => {
   if (!res || !res.data) return [];
   return res.data;
 };
+const goDetail = (query, _router) => {
+  _router.push({
+    pathname: routes.warnDetail.path,
+    query
+  });
+};
 const Index = observer(() => {
   const [refreshing, setRefreshing] = useState(false);
   const [footLoading, onEndReached] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  let [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
   const { warnStore } = useStores();
-  useEffect(() => {
-    getList().then(res => {
-      setData(parseData(res));
-    });
-    return () => {
-      Toast.hide();
-    };
-  }, []);
-  function goDetail(query) {
-    router.push({
-      pathname: "/warn-detail",
-      query
-    });
-  }
-
   async function getList(page_num = 1, page_size = pageSize) {
     const { server = "" } = globalConfig;
     try {
@@ -62,7 +55,18 @@ const Index = observer(() => {
       onEndReached(false);
     }
   }
+  useEffect(() => {
+    getList().then(res => {
+      // setData(parseData(res));
+      setData([{}, {}, {}, {}, {}]);
+    });
+    return () => {
+      Toast.hide();
+    };
+  }, []);
+
   function refresh() {
+    if (refreshing) return;
     setRefreshing(true);
     getList().then(res => {
       setPage(1);
@@ -72,6 +76,7 @@ const Index = observer(() => {
     });
   }
   function endReached() {
+    if (footLoading) return;
     onEndReached(true);
     getList(page + 1).then(res => {
       setData(data.concat(parseData(res)));
@@ -82,14 +87,11 @@ const Index = observer(() => {
     });
   }
   function renderRow(item) {
-    return <WarnItem item={item} onClick={() => goDetail(item)} key={item.record_id} />;
+    return <WarnItem item={item} onClick={() => goDetail(item, router)} key={item.record_id} />;
   }
-  return loading ? (
-    <LoadingPage />
-  ) : !data.length ? (
-    <PullToRefresh damping={30} refreshing={refreshing} onRefresh={refresh}>
-      <EmptyNoDataPage />
-    </PullToRefresh>
+
+  return loading || !data.length ? (
+    <Empty loading={loading} data={data} refresh={refreshing} onRefresh={refresh} />
   ) : (
     <div className={styles.main}>
       <List

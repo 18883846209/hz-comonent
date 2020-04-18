@@ -4,10 +4,16 @@ import classnames from "classnames";
 import LoadImg from "@/components/ImgLoad";
 import styles from "./styles/index.less";
 
+const parseNumber = num => {
+  const result = Number(num);
+  if (Number.isNaN(result)) return 0;
+  if (Number.isInteger(result)) return result;
+  return result.toFixed(1);
+};
+
 export const Card = ({ url, text = "", width, height, className, imgClass, onClick }) => (
   <div className={classnames(styles.card, className)} onClick={onClick}>
     <div className={classnames(styles.img, imgClass)}>
-      {/* <img src={url} alt="" /> */}
       <LoadImg src={url} width={width} height={height} />
     </div>
     <div className={styles.text}>{text}</div>
@@ -15,11 +21,10 @@ export const Card = ({ url, text = "", width, height, className, imgClass, onCli
 );
 
 export const Progress = ({ percent = 0 }) => {
-  percent = isNaN(percent) ? 0 : Number.isInteger(percent) ? percent : Number(percent).toFixed(1);
-  const num = `${percent}%`;
+  const num = `${parseNumber(percent)}%`;
   return (
     <div className={styles.progress}>
-      <div className={styles.percent} style={{ width: num }}></div>
+      <div className={styles.percent} style={{ width: num }} />
       <div className={styles.num}>{num}</div>
     </div>
   );
@@ -38,12 +43,15 @@ Card.propTypes = {
   text: PropTypes.string,
   className: PropTypes.string,
   imgClass: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  width: PropTypes.number,
+  height: PropTypes.number
 };
 Progress.propTypes = {
   percent: PropTypes.number
 };
 Item.propTypes = {
   desc: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  src: PropTypes.string
 };

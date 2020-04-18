@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { PullToRefresh, ListView } from "antd-mobile";
 import PropTypes from "prop-types";
 import Loading from "@/components/PullLoading";
-import styles from "./styles/index.less";
 
 const VirtualizedList = props => {
   const {
@@ -30,7 +29,7 @@ const VirtualizedList = props => {
     }, 0);
   }, [data]);
   const style = {
-    height: wrapHeight ? wrapHeight : height - 45 - 20,
+    height: wrapHeight || height - 45 - 20,
     overflow: "auto"
   };
   return (
@@ -39,9 +38,7 @@ const VirtualizedList = props => {
       dataSource={dataSource}
       renderRow={renderRow}
       initialListSize={size}
-      renderFooter={
-        renderFooter ? renderFooter : () => <div style={{ textAlign: "center" }}>{loading ? "加载中..." : null}</div>
-      }
+      renderFooter={renderFooter || (() => <div style={{ textAlign: "center" }}>{loading ? "加载中..." : null}</div>)}
       onEndReached={onEndReached}
       onEndReachedThreshold={10}
       useBodyScroll={false}
@@ -60,7 +57,6 @@ const VirtualizedList = props => {
       }
     />
   );
-  return <List className={classnames(styles.list, className)}>{children}</List>;
 };
 
 VirtualizedList.propTypes = {
