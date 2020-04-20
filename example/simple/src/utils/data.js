@@ -40,11 +40,11 @@ const filterDataList = [
       {
         key: "单人布控",
         value: 2
-      },
-      {
-        key: "民族布控",
-        value: 3
       }
+      // {
+      //   key: "民族布控",
+      //   value: 3
+      // }
     ]
   },
   {
