@@ -9,7 +9,7 @@ export function getDpr(url, ext = ".png") {
 }
 
 export function pxToRem(px) {
-  return `${px / 100}rem`;
+  return `${px / 75}rem`;
 }
 
 export function getImg(require1, require2) {

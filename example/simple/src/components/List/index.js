@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+// import ReactDOM from "react-dom";
 import { PullToRefresh, ListView } from "antd-mobile";
 import PropTypes from "prop-types";
+import { pxToRem } from "@/utils/utils";
 import Loading from "@/components/PullLoading";
 
 const VirtualizedList = props => {
@@ -16,24 +18,29 @@ const VirtualizedList = props => {
     size = 15,
     isRefresh = true
   } = props;
+  const listRef = useRef(null);
+  const navHeight = 45;
+  const margin = 40;
   const ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2
   });
   const [dataSource, setData] = useState(ds.cloneWithRows(data));
-  const [height, setHeight] = useState(602);
+  const height = `calc(100vh - ${navHeight}px - ${pxToRem(margin)})`;
   useEffect(() => {
     setData(ds.cloneWithRows(data));
-    setTimeout(() => {
-      const h = document.documentElement.clientHeight;
-      setHeight(h);
-    }, 0);
+    // setTimeout(() => {
+    //   // const h = document.documentElement.clientHeight - ReactDOM.findDOMNode(listRef.current).offsetTop;
+    //   const h = `${document.documentElement.clientHeight - navHeight}px - ${margin / 75}rem`;
+    //   setHeight(h);
+    // }, 0);
   }, [data]);
   const style = {
-    height: wrapHeight || height - 45 - 20,
+    height: wrapHeight || height,
     overflow: "auto"
   };
   return (
     <ListView
+      ref={listRef}
       style={style}
       dataSource={dataSource}
       renderRow={renderRow}
@@ -61,7 +68,7 @@ const VirtualizedList = props => {
 
 VirtualizedList.propTypes = {
   data: PropTypes.array,
-  wrapHeight: PropTypes.number, // 高度最好自行传入(内容区域高度即可)
+  wrapHeight: PropTypes.string, // 高度最好自行传入(内容区域高度即可)
   refreshing: PropTypes.bool,
   loading: PropTypes.bool,
   onRefresh: PropTypes.func,

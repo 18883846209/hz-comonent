@@ -56,4 +56,23 @@ const getRedirectType = type => {
   return text;
 };
 
-export { getRedirectStatus, getRedirectType };
+/** 判断filterTitle */
+const getTitle = type => {
+  let text = "状态";
+  switch (type) {
+    case "disposition_status":
+      text = "状态";
+      break;
+    case "disposition_target_type":
+      text = "目标";
+      break;
+    case "subscribe_status":
+      text = "告警订阅";
+      break;
+    default:
+      break;
+  }
+  return text;
+};
+
+export { getRedirectStatus, getRedirectType, getTitle };

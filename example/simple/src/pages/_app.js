@@ -68,8 +68,8 @@ export default class extends App {
           <link href={`${publicRuntimeConfig.cdn}/static/images/logo.png`} rel="apple-touch-icon-precomposed" />
           <script src={`${publicRuntimeConfig.cdn}/static/lib/rem/adaptive.min.js`} />
           <script src={`${publicRuntimeConfig.cdn}/static/lib/fastclick/1.0.6/fastclick.js`} />
-          <script src={`${publicRuntimeConfig.cdn}/static/lib/sockjs/sockjs.min.js`}></script>
-          <script src={`${publicRuntimeConfig.cdn}/static/lib/sockjs/stomp.min.js`}></script>
+          <script src={`${publicRuntimeConfig.cdn}/static/lib/sockjs/sockjs.min.js`} />
+          <script src={`${publicRuntimeConfig.cdn}/static/lib/sockjs/stomp.min.js`} />
 
           <script
             // eslint-disable-next-line
