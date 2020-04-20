@@ -50,8 +50,13 @@ const moduleListData = [
 const Home = observer(() => {
   const { warnStore } = useStores();
   const { newsFlag } = warnStore;
+  // const { config } = configStore;
   const isOdd = moduleListData.length % 2 === 0;
   const [bottomHeight, setBottom] = useState(200);
+  // const [configs, setConfig] = useState(config);
+  // useEffect(() => {
+  //   setConfig(config);
+  // }, [config]);
   useEffect(() => {
     const top = document.getElementById("bottom").getBoundingClientRect().y;
     setBottom(`calc(100vh - ${top}px - ${pxToRem(15)} )`);
@@ -60,6 +65,7 @@ const Home = observer(() => {
         warnStore.changeFlag(true);
       }
     });
+
     return () => {
       Toast.hide();
     };

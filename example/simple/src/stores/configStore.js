@@ -2,7 +2,7 @@ import { observable, action } from "mobx";
 
 export default class WarnStore {
   @observable
-  config = [];
+  config = "{}";
 
   @action
   getConfig(data) {
