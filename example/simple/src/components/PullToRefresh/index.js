@@ -1,13 +1,14 @@
 /*
  * @Aurhor: dengsha
  * @Date: 2020-04-11 10:20:00
- * @LastEditors: zhangjie
+ * @LastEditors: dengsha
  * @Description: 下拉、上拉加载
- * @LastEditTime: 2020-04-13 19:05:03
+ * @LastEditTime: 2020-04-20 17:29:44
  */
 import React, { useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { PullToRefresh } from "antd-mobile";
+import PropTypes from "prop-types";
 import styles from "./styles/index.less";
 
 /**
@@ -16,7 +17,7 @@ import styles from "./styles/index.less";
  * @return: 下拉刷新
  */
 export const PullDownRefresh = props => {
-  const { refreshing, onRefresh, direction } = props;
+  const { refreshing, onRefresh, direction, children} = props;
   // const [height, setHeight] = useState(document.documentElement.clientHeight);
   const [height, setHeight] = useState("100vh");
   const dateRef = useRef();
@@ -39,8 +40,15 @@ export const PullDownRefresh = props => {
         ref={dateRef}
         onRefresh={onRefresh}
       >
-        {props.children}
+        {children}
       </PullToRefresh>
     </div>
   );
+};
+
+PullDownRefresh.propTypes = {
+  children: PropTypes.node,// 图片数据源
+  direction: PropTypes.string, // 默认打开图片的index
+  onRefresh: PropTypes.func,// 是否打开图片浏览器
+  refreshing: PropTypes.func, // 关闭的回调方法
 };
