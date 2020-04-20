@@ -1,4 +1,4 @@
-import { useState, memo } from "react";
+import React, { useState, memo } from "react";
 import { List } from "antd-mobile";
 import PropTypes from "prop-types";
 import classnames from "classnames";
@@ -34,18 +34,17 @@ function FilterTitle({ titles, onClick, visible, currentKey }) {
     >
       {item.title}
       <div
-        className={
-          visible && currentKey === item.key
-            ? classnames(styles["title-icon-selected"], styles["title-icon"])
-            : styles["title-icon"]
-        }
+        className={classnames(
+          visible && currentKey === item.key ? styles["title-icon-selected"] : "",
+          styles["title-icon"]
+        )}
       />
     </div>
   ));
 }
 
 /** 选中标记 */
-const Selected = memo(() => <div className={styles.selected}>√</div>, false)
+const Selected = memo(() => <div className={styles.selected}>√</div>, false);
 
 function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => {} }) {
   const [filterList, setFilterList] = useState(filterDatas);
@@ -56,31 +55,31 @@ function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => 
   const [selected, setSelected] = useState({});
 
   /** 头部点击方法 */
-  const titleOnClick = (key, titleClick) => {
-    const filterData = filterList.find(data => data.key === key);
+  const titleOnClick = (currentKey, titleClick) => {
+    const filterData = filterList.find(data => data.key === currentKey);
     const valueList = filterData ? filterData.valList : [];
     setValList(valueList);
     setTitle(titleClick);
-    setKey(key);
-    if (title === titleClick || !visible) setVisible(visible => !visible);
+    setKey(currentKey);
+    if (title === titleClick || !visible) setVisible(visibled => !visibled);
   };
 
   /** 列表点击方法 */
   const itemClick = (itemKey, value) => {
-    let filterData = filterList.find(data => data.key === key);
-    filterData.title = itemKey;
-    setSelected(selected => {
+    const filterDataObj = filterList.find(data => data.key === key);
+    if (filterDataObj) filterDataObj.title = itemKey;
+    setSelected(select => {
       return {
-        ...selected,
+        ...select,
         [key]: value
       };
     });
     setValList(valueList => {
-      const data = valueList.find(data => data.value === value);
+      const data = valueList.find(item => item.value === value);
       data.selected = true;
       return valueList;
     });
-    setVisible(visible => !visible);
+    setVisible(visibled => !visibled);
     setFilterList(filterList);
     callback({ key, value });
   };
@@ -101,22 +100,22 @@ function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => 
   );
 }
 
-FilterList.prototype = {
+FilterList.propTypes = {
   valList: PropTypes.array,
   visible: PropTypes.bool,
   onClick: PropTypes.func,
   selected: PropTypes.object,
-  currentKey: PropTypes.number
+  currentKey: PropTypes.string
 };
 
-FilterTitle.prototype = {
+FilterTitle.propTypes = {
   onClick: PropTypes.func,
   titles: PropTypes.array,
   visible: PropTypes.bool,
   currentKey: PropTypes.string
 };
 
-Filter.prototype = {
+Filter.propTypes = {
   filterDatas: PropTypes.array,
   style: PropTypes.object,
   callback: PropTypes.func

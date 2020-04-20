@@ -5,7 +5,6 @@ import { useStaticRendering } from "mobx-react";
 import CommonStore from "@/stores/commonStore";
 import ThemeStore from "@/stores/themeStore";
 import WarnStore from "@/stores/warnStore";
-import ExecuteStore from "@/stores/executeStore";
 
 let store;
 const isServer = typeof window === "undefined";
@@ -18,7 +17,6 @@ export function initializeData(initialData = store || {}) {
     commonStore: new CommonStore(initialData.commonStore),
     themeStore: new ThemeStore(initialData.themeStore),
     warnStore: new WarnStore(initialData.warnStore),
-    executeStore: new ExecuteStore(initialData.executeStore)
   };
 }
 

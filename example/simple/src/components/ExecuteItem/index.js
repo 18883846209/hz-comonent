@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React from "react";
 import { Flex } from "antd-mobile";
 import PropTypes from "prop-types";
 import classnames from "classnames";
@@ -6,22 +6,19 @@ import TouchFeedback from "rmc-feedback";
 import moment from "moment";
 import router from "next/router";
 import { getRedirectStatus } from "@/utils/common";
-import List from "@/components/List";
 import LoadImg from "@/components/ImgLoad";
 import { getCalculateTime } from "@/utils/utils";
-import routes from "@/routes"
+import routes from "@/routes";
 import styles from "./styles/index.less";
-
-const { Item } = List;
 
 const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) => {
   /** 名单库转字符串 */
   const nameListToStr = (nameList = []) => {
     let nameListStr = nameList.map(data => data.tab_name).join(",");
     if (nameListStr.length > 18) {
-      nameListStr = nameListStr.slice(0, 16) + '...'
+      nameListStr = `${nameListStr.slice(0, 16)}...`;
     }
-    return nameListStr
+    return nameListStr;
   };
 
   /** 时间处理 */
@@ -46,11 +43,10 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
       <div className={styles.item} onClick={() => toDetails(item)} key={item.disposition_id}>
         <Flex className={styles["list-item"]} key={item.disposition_id}>
           <div
-            className={
-              item.disposition_target_type === 1
-                ? classnames(styles["item-name-list"], styles["item-left"])
-                : styles["item-left"]
-            }
+            className={classnames(
+              item.disposition_target_type === 1 ? styles["item-name-list"] : "",
+              styles["item-left"]
+            )}
           >
             {item.disposition_target_type === 1 ? (
               <div className={styles["name-list"]}>
@@ -71,11 +67,13 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
                 <img
                   style={{ height: 14, width: 14, marginRight: "2%", verticalAlign: "bottom" }}
                   src="/static/3x/user.png"
+                  alt=""
                 />
                 <span>{item.owner}</span>
                 <img
                   style={{ height: 14, width: 14, margin: "0 2%", verticalAlign: "bottom" }}
                   src="/static/3x/time.png"
+                  alt=""
                 />
                 <span>{getCalculateTime(item.create_time)}</span>
                 <TouchFeedback activeClassName="active">
@@ -90,6 +88,7 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
                           : `/static/2x/${changeImgUrl(Number(item.subscribe_status))}`
                       }
                       style={{ height: 18, width: 16 }}
+                      alt=""
                     />
                   </span>
                 </TouchFeedback>
@@ -102,7 +101,7 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
   );
 };
 
-ListItem.prototype = {
+ListItem.propTypes = {
   item: PropTypes.object,
   imgUrl: PropTypes.string,
   changeImgUrl: PropTypes.string,

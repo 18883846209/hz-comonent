@@ -1,5 +1,5 @@
-import request from "../utils/request";
 import globalConfig from "@/utils/getConfig";
+import request from "../utils/request";
 
 const { server = "" } = globalConfig;
 
@@ -20,7 +20,7 @@ export async function subscribe(params = {}) {
 }
 
 /** 设备查询 */
-export async function getDevices(params = {}, server) {
+export async function getDevices(params = {}) {
   return request(`${server}/disposition/devices`, {
     method: "POST",
     body: params
