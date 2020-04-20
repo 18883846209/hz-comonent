@@ -3,7 +3,7 @@
  * @Date: 2020-04-09 10:27:57
  * @LastEditors: dengsha
  * @Description: 图片浏览器
- * @LastEditTime: 2020-04-16 10:22:23
+ * @LastEditTime: 2020-04-20 17:28:19
  */
 
 /**
@@ -24,7 +24,7 @@ import "react-photo-view/dist/index.css";
 import PropTypes from "prop-types";
 
 const ImageViewer = props => {
-  const { visible, defaultIndex, sources } = props;
+  const { visible, defaultIndex, sources, onClose } = props;
   const [photoIndex, setPhotoIndex] = useState(defaultIndex);
   useEffect(() => {
     setPhotoIndex(defaultIndex);
@@ -33,7 +33,7 @@ const ImageViewer = props => {
     <PhotoSlider
       images={sources.map(item => ({ src: item }))}
       visible={visible}
-      onClose={props.onClose}
+      onClose={onClose}
       index={photoIndex}
       onIndexChange={setPhotoIndex}
     />
@@ -41,10 +41,10 @@ const ImageViewer = props => {
 };
 
 ImageViewer.propTypes = {
-  sources: PropTypes.array,//图片数据源
-  defaultIndex: PropTypes.number, //默认打开图片的index
-  visible: PropTypes.bool,//是否打开图片浏览器
-  onClose: PropTypes.func, //关闭的回调方法
+  sources: PropTypes.array,// 图片数据源
+  defaultIndex: PropTypes.number, // 默认打开图片的index
+  visible: PropTypes.bool,// 是否打开图片浏览器
+  onClose: PropTypes.func, // 关闭的回调方法
 };
 
 export default ImageViewer;

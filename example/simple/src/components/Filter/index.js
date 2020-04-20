@@ -2,6 +2,7 @@ import React, { useState, memo } from "react";
 import { List } from "antd-mobile";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+import { getTitle } from "@/utils/common";
 import styles from "./styles/index.less";
 
 const { Item } = List;
@@ -30,7 +31,7 @@ function FilterTitle({ titles, onClick, visible, currentKey }) {
     <div
       key={item.key}
       className={visible && currentKey === item.key ? selectedTitle : styles["title-item"]}
-      onClick={() => onClick(item.key, item.title)}
+      onClick={() => onClick(item.key)}
     >
       {item.title}
       <div
@@ -49,25 +50,28 @@ const Selected = memo(() => <div className={styles.selected}>√</div>, false);
 function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => {} }) {
   const [filterList, setFilterList] = useState(filterDatas);
   const [visible, setVisible] = useState(false);
-  const [title, setTitle] = useState("");
   const [key, setKey] = useState("");
   const [valList, setValList] = useState([]);
   const [selected, setSelected] = useState({});
 
   /** 头部点击方法 */
-  const titleOnClick = (currentKey, titleClick) => {
+  const titleOnClick = currentKey => {
     const filterData = filterList.find(data => data.key === currentKey);
     const valueList = filterData ? filterData.valList : [];
     setValList(valueList);
-    setTitle(titleClick);
     setKey(currentKey);
-    if (title === titleClick || !visible) setVisible(visibled => !visibled);
+    if (key === currentKey || !visible) setVisible(visibled => !visibled);
   };
 
   /** 列表点击方法 */
   const itemClick = (itemKey, value) => {
     const filterDataObj = filterList.find(data => data.key === key);
-    if (filterDataObj) filterDataObj.title = itemKey;
+    if (!filterDataObj) return;
+    if (itemKey === "不限") {
+      filterDataObj.title = getTitle(key);
+    } else {
+      filterDataObj.title = itemKey;
+    }
     setSelected(select => {
       return {
         ...select,

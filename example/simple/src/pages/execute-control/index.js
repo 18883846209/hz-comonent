@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { PullToRefresh, Toast } from "antd-mobile";
+import dynamic from "next/dynamic";
 import styles from "@/styles/executeControl/index.less";
 import Filter from "@/components/Filter";
 import { filterDataList } from "@/utils/data";
 import { setStore, getStore } from "@/utils/localStorage";
 import { getExecuteList, subscribe } from "@/services/executeControl";
-import Lists from "@/components/List";
 import Loading from "@/components/PullLoading";
 import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
 import Item from "@/components/ExecuteItem";
+
+const List = dynamic(import("@/components/List"), {
+  ssr: false
+});
 
 /** 蒙层 */
 const Mask = () => {
@@ -174,7 +178,7 @@ function ExecuteList() {
     } else if (executeList.length) {
       node = (
         <div className={styles.lists} style={{ height: "calc(100vh - 90px)" }}>
-          <Lists
+          <List
             data={executeList}
             loading={footLoading}
             onEndReached={endReached}

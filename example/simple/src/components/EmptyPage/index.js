@@ -3,10 +3,11 @@
  * @Date: 2020-04-09 17:20:49
  * @LastEditors: dengsha
  * @Description: 为空处理页
- * @LastEditTime: 2020-04-13 19:10:55
+ * @LastEditTime: 2020-04-20 17:31:37
  */
 import React from "react";
 import { Button } from "antd-mobile";
+import PropTypes from "prop-types";
 import styles from "./styles/index.less";
 
 /**
@@ -15,21 +16,26 @@ import styles from "./styles/index.less";
  * @return: 失败页面
  */
 export const EmptyFailedPage = props => {
+  const {reloadAction} = props;
   return (
     <div className={styles.empty_mainDiv} style={{height:"calc(100vh - 45px)"}}>
       <div className={styles.messageDiv}>
         <div style={{ textAlign: "center" }}>
-          <img src="/static/2x/empty_failed.png" width={294} height={165} />
+          <img src="/static/2x/empty_failed.png" width={294} height={165} alt="" />
         </div>
         <div className={styles.contentDiv}>加载失败</div>
         <div className={styles.buttonDiv}>
-          <Button className={styles.buttonStyle} onClick={props.reloadAction}>
+          <Button className={styles.buttonStyle} onClick={reloadAction}>
             重新加载
           </Button>
         </div>
       </div>
     </div>
   );
+};
+
+EmptyFailedPage.propTypes = {
+  reloadAction: PropTypes.func
 };
 
 /**
@@ -42,7 +48,7 @@ export const EmptyNoDataPage = () => {
     <div className={styles.empty_mainDiv} style={{height:"calc(100vh - 45px)"}}>
       <div className={styles.messageDiv}>
         <div style={{ textAlign: "center" }}>
-          <img src="/static/2x/empty_noData.png" width={294} height={165} />
+          <img src="/static/2x/empty_noData.png" width={294} height={165} alt="" />
         </div>
         <div className={styles.contentDiv}>暂无数据</div>
       </div>
@@ -60,7 +66,7 @@ export const LoadingPage = () => {
     <div className={styles.empty_mainDiv} style={{height:"calc(100vh - 45px)", backgroundColor: '#f4f4f4'}}>
       <div className={styles.messageDiv} style={{backgroundColor: '#f4f4f4'}}>
         <div style={{ textAlign: "center" }}>
-          <img src="/static/images/loading.gif" width={55} height={55} />
+          <img src="/static/images/loading.gif" width={55} height={55} alt="" />
         </div>
       </div>
     </div>

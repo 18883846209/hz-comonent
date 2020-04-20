@@ -98,7 +98,7 @@ const ExecuteDetails = ({ item }) => {
       <div className={styles.title}>
         <div className={styles.name}>
           <span className={styles["execute-name"]}>{item.title}</span>
-          <span className={styles["execute-state"]}>{getRedirectStatus(item.disposition_status)}</span>
+          <span className={styles["execute-state"]}>{getRedirectStatus(Number(item.disposition_status))}</span>
         </div>
         <div>
           <img src="/static/3x/user.png" alt="" />
