@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { PullToRefresh, Toast } from "antd-mobile";
 import styles from "@/styles/executeControl/index.less";
 import Filter from "@/components/Filter";
-import { memoTransition } from "@/components/MemoTransition";
 import { filterDataList } from "@/utils/data";
 import { setStore, getStore } from "@/utils/localStorage"
 import { getExecuteList, subscribe } from "@/services/executeControl";
@@ -77,6 +76,7 @@ function ExecuteList(props) {
       action,
       disposition_id: id
     }, server).then(result => {
+      if (!result.isSuccess) return
       action && setShowImg(true);
       action && setTimeout(() => setShowImg(false), 1000);
       const j = executeList.length;
@@ -109,16 +109,6 @@ function ExecuteList(props) {
       } else {
         return Toast.info(res.message, 2, null);
       }
-
-
-      // const { data: dataObj, code, message } = result;
-      // if (code !== "0000") return Toast.info(message, 2, null);
-      // const { data = [], paging } = dataObj;
-      // setExecuteList(dataList => {
-      //   return isDown ? dataList.concat(data) : data;
-      // });
-      // setRefreshing(false);
-      // isDown && onEndReached(false);
     });
   };
 
@@ -209,8 +199,4 @@ function ExecuteList(props) {
   );
 }
 
-ExecuteList.getInitialProps = async () => {
-  return {};
-};
-
-export default memoTransition(ExecuteList);
+export default ExecuteList;

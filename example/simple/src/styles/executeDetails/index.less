@@ -2,18 +2,18 @@
 
 .execute-details {
   .bg {
-    background-color: @nav-bg;
     height: 90px;
+    background-color: @nav-bg;
   }
   .title {
     display: flex;
-    height: 12%;
-    justify-content: space-evenly;
     flex-direction: column;
+    justify-content: space-evenly;
+    height: 12%;
     margin: -90px 3% 0;
-    border-radius: 10px;
     padding: 0 3%;
     background-color: #fff;
+    border-radius: 10px;
     .name {
       display: flex;
       justify-content: space-between;
@@ -24,8 +24,8 @@
         display: inline-block;
         width: 1.6rem;
         height: 100%;
-        text-align: center;
         color: #29b56d;
+        text-align: center;
         background-color: #dff6ea;
         border-radius: 5px;
       }
@@ -33,29 +33,29 @@
     img {
       width: 18px;
       height: 18px;
-      object-fit: contain;
       margin-right: 14px;
+      object-fit: contain;
     }
     .user {
       padding-right: 30px;
     }
   }
   .body {
-    margin: 3% 0.3rem 0;
-    background-color: #fff;
-    border-radius: 0.13333rem;
-    height: 85%;
     position: relative;
     display: flex;
     flex-direction: column;
+    height: 85%;
+    margin: 3% 0.3rem 0;
+    background-color: #fff;
+    border-radius: 0.13333rem;
     .wrap {
       padding: 30px 20px 20px;
       .key {
         img {
           width: 32px;
           height: 32px;
-          object-fit: contain;
           margin-right: 30px;
+          object-fit: contain;
         }
       }
       .value {
@@ -68,28 +68,28 @@
         cursor: pointer;
       }
       .content-img {
-        background-color: #f6f6f6;
-        height: 215px;
         width: 70%;
+        height: 215px;
+        background-color: #f6f6f6;
         border-radius: 10px;
         .idcard {
-          padding: 30px;
           display: flex;
           height: 100%;
+          padding: 30px;
           .idcard-details {
-            flex-grow: 1;
             display: flex;
             flex-direction: column;
+            flex-grow: 1;
             justify-content: space-between;
             .gender {
-              font-size: 12px;
               padding-left: 40px;
               color: #666;
+              font-size: 12px;
             }
             .idtype {
-              padding: 10px 0px;
-              font-size: 12px;
+              padding: 10px 0;
               color: #666;
+              font-size: 12px;
             }
           }
           .idcard-img {
@@ -109,9 +109,9 @@
     }
   }
   .bottom {
-    text-align: center;
-    width: 100%;
     flex-grow: 1;
+    width: 100%;
+    text-align: center;
     .foot {
       position: relative;
       top: 50%;
@@ -122,7 +122,12 @@
       }
       .icontext {
         padding-top: 40px;
+      }
+      .add {
         color: #4d6cc1;
+      }
+      .cancle {
+        color: #29b56d;
       }
     }
   }

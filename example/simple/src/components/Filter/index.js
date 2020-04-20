@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { List } from "antd-mobile";
 import PropTypes from "prop-types";
 import classnames from "classnames";
@@ -45,9 +45,7 @@ function FilterTitle({ titles, onClick, visible, currentKey }) {
 }
 
 /** 选中标记 */
-function Selected() {
-  return <div className={styles.selected}>√</div>;
-}
+const Selected = memo(() => <div className={styles.selected}>√</div>, false)
 
 function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => {} }) {
   const [filterList, setFilterList] = useState(filterDatas);

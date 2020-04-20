@@ -7,7 +7,9 @@ import moment from "moment";
 import router from "next/router";
 import { getRedirectStatus } from "@/utils/common";
 import List from "@/components/List";
+import LoadImg from "@/components/ImgLoad";
 import { getCalculateTime } from "@/utils/utils";
+import routes from "@/routes"
 import styles from "./styles/index.less";
 
 const { Item } = List;
@@ -26,7 +28,7 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
   /** 跳转 */
   const toDetails = query => {
     router.push({
-      pathname: "/execute-details",
+      pathname: routes.executeDetails.path,
       query: {
         ...query,
         tabs: query.tabs.map(tab => tab.tab_name).join(","),
@@ -51,7 +53,7 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
                 <span className={styles["name-list-name"]}>{nameListToStr(item.tabs)}</span>
               </div>
             ) : (
-              <img className={styles.img} src={item.image} />
+              <LoadImg className={styles.img} src={item.image} />
             )}
           </div>
           <div className={styles["item-right"]}>
@@ -64,12 +66,12 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
               <div className={styles.detail}>
                 <img
                   style={{ height: 14, width: 14, marginRight: "2%", verticalAlign: "bottom" }}
-                  src="/static/2x/user.png"
+                  src="/static/3x/user.png"
                 />
                 <span>{item.owner}</span>
                 <img
                   style={{ height: 14, width: 14, margin: "0 2%", verticalAlign: "bottom" }}
-                  src="/static/2x/time.png"
+                  src="/static/3x/time.png"
                 />
                 <span>{getCalculateTime(item.create_time)}</span>
                 <TouchFeedback activeClassName="active">

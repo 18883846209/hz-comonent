@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import classNames from "classnames";
 import styles from "./styles/index.less";
 
 const map = {
@@ -20,7 +21,7 @@ const getRatio = (w, h) => {
   return "1to1";
 };
 
-const LoadImg = ({ src, width = 160, height = 160 }) => {
+const LoadImg = ({ src, width = 160, height = 160, style, className }) => {
   const initUrl = map[`ratio_${getRatio(width, height)}_load`];
   const errorUrl = map[`ratio_${getRatio(width, height)}_error`];
   const [url, setUrl] = useState(initUrl);
@@ -35,7 +36,7 @@ const LoadImg = ({ src, width = 160, height = 160 }) => {
     img.src = src;
   }, [src]);
 
-  return <img className={styles.load_img} src={url} alt="" />;
+  return <img className={classNames(styles.load_img, className)} src={url} alt="" style={style} />;
 };
 
 LoadImg.propTypes = {

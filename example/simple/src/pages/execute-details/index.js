@@ -1,14 +1,15 @@
 import { List, Flex } from "antd-mobile";
-import styles from "@/styles/executeDetails/index.less";
 import moment from "moment";
 import router from "next/router";
-import { getRedirectStatus, getRedirectType } from "@/utils/common";
-import { getCalculateTime } from "@/utils/utils";
-import routes from "@/routes";
-import { subscribe } from "@/services/executeControl";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { useState } from "react";
+import styles from "@/styles/executeDetails/index.less";
+import { getRedirectStatus, getRedirectType } from "@/utils/common";
+import LoadImg from "@/components/ImgLoad";
+import { getCalculateTime } from "@/utils/utils";
+import routes from "@/routes";
+import { subscribe } from "@/services/executeControl";
 
 const TITLE = [
   { key: "时段", value: "timeIcon" },
@@ -84,9 +85,9 @@ const ExecuteDetails = ({ item }) => {
           <span className={styles["execute-state"]}>{getRedirectStatus(item.disposition_status)}</span>
         </div>
         <div>
-          <img src={`/static/2x/user.png`} alt="" />
+          <img src={`/static/3x/user.png`} alt="" />
           <span className={styles.user}>{item.owner}</span>
-          <img src={`/static/2x/time.png`} alt="" />
+          <img src={`/static/3x/time.png`} alt="" />
           {getCalculateTime(item.create_time)}
         </div>
       </div>
@@ -96,7 +97,7 @@ const ExecuteDetails = ({ item }) => {
             <Flex justify="between">
               <div className={styles.key}>
                 <Flex>
-                  <img src={`/static/2x/${data.img}.png`} alt="" />
+                  <img src={`/static/3x/${data.img}.png`} alt="" />
                   <div>{data.key}</div>
                 </Flex>
               </div>
@@ -133,7 +134,7 @@ const ExecuteDetails = ({ item }) => {
                         <div className={styles.id}>{item.certificate_id}</div>
                       </div>
                     </div>
-                    <img className={styles["idcard-img"]} src={item.image} />
+                    <LoadImg className={styles["idcard-img"]} src={item.image} />
                   </div>
                 </div>
               )}
@@ -142,8 +143,8 @@ const ExecuteDetails = ({ item }) => {
         ))}
         <div className={styles.bottom}>
           <div className={styles.foot} onClick={() => subscribeHandler(imgUrl === "subscribe" ? 1 : 0)}>
-            <img className={styles.img} src={`/static/2x/${imgUrl}.png`} />
-            <div className={styles.icontext}>{imgUrl === "subscribe" ? "添加告警订阅" : "取消告警订阅"}</div>
+            <img className={styles.img} src={`/static/3x/${imgUrl}.png`} />
+            <div className={classNames(styles.icontext, imgUrl === "subscribe" ? styles.add : styles.cancle)}>{imgUrl === "subscribe" ? "添加告警订阅" : "取消告警订阅"}</div>
           </div>
         </div>
       </div>
