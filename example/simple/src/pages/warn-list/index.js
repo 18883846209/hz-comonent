@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import router from "next/router";
 import dynamic from "next/dynamic";
 import { Toast } from "antd-mobile";
@@ -32,29 +32,32 @@ const Index = observer(() => {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const { warnStore } = useStores();
-  async function getList(page_num = 1, page_size = pageSize) {
-    const { server = "" } = globalConfig;
-    try {
-      const res = await request(`${server}/notification/face/list`, {
-        method: "POST",
-        body: {
-          page_num,
-          page_size
+  const getList = useCallback(
+    async (page_num = 1, page_size = pageSize) => {
+      const { server = "" } = globalConfig;
+      try {
+        const res = await request(`${server}/notification/face/list`, {
+          method: "POST",
+          body: {
+            page_num,
+            page_size
+          }
+        });
+        setLoading(false);
+        if (!res.isSuccess || res.res.message) {
+          Toast.info(res.res.message || "未获取到数据", 2, null);
+          return {};
         }
-      });
-      setLoading(false);
-      if (!res.isSuccess || res.res.message) {
-        Toast.info(res.res.message || "未获取到数据", 2, null);
-        return {};
+        return res.res.data;
+      } catch (e) {
+        setData([]);
+        setLoading(false);
+        setRefreshing(false);
+        onEndReached(false);
       }
-      return res.res.data;
-    } catch (e) {
-      setData([]);
-      setLoading(false);
-      setRefreshing(false);
-      onEndReached(false);
-    }
-  }
+    },
+    [page, pageSize]
+  );
   useEffect(() => {
     getList().then(res => {
       setData(parseData(res));
@@ -69,7 +72,7 @@ const Index = observer(() => {
     setRefreshing(true);
     getList().then(res => {
       setPage(1);
-      setData(parseData(res));
+      setData(data.concat(parseData(res)));
       setRefreshing(false);
       warnStore.changeFlag(false);
     });
@@ -80,7 +83,7 @@ const Index = observer(() => {
     getList(page + 1).then(res => {
       setData(data.concat(parseData(res)));
       onEndReached(false);
-      if (res.has_next) {
+      if (res.paging.total > data.length) {
         setPage(page + 1);
       }
     });

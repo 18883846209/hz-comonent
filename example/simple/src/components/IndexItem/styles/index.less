@@ -1,29 +1,29 @@
 @import "~@styles/themes/default.less";
-
+@import "~@styles/mixins/main.less";
 
 .wrap {
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: calc((100vw - 75px) / 2);
   height: 191px;
-  padding: 55px 0 0 0;
-  font-size: 0;
-  text-align: center;
   background: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 6px;
   box-shadow: 0 0 14px 0 rgba(176, 207, 255, 0.5);
+  &:nth-of-type(odd) {
+    margin-right: 15px;
+  }
+  &:nth-child(n + 3) {
+    margin-top: 15px;
+  }
   .flag {
     position: absolute;
     top: 5px;
     right: 10px;
     color: @brand-flag;
     font-size: 10px;
-  }
-  .left,
-  .right {
-    display: inline-block;
-    vertical-align: middle;
   }
   .left {
     width: 80px;
@@ -35,14 +35,17 @@
     }
   }
   .right {
+    min-width: 120px;
+    max-width: 160px;
     margin-left: 48px;
-    text-align: left;
     .name {
+      .overflow;
       margin-bottom: 10px;
       color: #333;
       font-size: 14px;
     }
     .en {
+      .overflow;
       color: #999;
       font-size: 12px;
     }

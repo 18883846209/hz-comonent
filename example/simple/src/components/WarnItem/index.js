@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Flex } from "antd-mobile";
 import TouchFeedback from "rmc-feedback";
 import { Progress, Item, Card } from "@/components/WarnComponents/index";
-import { getCalculateTime } from "@/utils/utils";
+import { getCalculateTime, getDpr } from "@/utils/utils";
 import styles from "./styles/index.less";
 
 const Warn = ({ onClick, item = {}, style }) => {
@@ -14,7 +14,7 @@ const Warn = ({ onClick, item = {}, style }) => {
           <Flex justify="between">
             <div className={styles.left}>{item.name}</div>
             <div className={styles.right}>
-              <img src="/static/2x/time.png" alt="" />
+              <img src={getDpr("warn/time")} alt="" />
               <span>{getCalculateTime(Number(item.notification_time))}</span>
             </div>
           </Flex>
@@ -25,8 +25,8 @@ const Warn = ({ onClick, item = {}, style }) => {
             <Card url={item.target_image_url} width={136} height={182} text="布控照" />
             <div className={styles.right}>
               <div className={styles.desc}>
-                <Item src="/static/warn/list_name@3x.png" desc={item.face_disposition_name || ""} />
-                <Item src="/static/warn/list_position@3x.png" desc={item.device_name || ""} />
+                <Item src={getDpr("warn/list_name")} desc={item.face_disposition_name || ""} />
+                <Item src={getDpr("warn/list_position")} desc={item.device_name || ""} />
               </div>
               <Progress percent={item.alarm_score || 0} />
             </div>

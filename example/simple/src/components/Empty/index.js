@@ -11,7 +11,7 @@ const Empty = ({ loading = true, data = [], refresh, onRefresh }) => {
       <PullToRefresh
         damping={30}
         indicator={{ activate: <Loading />, release: <Loading /> }}
-        refresh={refresh}
+        refresh={refresh.toString()}
         onRefresh={onRefresh}
       >
         <EmptyNoDataPage />
