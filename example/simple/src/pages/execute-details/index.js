@@ -120,14 +120,14 @@ const ExecuteDetails = ({ item }) => {
               {index !== 3 || `${item.disposition_target_type}` === "1" ? (
                 <div
                   onClick={
-                    data.key === "区域" && item.device_ids && item.device_ids.length > 0
+                    data.key === "区域" && item.device_ids && item.device_ids.split(";").length > 0
                       ? () =>
                           router.push({
                             pathname: routes.deviceList.path,
-                            query: {
+                            query: {param: JSON.stringify({
                               disposition_id: item.disposition_id,
                               device_ids: item.device_ids.split(";")
-                            }
+                            })}
                           })
                       : () => {}
                   }
