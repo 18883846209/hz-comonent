@@ -3,10 +3,10 @@ import { PullToRefresh, Toast } from "antd-mobile";
 import styles from "@/styles/executeControl/index.less";
 import Filter from "@/components/Filter";
 import { filterDataList } from "@/utils/data";
-import { setStore, getStore } from "@/utils/localStorage"
+import { setStore, getStore } from "@/utils/localStorage";
 import { getExecuteList, subscribe } from "@/services/executeControl";
 import Lists from "@/components/List";
-import Loading from '@/components/PullLoading';
+import Loading from "@/components/PullLoading";
 import { EmptyFailedPage, EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
 import Item from "@/components/ExecuteItem";
 
@@ -15,7 +15,7 @@ const Mask = () => {
   const [isFirst, setIsFirst] = useState(false);
 
   useEffect(() => {
-    const first = getStore("isFirst")
+    const first = getStore("isFirst");
     if (first === 1) {
       setIsFirst(false);
     } else {
@@ -67,7 +67,6 @@ function ExecuteList(props) {
 
   /** 添加取消订阅 action(0：取消订阅，1：订阅) */
   const subscribeHandler = (id, action, e) => {
-    const { server = "" } = window.hzConfig;
     if (e && e.stopPropagation) e.stopPropagation();
     else window.event.cancelBubble = true;
     setCurrentId(id);
@@ -75,8 +74,8 @@ function ExecuteList(props) {
     subscribe({
       action,
       disposition_id: id
-    }, server).then(result => {
-      if (!result.isSuccess) return
+    }).then(result => {
+      if (!result.isSuccess) return;
       action && setShowImg(true);
       action && setTimeout(() => setShowImg(false), 1000);
       const j = executeList.length;
@@ -94,9 +93,7 @@ function ExecuteList(props) {
 
   /** 获取布控列表 */
   const queryExecuteList = (params, isDown) => {
-    // !isDown && setLoading(true);
-    const { server = "" } = window.hzConfig;
-    getExecuteList(params, server).then(result => {
+    getExecuteList(params).then(result => {
       setLoading(false);
       const { res } = result;
       if (result.isSuccess) {
@@ -187,7 +184,7 @@ function ExecuteList(props) {
         </div>
       ) : (
         <div style={{ height: "calc(100vh - 90px)", overflow: "hidden" }}>
-          <PullToRefresh onRefresh={refresh} damping={30}>
+          <PullToRefresh onRefresh={refresh} damping={30} indicator={{ release: <Loading /> }}>
             <EmptyNoDataPage />
           </PullToRefresh>
         </div>
