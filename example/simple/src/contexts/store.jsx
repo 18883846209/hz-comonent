@@ -6,7 +6,6 @@ import CommonStore from "@/stores/commonStore";
 import ThemeStore from "@/stores/themeStore";
 import WarnStore from "@/stores/warnStore";
 import ConfigStore from "@/stores/configStore";
-import ExecuteStore from "@/stores/executeStore";
 
 let store;
 const isServer = typeof window === "undefined";
@@ -19,8 +18,7 @@ export function initializeData(initialData = store || {}) {
     commonStore: new CommonStore(initialData.commonStore),
     themeStore: new ThemeStore(initialData.themeStore),
     warnStore: new WarnStore(initialData.warnStore),
-    configStore: new ConfigStore(initialData.configStore),
-    executeStore: new ExecuteStore(initialData.executeStore)
+    configStore: new ConfigStore(initialData.configStore)
   };
 }
 

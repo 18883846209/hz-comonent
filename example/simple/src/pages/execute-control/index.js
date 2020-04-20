@@ -1,14 +1,13 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { PullToRefresh, Toast } from "antd-mobile";
 import styles from "@/styles/executeControl/index.less";
 import Filter from "@/components/Filter";
-import { memoTransition } from "@/components/MemoTransition";
 import { filterDataList } from "@/utils/data";
-import { setStore, getStore } from "@/utils/localStorage"
+import { setStore, getStore } from "@/utils/localStorage";
 import { getExecuteList, subscribe } from "@/services/executeControl";
 import Lists from "@/components/List";
-import Loading from '@/components/PullLoading';
-import { EmptyFailedPage, EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
+import Loading from "@/components/PullLoading";
+import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
 import Item from "@/components/ExecuteItem";
 
 /** 蒙层 */
@@ -16,7 +15,7 @@ const Mask = () => {
   const [isFirst, setIsFirst] = useState(false);
 
   useEffect(() => {
-    const first = getStore("isFirst")
+    const first = getStore("isFirst");
     if (first === 1) {
       setIsFirst(false);
     } else {
@@ -27,17 +26,18 @@ const Mask = () => {
 
   return isFirst ? (
     <div className={styles.mask} onClick={() => setIsFirst(false)}>
-      <img style={{ width: "100%", height: "100%", position: "absolute" }} src="/static/2x/background.png" />
+      <img alt="" style={{ width: "100%", height: "100%", position: "absolute" }} src="/static/2x/background.png" />
       <div className={styles.mask} />
       <img
         style={{ width: "100%", height: "100%", zIndex: 1000000, position: "absolute" }}
         src="/static/2x/example.gif"
+        alt=""
       />
     </div>
   ) : null;
 };
 
-function ExecuteList(props) {
+function ExecuteList() {
   const [refreshing, setRefreshing] = useState(false);
   const [footLoading, onEndReached] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -53,22 +53,64 @@ function ExecuteList(props) {
     page_size: 15
   });
 
+  /** 获取布控列表 */
+  const queryExecuteList = (param, isDown) => {
+    getExecuteList(param).then(result => {
+      setLoading(false);
+      const { res } = result;
+      if (result.isSuccess) {
+        const { data = [] } = res;
+        setExecuteList(dataList => {
+          return isDown ? dataList.concat(data) : data;
+        });
+        setRefreshing(false);
+        if (isDown) onEndReached(false);
+      } else {
+        return Toast.info(res.message, 2, null);
+      }
+    });
+  };
+
   useEffect(() => {
     queryExecuteList(params);
   }, []);
 
   /** 获取过滤参数 */
   const getFilterVal = (obj = { key: "", value: "" }) => {
-    setParams(params => {
-      params[obj.key] = obj.value;
-      queryExecuteList(params);
-      return params;
+    setParams(param => {
+      param[obj.key] = obj.value;
+      queryExecuteList(param);
+      return param;
     });
+  };
+
+  /** 点击图处理 status(0: 已订阅 1：未订阅 2：订阅动画 3：取消动画 4: 订阅失败) */
+  const changeImgUrl = status => {
+    let imgForUrl = "add_subscribe.png";
+    switch (status) {
+      case 0:
+        imgForUrl = "add_subscribe.png";
+        break;
+      case 1:
+        imgForUrl = "subscribed_small.png";
+        break;
+      case 2:
+        imgForUrl = "sub_success.gif";
+        break;
+      case 3:
+        imgForUrl = "sub_cancel.gif";
+        break;
+      case 4:
+        imgForUrl = "sub_fail.gif";
+        break;
+      default:
+        break;
+    }
+    return imgForUrl;
   };
 
   /** 添加取消订阅 action(0：取消订阅，1：订阅) */
   const subscribeHandler = (id, action, e) => {
-    const { server = "" } = window.hzConfig;
     if (e && e.stopPropagation) e.stopPropagation();
     else window.event.cancelBubble = true;
     setCurrentId(id);
@@ -76,11 +118,14 @@ function ExecuteList(props) {
     subscribe({
       action,
       disposition_id: id
-    }, server).then(result => {
-      action && setShowImg(true);
-      action && setTimeout(() => setShowImg(false), 1000);
+    }).then(result => {
+      const { res } = result;
+      if (!result.isSuccess) return Toast.info(res.message, 2, null);
+      if (action) {
+        setShowImg(true);
+        setTimeout(() => setShowImg(false), 1000);
+      }
       const j = executeList.length;
-      let i = 0;
       for (let i = 0; i < j; i++) {
         if (executeList[i].disposition_id === id) {
           executeList[i].subscribe_status = action ? 1 : 0;
@@ -90,61 +135,6 @@ function ExecuteList(props) {
       setExecuteList(executeList);
       setCurrentId("");
     });
-  };
-
-  /** 获取布控列表 */
-  const queryExecuteList = (params, isDown) => {
-    // !isDown && setLoading(true);
-    const { server = "" } = window.hzConfig;
-    getExecuteList(params, server).then(result => {
-      setLoading(false);
-      const { res } = result;
-      if (result.isSuccess) {
-        const { data = [], paging } = res;
-        setExecuteList(dataList => {
-          return isDown ? dataList.concat(data) : data;
-        });
-        setRefreshing(false);
-        isDown && onEndReached(false);
-      } else {
-        return Toast.info(res.message, 2, null);
-      }
-
-
-      // const { data: dataObj, code, message } = result;
-      // if (code !== "0000") return Toast.info(message, 2, null);
-      // const { data = [], paging } = dataObj;
-      // setExecuteList(dataList => {
-      //   return isDown ? dataList.concat(data) : data;
-      // });
-      // setRefreshing(false);
-      // isDown && onEndReached(false);
-    });
-  };
-
-  /** 点击图处理 status(0: 已订阅 1：未订阅 2：订阅动画 3：取消动画 4: 订阅失败) */
-  const changeImgUrl = status => {
-    let imgUrl = "add_subscribe.png";
-    switch (status) {
-      case 0:
-        imgUrl = "add_subscribe.png";
-        break;
-      case 1:
-        imgUrl = "subscribed_small.png";
-        break;
-      case 2:
-        imgUrl = "sub_success.gif";
-        break;
-      case 3:
-        imgUrl = "sub_cancel.gif";
-        break;
-      case 4:
-        imgUrl = "sub_fail.gif";
-        break;
-      default:
-        break;
-    }
-    return imgUrl;
   };
 
   function renderRow(item) {
@@ -161,29 +151,28 @@ function ExecuteList(props) {
 
   function refresh() {
     setRefreshing(true);
-    setParams(params => {
-      params.page_num = 1;
-      queryExecuteList(params);
-      return params;
+    setParams(param => {
+      param.page_num = 1;
+      queryExecuteList(param);
+      return param;
     });
   }
 
   function endReached() {
     onEndReached(true);
-    setParams(params => {
-      params.page_num += 1;
-      queryExecuteList(params, true);
-      return params;
+    setParams(param => {
+      param.page_num += 1;
+      queryExecuteList(param, true);
+      return param;
     });
   }
 
-  return (
-    <>
-      <Mask />
-      <Filter filterDatas={filterDataList} callback={getFilterVal} />
-      {loading ? (
-        <LoadingPage />
-      ) : executeList.length ? (
+  function renderContext() {
+    let node;
+    if (loading) {
+      node = <LoadingPage />;
+    } else if (executeList.length) {
+      node = (
         <div className={styles.lists} style={{ height: "calc(100vh - 90px)" }}>
           <Lists
             data={executeList}
@@ -193,24 +182,31 @@ function ExecuteList(props) {
             onRefresh={refresh}
             renderRow={renderRow}
             wrapHeight={document.documentElement.clientHeight - 90}
-          ></Lists>
+          />
         </div>
-      ) : (
+      );
+    } else {
+      node = (
         <div style={{ height: "calc(100vh - 90px)", overflow: "hidden" }}>
-          <PullToRefresh onRefresh={refresh} damping={30}>
+          <PullToRefresh onRefresh={refresh} damping={30} indicator={{ release: <Loading /> }}>
             <EmptyNoDataPage />
           </PullToRefresh>
         </div>
-      )}
+      );
+    }
+    return node;
+  }
+
+  return (
+    <div>
+      <Mask />
+      <Filter filterDatas={filterDataList} callback={getFilterVal} />
+      {renderContext()}
       <div className={styles.result}>
-        <img src={showImg ? "/static/2x/sub_success_big.gif" : ""} />
+        <img src={showImg ? "/static/2x/sub_success_big.gif" : ""} alt="" />
       </div>
-    </>
+    </div>
   );
 }
 
-ExecuteList.getInitialProps = async () => {
-  return {};
-};
-
-export default memoTransition(ExecuteList);
+export default ExecuteList;

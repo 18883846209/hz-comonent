@@ -28,7 +28,7 @@ const DeviceList = () => {
     setLoading(true);
     const { server = "" } = globalConfig;
     const object = {
-      body: params,
+      body: JSON.parse(params.param),
       method: "POST"
     };
     request(`${server}/disposition/devices`, object).then(res => {

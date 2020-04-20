@@ -1,14 +1,14 @@
-import { List, Flex } from "antd-mobile";
-import styles from "@/styles/executeDetails/index.less";
-import moment from "moment";
+import React, { useState } from "react";
+import { Flex, Toast } from "antd-mobile";
 import router from "next/router";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import styles from "@/styles/executeDetails/index.less";
 import { getRedirectStatus, getRedirectType } from "@/utils/common";
+import LoadImg from "@/components/ImgLoad";
 import { getCalculateTime } from "@/utils/utils";
 import routes from "@/routes";
 import { subscribe } from "@/services/executeControl";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import { useState } from "react";
 
 const TITLE = [
   { key: "时段", value: "timeIcon" },
@@ -44,16 +44,32 @@ const executeType = (type = 1) => {
   return typeStr;
 };
 
+/** 性别 */
+const renderGender = (gender = 1) => {
+  let genderStr = "";
+  switch (gender) {
+    case "1":
+      genderStr = "男";
+      break;
+    case "2":
+      genderStr = "女";
+      break;
+    default:
+      break;
+  }
+  return genderStr;
+};
+
 function getContentList(data) {
-  const { device_ids, disposition_target_type, tabs, describe, threshold } = data;
+  const { device_ids: deviceIds, disposition_target_type: type, tabs, describe, threshold } = data;
   const oData = {
     ...data,
-    position: `${executeArea(device_ids)}个监控点`,
-    types: executeType(disposition_target_type),
+    position: `${executeArea(deviceIds)}个监控点`,
+    types: executeType(type),
     target: tabs,
     remarks: describe,
     threshold: `≥${threshold}%`,
-    showLink: `${executeArea(device_ids)}` !== "0"
+    showLink: `${executeArea(deviceIds)}` !== "0"
   };
 
   return TITLE.map(item => {
@@ -65,11 +81,12 @@ const ExecuteDetails = ({ item }) => {
   const [imgUrl, setImgUrl] = useState(`${item.subscribe_status}` === "0" ? "subscribe" : "cancel_subscribed");
 
   const subscribeHandler = action => {
-    const { server = "" } = window.hzConfig;
     subscribe({
       action,
       disposition_id: item.disposition_id
-    }, server).then(result => {
+    }).then(result => {
+      const { res } = result;
+      if (!result.isSuccess) return Toast.info(res.message, 2, null);
       setImgUrl(action ? "cancel_subscribed" : "subscribe");
     });
   };
@@ -77,16 +94,16 @@ const ExecuteDetails = ({ item }) => {
   const contentList = getContentList(item);
   return (
     <div className={styles["execute-details"]} style={{ height: "calc(100vh - 45px)" }}>
-      <div className={styles.bg}></div>
+      <div className={styles.bg} />
       <div className={styles.title}>
         <div className={styles.name}>
           <span className={styles["execute-name"]}>{item.title}</span>
           <span className={styles["execute-state"]}>{getRedirectStatus(item.disposition_status)}</span>
         </div>
         <div>
-          <img src={`/static/2x/user.png`} alt="" />
+          <img src="/static/3x/user.png" alt="" />
           <span className={styles.user}>{item.owner}</span>
-          <img src={`/static/2x/time.png`} alt="" />
+          <img src="/static/3x/time.png" alt="" />
           {getCalculateTime(item.create_time)}
         </div>
       </div>
@@ -96,27 +113,25 @@ const ExecuteDetails = ({ item }) => {
             <Flex justify="between">
               <div className={styles.key}>
                 <Flex>
-                  <img src={`/static/2x/${data.img}.png`} alt="" />
+                  <img src={`/static/3x/${data.img}.png`} alt="" />
                   <div>{data.key}</div>
                 </Flex>
               </div>
               {index !== 3 || `${item.disposition_target_type}` === "1" ? (
                 <div
                   onClick={
-                    data.key === "区域"
+                    data.key === "区域" && item.device_ids && item.device_ids.split(";").length > 0
                       ? () =>
                           router.push({
                             pathname: routes.deviceList.path,
-                            query: {
+                            query: {param: JSON.stringify({
                               disposition_id: item.disposition_id,
-                              device_ids: item.device_ids.split(';')
-                            }
+                              device_ids: item.device_ids.split(";")
+                            })}
                           })
                       : () => {}
                   }
-                  className={
-                    data.key === "区域" && data.showLink ? classNames(styles.link, styles.value) : styles.value
-                  }
+                  className={classNames(data.key === "区域" && data.showLink ? styles.link : "", styles.value)}
                 >
                   {data.value}
                 </div>
@@ -126,14 +141,14 @@ const ExecuteDetails = ({ item }) => {
                     <div className={styles["idcard-details"]}>
                       <div>
                         <span>{item.name}</span>
-                        <span className={styles.gender}>{item.gender}</span>
+                        <span className={styles.gender}>{renderGender(item.gender)}</span>
                       </div>
                       <div>
                         <div className={styles.idtype}>{getRedirectType(item.certificate_type)}</div>
                         <div className={styles.id}>{item.certificate_id}</div>
                       </div>
                     </div>
-                    <img className={styles["idcard-img"]} src={item.image} />
+                    <LoadImg className={styles["idcard-img"]} src={item.image} />
                   </div>
                 </div>
               )}
@@ -142,8 +157,10 @@ const ExecuteDetails = ({ item }) => {
         ))}
         <div className={styles.bottom}>
           <div className={styles.foot} onClick={() => subscribeHandler(imgUrl === "subscribe" ? 1 : 0)}>
-            <img className={styles.img} src={`/static/2x/${imgUrl}.png`} />
-            <div className={styles.icontext}>{imgUrl === "subscribe" ? "添加告警订阅" : "取消告警订阅"}</div>
+            <img className={styles.img} src={`/static/3x/${imgUrl}.png`} alt="" />
+            <div className={classNames(styles.icontext, imgUrl === "subscribe" ? styles.add : styles.cancle)}>
+              {imgUrl === "subscribe" ? "添加告警订阅" : "取消告警订阅"}
+            </div>
           </div>
         </div>
       </div>

@@ -55,7 +55,7 @@ const VirtualizedList = props => {
       pullToRefresh={
         !isRefresh ? null : (
           <PullToRefresh
-            indicator={{ activate: <Loading />, release: <Loading /> }}
+            indicator={{ release: <Loading /> }}
             damping={30}
             refreshing={refreshing}
             onRefresh={onRefresh}

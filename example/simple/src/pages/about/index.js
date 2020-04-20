@@ -3,10 +3,12 @@
  * @Date: 2020-04-08 16:24:11
  * @LastEditors: dengsha
  * @Description: 关于页面
- * @LastEditTime: 2020-04-10 17:01:55
+ * @LastEditTime: 2020-04-20 09:49:04
  */
 import React, { useState } from "react";
-import styles from "./styles/index.less";
+// import styles from "@/styles/about/index.less";
+import { getCookie } from "@/utils/cookie";
+import styles from "@/styles/about/index.less";
 
 const AboutPage = () => {
   return (
@@ -14,7 +16,7 @@ const AboutPage = () => {
       <div className={styles.about_imgDiv}>
         <img src="/static/2x/about_logo.png" width={104} height={104} />
         <div className={styles.about_name}>掌上作战室</div>
-        <div className={styles.about_version}>Version 1.1.0</div>
+        <div className={styles.about_version}>{`Version ${getCookie("versionName")}`}</div>
       </div>
 
       <div className={styles.about_bottom}>
