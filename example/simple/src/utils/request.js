@@ -3,29 +3,30 @@
 
 import { stringify } from "qs";
 import getConfig from "next/config";
+import { getCookie } from "@/utils/cookie";
+
 require("isomorphic-unfetch");
 
-import { getCookie } from "@/utils/cookie";
 
 const { publicRuntimeConfig } = getConfig();
 
 // 解析返回数据
-function parseResponse(response) {
-  const resType = response.headers.get("content-type");
-  if (resType.includes("json")) {
-    return response.json();
-  }
+// function parseResponse(response) {
+//   const resType = response.headers.get("content-type");
+//   if (resType.includes("json")) {
+//     return response.json();
+//   }
 
-  if (resType.includes("text")) {
-    return response.text();
-  }
+//   if (resType.includes("text")) {
+//     return response.text();
+//   }
 
-  if (resType.includes("jpg" || resType.includes("mp3"))) {
-    return response.blob();
-  }
+//   if (resType.includes("jpg" || resType.includes("mp3"))) {
+//     return response.blob();
+//   }
 
-  throw new Error("请定义返回数据类型");
-}
+//   throw new Error("请定义返回数据类型");
+// }
 
 // function checkStatus(response) {
 //   if (response.status >= 200 && response.status < 300) {
@@ -47,36 +48,6 @@ function getHeaders() {
     User: getCookie("userCode") || 123456
   };
 }
-
-export default function request(url, options = {}) {
-  options.method = options.method ? options.method.toUpperCase() : "GET";
-
-  if (options.method === "GET" && typeof options.body === "object") {
-    url = `${url}?${stringify(options.body)}`;
-    delete options.body;
-  }
-
-  options.headers = {
-    ...getHeaders(),
-    ...options.headers
-  };
-
-  if (typeof options.body === "object") {
-    options.body = JSON.stringify(options.body);
-  }
-
-  const newOptions = {
-    ...initOptions,
-    ...options
-  };
-
-  return fetch(url, newOptions)
-    .then(checkStatus)
-    .catch(error => {
-      throw error;
-    });
-}
-
 // 根据返回HTTP代码来分组返回数据
 const checkStatus = response => {
   const responseData = {};
@@ -92,7 +63,7 @@ const checkStatus = response => {
             resolve(responseData);
           } catch (error) {
             responseData.isSuccess = false;
-            responseData.res = { message: '接口数据错误' };
+            responseData.res = { message: "接口数据错误" };
             resolve(responseData);
           }
         } else {
@@ -176,4 +147,32 @@ export function modelResponseNode(response = {}) {
     sendMsg.msg = "操作成功";
   }
   return sendMsg;
+}
+export default function request(url, options = {}) {
+  options.method = options.method ? options.method.toUpperCase() : "GET";
+
+  if (options.method === "GET" && typeof options.body === "object") {
+    url = `${url}?${stringify(options.body)}`;
+    delete options.body;
+  }
+
+  options.headers = {
+    ...getHeaders(),
+    ...options.headers
+  };
+
+  if (typeof options.body === "object") {
+    options.body = JSON.stringify(options.body);
+  }
+
+  const newOptions = {
+    ...initOptions,
+    ...options
+  };
+
+  return fetch(url, newOptions)
+    .then(checkStatus)
+    .catch(error => {
+      throw error;
+    });
 }

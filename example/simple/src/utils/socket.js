@@ -15,7 +15,7 @@ export default function(url) {
   return new Promise(resolve => {
     setTimeout(() => {
       const socket = new window.SockJS(url);
-      const stompClient = window.Stomp.over(socket); //创建STOMP客户端
+      const stompClient = window.Stomp.over(socket); // 创建STOMP客户端
       resolve(stompClient);
     }, 0);
   });
