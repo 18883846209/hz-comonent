@@ -44,6 +44,22 @@ const executeType = (type = 1) => {
   return typeStr;
 };
 
+/** 性别 */
+const renderGender = (gender = 1) => {
+  let genderStr = "";
+  switch (gender) {
+    case "1":
+      genderStr = "男";
+      break;
+    case "2":
+      genderStr = "女";
+      break;
+    default:
+      break;
+  }
+  return genderStr;
+};
+
 function getContentList(data) {
   const { device_ids: deviceIds, disposition_target_type: type, tabs, describe, threshold } = data;
   const oData = {
@@ -125,7 +141,7 @@ const ExecuteDetails = ({ item }) => {
                     <div className={styles["idcard-details"]}>
                       <div>
                         <span>{item.name}</span>
-                        <span className={styles.gender}>{item.gender}</span>
+                        <span className={styles.gender}>{renderGender(item.gender)}</span>
                       </div>
                       <div>
                         <div className={styles.idtype}>{getRedirectType(item.certificate_type)}</div>
