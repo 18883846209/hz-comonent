@@ -30,11 +30,11 @@ const Mask = () => {
 
   return isFirst ? (
     <div className={styles.mask} onClick={() => setIsFirst(false)}>
-      <img alt="" style={{ width: "100%", height: "100%", position: "absolute" }} src="/static/2x/background.png" />
+      <img alt="" style={{ width: "100%", height: "100%", position: "absolute" }} src="/static/3x/background.png" />
       <div className={styles.mask} />
       <img
         style={{ width: "100%", height: "100%", zIndex: 1000000, position: "absolute" }}
-        src="/static/2x/example.gif"
+        src="/static/3x/example.gif"
         alt=""
       />
     </div>
