@@ -17,7 +17,11 @@ const { Item } = List;
 const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) => {
   /** 名单库转字符串 */
   const nameListToStr = (nameList = []) => {
-    return nameList.map(data => data.tab_name).join(",");
+    let nameListStr = nameList.map(data => data.tab_name).join(",");
+    if (nameListStr.length > 18) {
+      nameListStr = nameListStr.slice(0, 16) + '...'
+    }
+    return nameListStr
   };
 
   /** 时间处理 */
