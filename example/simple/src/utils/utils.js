@@ -82,14 +82,14 @@ export const getCalculateTime = (value, isStringTime = false, needTranslate = tr
   const today = moment(new Date().getTime()).format("YYYY-MM-DD");
   // 前一天的日期
   const preDate = new Date().getTime() - 24 * 60 * 60 * 1000;
-  const preDateTime = moment(parseInt(preDate)).format("YYYY-MM-DD");
+  const preDateTime = moment(parseInt(preDate, 10)).format("YYYY-MM-DD");
   // 当年
-  const today_year = moment(new Date().getTime()).format("YYYY");
+  const todayYear = moment(new Date().getTime()).format("YYYY");
   // 获取日期年份
   const getTimeValue = isStringTime ? moment(value, "YYYY-MM-DD HH:mm:ss").valueOf() : value;
-  const getTime_year = moment(parseInt(getTimeValue)).format("YYYY");
+  const getTimeYear = moment(parseInt(getTimeValue, 10)).format("YYYY");
   // 获取的时间日期
-  const getTime = moment(parseInt(getTimeValue)).format("YYYY-MM-DD");
+  const getTime = moment(parseInt(getTimeValue, 10)).format("YYYY-MM-DD");
   if (time < 1) {
     return "刚刚";
   } else if (time >= 1 && time < 30) {
@@ -97,22 +97,22 @@ export const getCalculateTime = (value, isStringTime = false, needTranslate = tr
   } else if (time >= 30 && time < 60) {
     return "半分钟前";
   } else if (time >= 60 && time < 60 * 60) {
-    const min = parseInt(time / 60);
+    const min = parseInt(time / 60, 10);
     return `${min}分钟以前`;
-  } else if (time >= 60 * 60 && today == getTime) {
+  } else if (time >= 60 * 60 && today === getTime) {
     const timeValue = isStringTime ? moment(value, "YYYY-MM-DD HH:mm:ss").valueOf() : value;
-    const now = moment(parseInt(timeValue)).format("HH:mm");
+    const now = moment(parseInt(timeValue, 10)).format("HH:mm");
     return `今天 ${now}`;
-  } else if (time >= 60 * 60 && preDateTime == getTime) {
+  } else if (time >= 60 * 60 && preDateTime === getTime) {
     const timeValue = isStringTime ? moment(value, "YYYY-MM-DD HH:mm:ss").valueOf() : value;
-    const now = moment(parseInt(timeValue)).format("HH:mm");
+    const now = moment(parseInt(timeValue, 10)).format("HH:mm");
     return `昨天 ${now}`;
-  } else if (getTime_year == today_year) {
+  } else if (getTimeYear === todayYear) {
     const timeValue = isStringTime ? moment(value, "YYYY-MM-DD HH:mm:ss").valueOf() : value;
-    const now = moment(parseInt(timeValue)).format("MM-DD HH:mm");
+    const now = moment(parseInt(timeValue, 10)).format("MM-DD HH:mm");
     return now;
   }
   const timeValue = isStringTime ? moment(value, "YYYY-MM-DD HH:mm:ss").valueOf() : value;
-  const now = moment(parseInt(timeValue)).format("YYYY-MM-DD HH:mm");
+  const now = moment(parseInt(timeValue, 10)).format("YYYY-MM-DD HH:mm");
   return now;
 };
