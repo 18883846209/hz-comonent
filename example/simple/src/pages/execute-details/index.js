@@ -103,7 +103,7 @@ const ExecuteDetails = ({ item }) => {
               {index !== 3 || `${item.disposition_target_type}` === "1" ? (
                 <div
                   onClick={
-                    data.key === "区域"
+                    data.key === "区域" && item.device_ids && item.device_ids.length > 0
                       ? () =>
                           router.push({
                             pathname: routes.deviceList.path,
