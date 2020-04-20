@@ -1,8 +1,8 @@
-import React, { Flex, Toast } from "antd-mobile";
+import React, { useState } from "react";
+import { Flex, Toast } from "antd-mobile";
 import router from "next/router";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { useState } from "react";
 import styles from "@/styles/executeDetails/index.less";
 import { getRedirectStatus, getRedirectType } from "@/utils/common";
 import LoadImg from "@/components/ImgLoad";
