@@ -85,7 +85,7 @@ const Base = observer(({ children }) => {
   useEffect(() => {
     // queryConfig().then(res => {
     //   configStore.getConfig(JSON.stringify(res.slice(5)));
-    //   // console.log("111111", configStore.config);
+    // console.log("111111", configStore.config);
     // });
     let stomp;
     socket(`${websocket}/endpointWisely`).then(sock => {
