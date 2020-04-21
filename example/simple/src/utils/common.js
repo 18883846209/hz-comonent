@@ -1,6 +1,6 @@
 /** 判断布控状态 */
 const getRedirectStatus = status => {
-  status = Number(status)
+  status = Number(status);
   let text = "布控中";
   switch (status) {
     case 0:
@@ -76,4 +76,29 @@ const getTitle = type => {
   return text;
 };
 
-export { getRedirectStatus, getRedirectType, getTitle };
+/** 点击图处理 status(0: 已订阅 1：未订阅 2：订阅动画 3：取消动画 4: 订阅失败) */
+const changeImgUrl = status => {
+  let imgForUrl = ["add_subscribe", ".png"];
+  switch (status) {
+    case 0:
+      imgForUrl = ["add_subscribe", ".png"];
+      break;
+    case 1:
+      imgForUrl = ["subscribed_small", ".png"];
+      break;
+    case 2:
+      imgForUrl = ["sub_success", ".gif"];
+      break;
+    case 3:
+      imgForUrl = ["sub_cancel", ".gif"];
+      break;
+    case 4:
+      imgForUrl = ["sub_fail", ".gif"];
+      break;
+    default:
+      break;
+  }
+  return imgForUrl;
+};
+
+export { getRedirectStatus, getRedirectType, getTitle, changeImgUrl };

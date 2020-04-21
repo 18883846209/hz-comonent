@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { PullToRefresh, Toast } from "antd-mobile";
 import dynamic from "next/dynamic";
-import styles from "@/styles/executeControl/index.less";
-import Filter from "@/components/Filter";
-import { filterDataList } from "@/utils/data";
-import { setStore, getStore } from "@/utils/localStorage";
 import { getExecuteList, subscribe } from "@/services/executeControl";
-import { getDpr } from "@/utils/utils";
-import Loading from "@/components/PullLoading";
 import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
+import Loading from "@/components/PullLoading";
+import Filter from "@/components/Filter";
 import Item from "@/components/ExecuteItem";
+import { setStore, getStore } from "@/utils/localStorage";
+import { filterDataList } from "@/utils/data";
+import { changeImgUrl } from "@/utils/common";
+import { getDpr } from "@/utils/utils";
+import styles from "@/styles/executeControl/index.less";
 
 const List = dynamic(import("@/components/List"), {
   ssr: false
 });
+
+const height = "calc(100vh - 90px)";
 
 /** 蒙层 */
 const Mask = () => {
@@ -90,31 +93,6 @@ function ExecuteList() {
     });
   };
 
-  /** 点击图处理 status(0: 已订阅 1：未订阅 2：订阅动画 3：取消动画 4: 订阅失败) */
-  const changeImgUrl = status => {
-    let imgForUrl = ["add_subscribe", ".png"];
-    switch (status) {
-      case 0:
-        imgForUrl = ["add_subscribe", ".png"];
-        break;
-      case 1:
-        imgForUrl = ["subscribed_small", ".png"];
-        break;
-      case 2:
-        imgForUrl = ["sub_success", ".gif"];
-        break;
-      case 3:
-        imgForUrl = ["sub_cancel", ".gif"];
-        break;
-      case 4:
-        imgForUrl = ["sub_fail", ".gif"];
-        break;
-      default:
-        break;
-    }
-    return imgForUrl;
-  };
-
   /** 添加取消订阅 action(0：取消订阅，1：订阅) */
   const subscribeHandler = (id, action, e) => {
     if (e && e.stopPropagation) e.stopPropagation();
@@ -187,13 +165,13 @@ function ExecuteList() {
             refresh={refreshing}
             onRefresh={refresh}
             renderRow={renderRow}
-            wrapHeight={document.documentElement.clientHeight - 90}
+            wrapHeight={height}
           />
         </div>
       );
     } else {
       node = (
-        <div className={styles['no-data']}>
+        <div className={styles["no-data"]}>
           <PullToRefresh onRefresh={refresh} damping={30} indicator={{ release: <Loading /> }}>
             <EmptyNoDataPage />
           </PullToRefresh>
@@ -209,7 +187,7 @@ function ExecuteList() {
       <Filter filterDatas={filterDataList} callback={getFilterVal} />
       {renderContext()}
       <div className={styles.result}>
-        <img src={showImg ? getDpr('executeControl/sub_success_big', '.gif') : ""} alt="" />
+        <img src={showImg ? getDpr("executeControl/sub_success_big", ".gif") : ""} alt="" />
       </div>
     </div>
   );
