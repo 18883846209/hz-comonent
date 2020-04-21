@@ -83,6 +83,7 @@ function ExecuteList() {
   const getFilterVal = (obj = { key: "", value: "" }) => {
     setParams(param => {
       param[obj.key] = obj.value;
+      param.page_num = 1;
       queryExecuteList(param);
       return param;
     });
