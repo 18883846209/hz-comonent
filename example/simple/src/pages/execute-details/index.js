@@ -92,6 +92,20 @@ const ExecuteDetails = ({ item }) => {
     });
   };
 
+  const deviceListClick = data => {
+    if (data.key === "区域" && item.device_ids && item.device_ids.split(";").length > 0) {
+      router.push({
+        pathname: routes.deviceList.path,
+        query: {
+          param: JSON.stringify({
+            disposition_id: item.disposition_id,
+            device_ids: item.device_ids.split(";")
+          })
+        }
+      });
+    }
+  };
+
   const contentList = getContentList(item);
   return (
     <div className={styles["execute-details"]}>
@@ -120,21 +134,12 @@ const ExecuteDetails = ({ item }) => {
               </div>
               {index !== 3 || `${item.disposition_target_type}` === "1" ? (
                 <div
-                  onClick={
-                    data.key === "区域" && item.device_ids && item.device_ids.split(";").length > 0
-                      ? () =>
-                          router.push({
-                            pathname: routes.deviceList.path,
-                            query: {
-                              param: JSON.stringify({
-                                disposition_id: item.disposition_id,
-                                device_ids: item.device_ids.split(";")
-                              })
-                            }
-                          })
-                      : () => {}
-                  }
-                  className={classNames(data.key === "区域" && data.showLink ? styles.link : "", styles.value)}
+                  onClick={() => deviceListClick(data)}
+                  className={classNames(
+                    data.key === "区域" && data.showLink ? styles.link : "",
+                    styles.value,
+                    data.key === "时段" ? styles.overflow : ""
+                  )}
                 >
                   {data.value}
                 </div>
