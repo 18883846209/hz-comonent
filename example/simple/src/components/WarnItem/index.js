@@ -28,7 +28,7 @@ const Warn = ({ onClick, item = {}, style }) => {
                 <Item src={getDpr("warn/list_name")} desc={item.face_disposition_name || ""} />
                 <Item src={getDpr("warn/list_position")} desc={item.device_name || ""} />
               </div>
-              <Progress percent={item.alarm_score || 0} />
+              <Progress percent={item.alarm_score} />
             </div>
           </Flex>
         </div>

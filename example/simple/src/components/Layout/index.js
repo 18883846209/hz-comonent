@@ -83,6 +83,9 @@ const goBack = router => {
 //   }
 //   return [];
 // };
+const disconnect = stomp => {
+  if (stomp && typeof stomp.disconnect === "function") stomp.disconnect();
+};
 
 const Base = observer(({ children }) => {
   const { warnStore } = useStores();
@@ -94,6 +97,7 @@ const Base = observer(({ children }) => {
     //   // console.log("111111", configStore.config);
     // });
     let stomp;
+    disconnect(stomp);
     socket(`${websocket}/endpointWisely`).then(sock => {
       stomp = sock;
       stomp.connect({}, () => {
@@ -104,7 +108,7 @@ const Base = observer(({ children }) => {
     });
 
     return () => {
-      if (stomp && typeof stomp.over === "function") stomp.over();
+      disconnect(stomp);
     };
   }, []);
   const LeftContent = !isHome(router) ? <Icon type="left" /> : null;

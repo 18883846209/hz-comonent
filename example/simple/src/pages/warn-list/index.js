@@ -17,7 +17,7 @@ const List = dynamic(import("@/components/List"), {
 const pageSize = 15;
 const parseData = res => {
   if (!res || !res.data) return [];
-  return res.data;
+  return Array.isArray(res.data) ? res.data : [];
 };
 const goDetail = (query, _router) => {
   _router.push({

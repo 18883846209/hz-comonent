@@ -5,6 +5,10 @@ import PropTypes from "prop-types";
 import { pxToRem } from "@/utils/utils";
 import Loading from "@/components/PullLoading";
 
+const navHeight = 45;
+const margin = 40;
+const height = `calc(100vh - ${navHeight}px - ${pxToRem(margin)})`;
+
 const VirtualizedList = props => {
   const {
     data = [],
@@ -19,20 +23,12 @@ const VirtualizedList = props => {
     isRefresh = true
   } = props;
   const listRef = useRef(null);
-  const navHeight = 45;
-  const margin = 40;
   const ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2
   });
   const [dataSource, setData] = useState(ds.cloneWithRows(data));
-  const height = `calc(100vh - ${navHeight}px - ${pxToRem(margin)})`;
   useEffect(() => {
     setData(ds.cloneWithRows(data));
-    // setTimeout(() => {
-    //   // const h = document.documentElement.clientHeight - ReactDOM.findDOMNode(listRef.current).offsetTop;
-    //   const h = `${document.documentElement.clientHeight - navHeight}px - ${margin / 75}rem`;
-    //   setHeight(h);
-    // }, 0);
   }, [data]);
   const style = {
     height: wrapHeight || height,
