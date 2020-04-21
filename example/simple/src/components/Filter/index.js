@@ -97,7 +97,7 @@ function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => 
         <FilterList visible={visible} valList={valList} currentKey={key} selected={selected} onClick={itemClick} />
       </div>
       {visible ? (
-        <div className={styles.mask} onClick={() => setVisible(!visible)} style={{ height: "calc(100vh - 45px)" }} />
+        <div className={styles.mask} onClick={() => setVisible(!visible)} />
       ) : null}
       <div className={styles.height} />
     </>

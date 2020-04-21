@@ -87,7 +87,7 @@ const Detail = ({ item = {} }) => {
     {
       src: "warn/detail_time",
       name: "时间",
-      value: getCalculateTime(item.notification_time, false, false)
+      value: getCalculateTime(item.notification_time, true, false)
     },
     {
       src: "warn/detail_position",

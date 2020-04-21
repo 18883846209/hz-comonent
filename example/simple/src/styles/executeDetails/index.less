@@ -1,6 +1,8 @@
 @import "~@styles/themes/default.less";
+@import "~@styles/mixins/main.less";
 
 .execute-details {
+  height: calc(100vh - 45PX);
   .bg {
     height: 90px;
     background-color: @nav-bg;
@@ -61,6 +63,7 @@
       .value {
         max-width: 80%;
         text-align: right;
+        .overflow-clamps;
       }
       .link {
         color: #4d6cc1;

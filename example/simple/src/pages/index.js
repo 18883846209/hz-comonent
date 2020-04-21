@@ -57,6 +57,7 @@ const Home = observer(() => {
   // useEffect(() => {
   //   setConfig(config);
   // }, [config]);
+  // console.log(JSON.parse(config));
   useEffect(() => {
     const top = document.getElementById("bottom").getBoundingClientRect().y;
     setBottom(`calc(100vh - ${top}px - ${pxToRem(15)} )`);

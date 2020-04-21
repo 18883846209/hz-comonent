@@ -7,7 +7,9 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 .lists {
+  height: calc(100vh - 90PX);
   :global {
     .list-view-section-body {
       background-color: #f4f4f4;
@@ -16,6 +18,11 @@
       background-color: transparent;
     }
   }
+}
+
+.no-data {
+  height: calc(100vh - 90PX);
+  overflow: hidden;
 }
 
 .result {
