@@ -6,7 +6,7 @@ import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
 import Loading from "@/components/PullLoading";
 import Filter from "@/components/Filter";
 import Item from "@/components/ExecuteItem";
-import { setStore, getStore } from "@/utils/localStorage";
+import Mask from "@/components/Mask";
 import { filterDataList } from "@/utils/data";
 import { changeImgUrl } from "@/utils/common";
 import { getDpr } from "@/utils/utils";
@@ -17,33 +17,6 @@ const List = dynamic(import("@/components/List"), {
 });
 
 const height = "calc(100vh - 90px)";
-
-/** 蒙层 */
-const Mask = () => {
-  const [isFirst, setIsFirst] = useState(false);
-
-  useEffect(() => {
-    const first = getStore("isFirst");
-    if (first === 1) {
-      setIsFirst(false);
-    } else {
-      setIsFirst(true);
-      setStore("isFirst", 1);
-    }
-  }, []);
-
-  return isFirst ? (
-    <div className={styles.mask} onClick={() => setIsFirst(false)}>
-      <img alt="" style={{ width: "100%", height: "100%", position: "absolute" }} src="/static/3x/background.png" />
-      <div className={styles.mask} />
-      <img
-        style={{ width: "100%", height: "100%", zIndex: 1000000, position: "absolute" }}
-        src="/static/3x/example.gif"
-        alt=""
-      />
-    </div>
-  ) : null;
-};
 
 function ExecuteList() {
   const [refreshing, setRefreshing] = useState(false);
