@@ -27,16 +27,16 @@ const executeArea = (ids = "") => {
 };
 
 /** 布控类型 */
-const executeType = (type = 1) => {
+const executeType = (type = "1") => {
   let typeStr = "名单库布控";
   switch (type) {
-    case 1:
+    case "1":
       typeStr = "名单库布控";
       break;
-    case 2:
+    case "2":
       typeStr = "单人布控";
       break;
-    case 3:
+    case "3":
       typeStr = "民族布控";
       break;
     default:
@@ -65,7 +65,7 @@ function getContentList(data) {
   const { device_ids: deviceIds, disposition_target_type: type, tabs, describe, threshold } = data;
   const oData = {
     ...data,
-    position: `${executeArea(deviceIds)}个监控点`,
+    position: executeArea(deviceIds) === 0 ? "全部监控点" : `${executeArea(deviceIds)}个监控点`,
     types: executeType(type),
     target: tabs,
     remarks: describe,
@@ -99,7 +99,7 @@ const ExecuteDetails = ({ item }) => {
       <div className={styles.title}>
         <div className={styles.name}>
           <span className={styles["execute-name"]}>{item.title}</span>
-          <span className={styles["execute-state"]}>{getRedirectStatus(Number(item.disposition_status))}</span>
+          <span className={styles["execute-state"]}>{getRedirectStatus(item.disposition_status)}</span>
         </div>
         <div>
           <img src={getDpr("executeControl/user")} alt="" />
