@@ -46,7 +46,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    height: 85%;
+    min-height: 85%;
     margin: 3% 0.3rem 0;
     background-color: #fff;
     border-radius: 0.13333rem;
@@ -112,19 +112,22 @@
     }
   }
   .bottom {
+    position: relative;
     flex-grow: 1;
     width: 100%;
-    text-align: center;
+    min-height: 300px;
     .foot {
-      position: relative;
+      position: absolute;
       top: 50%;
-      transform: translateY(-50%);
+      left: 50%;
+      transform: translate(-50%, -50%);
       .img {
         width: 200px;
         height: 200px;
       }
       .icontext {
         padding-top: 40px;
+        text-align: center;
       }
       .add {
         color: #4d6cc1;
