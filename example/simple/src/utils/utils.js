@@ -77,7 +77,7 @@ export const getCalculateTime = (value, isStringTime = false, needTranslate = tr
   const time = isStringTime
     ? (new Date().getTime() - moment(value, "YYYY-MM-DD HH:mm:ss").valueOf()) / 1000
     : (new Date().getTime() - value) / 1000;
-  if (!needTranslate) return moment(Number(value)).format("YYYY-MM-DD HH:mm:ss");
+  if (!needTranslate) return value;
   // 当天日期
   const today = moment(new Date().getTime()).format("YYYY-MM-DD");
   // 前一天的日期

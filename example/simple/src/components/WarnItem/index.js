@@ -15,7 +15,7 @@ const Warn = ({ onClick, item = {}, style }) => {
             <div className={styles.left}>{item.name}</div>
             <div className={styles.right}>
               <img src={getDpr("warn/time")} alt="" />
-              <span>{getCalculateTime(Number(item.notification_time))}</span>
+              <span>{getCalculateTime(item.notification_time, true)}</span>
             </div>
           </Flex>
         </div>

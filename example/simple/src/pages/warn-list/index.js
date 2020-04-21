@@ -48,7 +48,7 @@ const Index = observer(() => {
           Toast.info(res.res.message || "未获取到数据", 2, null);
           return {};
         }
-        return res.res.data;
+        return res.res;
       } catch (e) {
         setData([]);
         setLoading(false);
