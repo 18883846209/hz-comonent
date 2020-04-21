@@ -36,20 +36,20 @@ const base = {
     { key: "homeTopBg", value: 1, desc: "首页背景图片" },
     {
       key: "Portra",
-      value: {
+      value: JSON.stringify({
         name: "人像布控",
         enName: "Portra",
         icon: 1
-      },
+      }),
       desc: "首页人像布控模块"
     },
     {
       key: "Alarm",
-      value: {
+      value: JSON.stringify({
         name: "告警",
         enName: "Alarm",
         icon: 1
-      },
+      }),
       desc: "首页告警模块"
     }
   ]
