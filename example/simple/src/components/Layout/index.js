@@ -83,10 +83,10 @@ const Base = observer(({ children }) => {
   const { newsFlag } = warnStore;
   const router = useRouter();
   useEffect(() => {
-    queryConfig().then(res => {
-      configStore.getConfig(JSON.stringify(res.slice(5)));
-      // console.log("111111", configStore.config);
-    });
+    // queryConfig().then(res => {
+    //   configStore.getConfig(JSON.stringify(res.slice(5)));
+    //   // console.log("111111", configStore.config);
+    // });
     let stomp;
     socket(`${websocket}/endpointWisely`).then(sock => {
       stomp = sock;
