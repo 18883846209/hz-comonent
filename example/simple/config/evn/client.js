@@ -31,7 +31,28 @@ const base = {
     callAndroid: "android"
   },
   server: "http://192.168.111.231:8080",
-  websocket: "http://192.168.111.231:8080"
+  websocket: "http://192.168.111.231:8080",
+  settings: [
+    { key: "homeTopBg", value: 1, desc: "首页背景图片" },
+    {
+      key: "Portra",
+      value: {
+        name: "人像布控",
+        enName: "Portra",
+        icon: 1
+      },
+      desc: "首页人像布控模块"
+    },
+    {
+      key: "Alarm",
+      value: {
+        name: "告警",
+        enName: "Alarm",
+        icon: 1
+      },
+      desc: "首页告警模块"
+    }
+  ]
 };
 
 module.exports = {
