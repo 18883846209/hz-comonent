@@ -3,6 +3,7 @@ import { List } from "antd-mobile";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import cloneDeep from "lodash/cloneDeep";
+import TouchFeedback from "rmc-feedback";
 import { getTitle } from "@/utils/common";
 import styles from "./styles/index.less";
 
@@ -29,19 +30,21 @@ function FilterList({ valList, visible, onClick, selected, currentKey }) {
 function FilterTitle({ titles, onClick, visible, currentKey }) {
   const selectedTitle = classnames(styles["title-item"], styles.selected);
   return titles.map(item => (
-    <div
-      key={item.key}
-      className={visible && currentKey === item.key ? selectedTitle : styles["title-item"]}
-      onClick={() => onClick(item.key)}
-    >
-      {item.title}
+    <TouchFeedback activeClassName="active">
       <div
-        className={classnames(
-          visible && currentKey === item.key ? styles["title-icon-selected"] : "",
-          styles["title-icon"]
-        )}
-      />
-    </div>
+        key={item.key}
+        className={visible && currentKey === item.key ? selectedTitle : styles["title-item"]}
+        onClick={() => onClick(item.key)}
+      >
+        {item.title}
+        <div
+          className={classnames(
+            visible && currentKey === item.key ? styles["title-icon-selected"] : "",
+            styles["title-icon"]
+          )}
+        />
+      </div>
+    </TouchFeedback>
   ));
 }
 
