@@ -58,7 +58,7 @@ const Detail = ({ item = {} }) => {
     {
       width,
       height,
-      url: item.target_image_url,
+      url: item.captured_image_url,
       text: "抓拍照"
     },
     {
