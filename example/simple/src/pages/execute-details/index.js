@@ -3,6 +3,7 @@ import { Flex, Toast } from "antd-mobile";
 import router from "next/router";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import TouchFeedback from "rmc-feedback";
 import styles from "@/styles/executeDetails/index.less";
 import { getRedirectStatus, getRedirectType } from "@/utils/common";
 import LoadImg from "@/components/ImgLoad";
@@ -101,9 +102,9 @@ const ExecuteDetails = ({ item }) => {
           <span className={styles["execute-state"]}>{getRedirectStatus(Number(item.disposition_status))}</span>
         </div>
         <div>
-          <img src={getDpr('executeControl/user')} alt="" />
+          <img src={getDpr("executeControl/user")} alt="" />
           <span className={styles.user}>{item.owner}</span>
-          <img src={getDpr('executeControl/time')} alt="" />
+          <img src={getDpr("executeControl/time")} alt="" />
           {getCalculateTime(item.create_time)}
         </div>
       </div>
@@ -124,10 +125,12 @@ const ExecuteDetails = ({ item }) => {
                       ? () =>
                           router.push({
                             pathname: routes.deviceList.path,
-                            query: {param: JSON.stringify({
-                              disposition_id: item.disposition_id,
-                              device_ids: item.device_ids.split(";")
-                            })}
+                            query: {
+                              param: JSON.stringify({
+                                disposition_id: item.disposition_id,
+                                device_ids: item.device_ids.split(";")
+                              })
+                            }
                           })
                       : () => {}
                   }
@@ -156,12 +159,14 @@ const ExecuteDetails = ({ item }) => {
           </div>
         ))}
         <div className={styles.bottom}>
-          <div className={styles.foot} onClick={() => subscribeHandler(imgUrl === "subscribe" ? 1 : 0)}>
-            <img className={styles.img} src={getDpr(`executeControl/${imgUrl}`)} alt="" />
-            <div className={classNames(styles.icontext, imgUrl === "subscribe" ? styles.add : styles.cancle)}>
-              {imgUrl === "subscribe" ? "添加告警订阅" : "取消告警订阅"}
+          <TouchFeedback activeClassName="active">
+            <div className={styles.foot} onClick={() => subscribeHandler(imgUrl === "subscribe" ? 1 : 0)}>
+              <img className={styles.img} src={getDpr(`executeControl/${imgUrl}`)} alt="" />
+              <div className={classNames(styles.icontext, imgUrl === "subscribe" ? styles.add : styles.cancle)}>
+                {imgUrl === "subscribe" ? "添加告警订阅" : "取消告警订阅"}
+              </div>
             </div>
-          </div>
+          </TouchFeedback>
         </div>
       </div>
     </div>
