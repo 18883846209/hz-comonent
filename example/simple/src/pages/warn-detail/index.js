@@ -58,7 +58,7 @@ const Detail = ({ item = {} }) => {
     {
       width,
       height,
-      url: item.target_image_url,
+      url: item.captured_image_url,
       text: "抓拍照"
     },
     {
@@ -116,7 +116,7 @@ const Detail = ({ item = {} }) => {
       <div className={styles.top}>
         <div className={styles.name}>{item.name || ""}</div>
         <div className={styles.similar}>
-          <Progress percent={item.alarm_score} />
+          <Progress percent={Number(item.alarm_score)} />
         </div>
         <div className={styles.center}>
           {cardListData.map((v, i) => (

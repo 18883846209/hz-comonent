@@ -4,7 +4,7 @@ import { PullToRefresh } from "antd-mobile";
 import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
 import Loading from "@/components/PullLoading";
 
-const Empty = ({ loading = true, data = [], refresh, onRefresh }) => {
+const Empty = ({ loading = true, data = [], refresh = false, onRefresh = () => {} }) => {
   if (loading) return <LoadingPage />;
   if (!data.length)
     return (

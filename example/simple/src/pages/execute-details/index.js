@@ -3,6 +3,7 @@ import { Flex, Toast } from "antd-mobile";
 import router from "next/router";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import TouchFeedback from "rmc-feedback";
 import styles from "@/styles/executeDetails/index.less";
 import { getRedirectStatus, getRedirectType } from "@/utils/common";
 import LoadImg from "@/components/ImgLoad";
@@ -26,16 +27,16 @@ const executeArea = (ids = "") => {
 };
 
 /** 布控类型 */
-const executeType = (type = 1) => {
+const executeType = (type = "1") => {
   let typeStr = "名单库布控";
   switch (type) {
-    case 1:
+    case "1":
       typeStr = "名单库布控";
       break;
-    case 2:
+    case "2":
       typeStr = "单人布控";
       break;
-    case 3:
+    case "3":
       typeStr = "民族布控";
       break;
     default:
@@ -64,7 +65,7 @@ function getContentList(data) {
   const { device_ids: deviceIds, disposition_target_type: type, tabs, describe, threshold } = data;
   const oData = {
     ...data,
-    position: `${executeArea(deviceIds)}个监控点`,
+    position: executeArea(deviceIds) === 0 ? "全部监控点" : `${executeArea(deviceIds)}个监控点`,
     types: executeType(type),
     target: tabs,
     remarks: describe,
@@ -98,12 +99,12 @@ const ExecuteDetails = ({ item }) => {
       <div className={styles.title}>
         <div className={styles.name}>
           <span className={styles["execute-name"]}>{item.title}</span>
-          <span className={styles["execute-state"]}>{getRedirectStatus(Number(item.disposition_status))}</span>
+          <span className={styles["execute-state"]}>{getRedirectStatus(item.disposition_status)}</span>
         </div>
         <div>
-          <img src={getDpr('executeControl/user')} alt="" />
+          <img src={getDpr("executeControl/user")} alt="" />
           <span className={styles.user}>{item.owner}</span>
-          <img src={getDpr('executeControl/time')} alt="" />
+          <img src={getDpr("executeControl/time")} alt="" />
           {getCalculateTime(item.create_time)}
         </div>
       </div>
@@ -124,10 +125,12 @@ const ExecuteDetails = ({ item }) => {
                       ? () =>
                           router.push({
                             pathname: routes.deviceList.path,
-                            query: {param: JSON.stringify({
-                              disposition_id: item.disposition_id,
-                              device_ids: item.device_ids.split(";")
-                            })}
+                            query: {
+                              param: JSON.stringify({
+                                disposition_id: item.disposition_id,
+                                device_ids: item.device_ids.split(";")
+                              })
+                            }
                           })
                       : () => {}
                   }
@@ -156,12 +159,14 @@ const ExecuteDetails = ({ item }) => {
           </div>
         ))}
         <div className={styles.bottom}>
-          <div className={styles.foot} onClick={() => subscribeHandler(imgUrl === "subscribe" ? 1 : 0)}>
-            <img className={styles.img} src={getDpr(`executeControl/${imgUrl}`)} alt="" />
-            <div className={classNames(styles.icontext, imgUrl === "subscribe" ? styles.add : styles.cancle)}>
-              {imgUrl === "subscribe" ? "添加告警订阅" : "取消告警订阅"}
+          <TouchFeedback activeClassName="active">
+            <div className={styles.foot} onClick={() => subscribeHandler(imgUrl === "subscribe" ? 1 : 0)}>
+              <img className={styles.img} src={getDpr(`executeControl/${imgUrl}`)} alt="" />
+              <div className={classNames(styles.icontext, imgUrl === "subscribe" ? styles.add : styles.cancle)}>
+                {imgUrl === "subscribe" ? "添加告警订阅" : "取消告警订阅"}
+              </div>
             </div>
-          </div>
+          </TouchFeedback>
         </div>
       </div>
     </div>

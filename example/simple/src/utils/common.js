@@ -1,5 +1,6 @@
 /** 判断布控状态 */
 const getRedirectStatus = status => {
+  status = Number(status)
   let text = "布控中";
   switch (status) {
     case 0:

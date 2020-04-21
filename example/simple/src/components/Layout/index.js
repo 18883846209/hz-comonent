@@ -31,11 +31,17 @@ const isHome = router => {
 };
 
 const goBack = router => {
-  if (!isHome(router)) {
-    router.back();
-  } else {
-    router.replace("/");
+  const path = router.pathname;
+  const listPath = routesMap.warnList.path;
+  const detailPath = routesMap.warnDetail.path;
+  const homePath = routesMap.home.path;
+  if (path === detailPath) {
+    return router.push(listPath);
   }
+  if (path === listPath) {
+    return router.replace(homePath);
+  }
+  return router.back();
 };
 
 // 保存配置
