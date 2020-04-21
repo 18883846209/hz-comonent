@@ -71,7 +71,7 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
           )}
         </div>
         <div className={styles["item-right"]}>
-          <div>
+          <div className={styles["item-right-head"]}>
             <span className={styles.name}>{item.title}</span>
             <span className={styles.state}>{getRedirectStatus(item.disposition_status)}</span>
           </div>

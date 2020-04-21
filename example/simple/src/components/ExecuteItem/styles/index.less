@@ -1,3 +1,5 @@
+@import "~@styles/mixins/main.less";
+
 .item {
   position: relative;
   margin: 20px;
@@ -63,16 +65,22 @@
     width: 60%;
     height: 200px;
     font-size: 12px;
-    .name {
-      margin-right: 5%;
-      font-size: 14px;
-    }
-    .state {
-      display: inline-block;
-      width: 100px;
-      color: #29b56d;
-      text-align: center;
-      background-color: #dff6ea;
+    .item-right-head {
+      display: flex;
+      .name {
+        display: inline-block;
+        max-width: 350px;
+        margin-right: 5%;
+        font-size: 14px;
+        .overflow;
+      }
+      .state {
+        display: inline-block;
+        width: 100px;
+        color: #29b56d;
+        text-align: center;
+        background-color: #dff6ea;
+      }
     }
     .card {
       display: flex;
