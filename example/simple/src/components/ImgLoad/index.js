@@ -1,8 +1,7 @@
 /* eslint-disable no-undef */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-// import { LazyLoadImage } from "react-lazy-load-image-component";
 import styles from "./styles/index.less";
 
 const map = {
@@ -22,34 +21,22 @@ const getRatio = (w, h) => {
   return "1to1";
 };
 
-const load = (src, callback = () => {}, errCallback = () => {}) => {
-  const img = new Image();
-  img.onload = () => {
-    callback();
-  };
-  img.onerror = () => {
-    errCallback();
-  };
-  img.src = src;
-};
-
 const LoadImg = ({ src, width = 160, height = 160, style, className }) => {
   const initUrl = map[`ratio_${getRatio(width, height)}_load`];
   const errorUrl = map[`ratio_${getRatio(width, height)}_error`];
-  const [url, setUrl] = useState(initUrl);
-  useEffect(() => {
-    load(
-      src,
-      () => {
-        setUrl(src);
-      },
-      () => {
-        setUrl(errorUrl);
-      }
-    );
-  }, [src]);
-  // return <LazyLoadImage placeholder={<span>aaa</span>} alt={initUrl} height={height} src={`${src}1`} width={width} />;
-  return <img className={classNames(styles.load_img, className)} src={url} alt="" style={style} />;
+  const [url, setUrl] = useState(src);
+  const onerror = () => {
+    setUrl(errorUrl);
+  };
+  return (
+    <img
+      className={classNames(styles.load_img, className)}
+      onError={onerror}
+      src={url}
+      alt=""
+      style={{ backgroundImage: `url(${initUrl})`, ...style }}
+    />
+  );
 };
 
 LoadImg.propTypes = {
