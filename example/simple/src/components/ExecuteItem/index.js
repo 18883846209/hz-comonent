@@ -111,8 +111,8 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
 
 ListItem.propTypes = {
   item: PropTypes.object,
-  imgUrl: PropTypes.string,
-  changeImgUrl: PropTypes.string,
+  imgUrl: PropTypes.array,
+  changeImgUrl: PropTypes.func,
   currentId: PropTypes.string,
   subscribeHandler: PropTypes.func,
   key: PropTypes.string
