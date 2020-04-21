@@ -61,6 +61,7 @@ const Index = observer(() => {
   useEffect(() => {
     getList().then(res => {
       setData(parseData(res));
+      warnStore.changeFlag(false);
     });
     return () => {
       Toast.hide();
