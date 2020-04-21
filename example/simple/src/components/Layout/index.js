@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import propTypes from "prop-types";
 import { NavBar, Icon } from "antd-mobile";
 import { observer } from "mobx-react";
-import request from "@/utils/request";
+// import request from "@/utils/request";
 import useStores from "@/hooks/useStores";
 import socket from "@/utils/socket";
 import globalConfig from "@/utils/getConfig";
@@ -20,7 +20,7 @@ import styles from "./styles/index.less";
 //   "/execute-details": "人像布控详情",
 //   "/about": "关于"
 // };
-const { websocket = "", server = "" } = globalConfig;
+const { websocket = "" } = globalConfig;
 const routes = {};
 Object.keys(routesMap).forEach(item => {
   routes[routesMap[item].path] = routesMap[item].name;
@@ -39,54 +39,54 @@ const goBack = router => {
 };
 
 // 保存配置
-const saveConfig = async () => {
-  const res = await request(`${server}/settings`, {
-    method: "POST",
-    body: {
-      settings: [
-        { key: "homeTopBg", value: 1, desc: "首页背景图片" },
-        {
-          key: "Portra",
-          value: JSON.stringify({
-            name: "人像布控",
-            enName: "Portra",
-            icon: 1
-          }),
-          desc: "首页人像布控模块"
-        },
-        {
-          key: "Alarm",
-          value: JSON.stringify({
-            name: "告警",
-            enName: "Alarm",
-            icon: 1
-          }),
-          desc: "首页告警模块"
-        }
-      ]
-    }
-  });
-  return res;
-};
+// const saveConfig = async () => {
+//   const res = await request(`${server}/settings`, {
+//     method: "POST",
+//     body: {
+//       settings: [
+//         { key: "homeTopBg", value: 1, desc: "首页背景图片" },
+//         {
+//           key: "Portra",
+//           value: JSON.stringify({
+//             name: "人像布控",
+//             enName: "Portra",
+//             icon: 1
+//           }),
+//           desc: "首页人像布控模块"
+//         },
+//         {
+//           key: "Alarm",
+//           value: JSON.stringify({
+//             name: "告警",
+//             enName: "Alarm",
+//             icon: 1
+//           }),
+//           desc: "首页告警模块"
+//         }
+//       ]
+//     }
+//   });
+//   return res;
+// };
 
-// 获取配置
-const queryConfig = async () => {
-  const res = await request(`${server}/settings`);
-  if (res.isSuccess) {
-    return res.res || [];
-  }
-  return [];
-};
+// // 获取配置
+// const queryConfig = async () => {
+//   const res = await request(`${server}/settings`);
+//   if (res.isSuccess) {
+//     return res.res || [];
+//   }
+//   return [];
+// };
 
 const Base = observer(({ children }) => {
-  const { warnStore, configStore } = useStores();
+  const { warnStore } = useStores();
   const { newsFlag } = warnStore;
   const router = useRouter();
   useEffect(() => {
-    queryConfig().then(res => {
-      configStore.getConfig(JSON.stringify(res.slice(5)));
-      // console.log("111111", configStore.config);
-    });
+    // queryConfig().then(res => {
+    //   configStore.getConfig(JSON.stringify(res.slice(5)));
+    //   // console.log("111111", configStore.config);
+    // });
     let stomp;
     socket(`${websocket}/endpointWisely`).then(sock => {
       stomp = sock;

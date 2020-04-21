@@ -48,9 +48,9 @@ const moduleListData = [
 ];
 
 const Home = observer(() => {
-  const { warnStore, configStore } = useStores();
+  const { warnStore } = useStores();
   const { newsFlag } = warnStore;
-  const { config } = configStore;
+  // const { config } = configStore;
   const isOdd = moduleListData.length % 2 === 0;
   const [bottomHeight, setBottom] = useState(200);
   // const [configs, setConfig] = useState(config);
