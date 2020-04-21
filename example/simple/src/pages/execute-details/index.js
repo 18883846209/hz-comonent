@@ -6,7 +6,7 @@ import classNames from "classnames";
 import styles from "@/styles/executeDetails/index.less";
 import { getRedirectStatus, getRedirectType } from "@/utils/common";
 import LoadImg from "@/components/ImgLoad";
-import { getCalculateTime } from "@/utils/utils";
+import { getCalculateTime, getDpr } from "@/utils/utils";
 import routes from "@/routes";
 import { subscribe } from "@/services/executeControl";
 
@@ -85,7 +85,7 @@ const ExecuteDetails = ({ item }) => {
       action,
       disposition_id: item.disposition_id
     }).then(result => {
-      const { res } = result;
+      const { res = {} } = result;
       if (!result.isSuccess) return Toast.info(res.message, 2, null);
       setImgUrl(action ? "cancel_subscribed" : "subscribe");
     });
@@ -93,7 +93,7 @@ const ExecuteDetails = ({ item }) => {
 
   const contentList = getContentList(item);
   return (
-    <div className={styles["execute-details"]} style={{ height: "calc(100vh - 45px)" }}>
+    <div className={styles["execute-details"]}>
       <div className={styles.bg} />
       <div className={styles.title}>
         <div className={styles.name}>
@@ -101,9 +101,9 @@ const ExecuteDetails = ({ item }) => {
           <span className={styles["execute-state"]}>{getRedirectStatus(Number(item.disposition_status))}</span>
         </div>
         <div>
-          <img src="/static/3x/user.png" alt="" />
+          <img src={getDpr('executeControl/user')} alt="" />
           <span className={styles.user}>{item.owner}</span>
-          <img src="/static/3x/time.png" alt="" />
+          <img src={getDpr('executeControl/time')} alt="" />
           {getCalculateTime(item.create_time)}
         </div>
       </div>
@@ -113,7 +113,7 @@ const ExecuteDetails = ({ item }) => {
             <Flex justify="between">
               <div className={styles.key}>
                 <Flex>
-                  <img src={`/static/3x/${data.img}.png`} alt="" />
+                  <img src={getDpr(`executeControl/${data.img}`)} alt="" />
                   <div>{data.key}</div>
                 </Flex>
               </div>
@@ -157,7 +157,7 @@ const ExecuteDetails = ({ item }) => {
         ))}
         <div className={styles.bottom}>
           <div className={styles.foot} onClick={() => subscribeHandler(imgUrl === "subscribe" ? 1 : 0)}>
-            <img className={styles.img} src={`/static/3x/${imgUrl}.png`} alt="" />
+            <img className={styles.img} src={getDpr(`executeControl/${imgUrl}`)} alt="" />
             <div className={classNames(styles.icontext, imgUrl === "subscribe" ? styles.add : styles.cancle)}>
               {imgUrl === "subscribe" ? "添加告警订阅" : "取消告警订阅"}
             </div>

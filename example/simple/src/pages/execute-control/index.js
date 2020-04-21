@@ -6,6 +6,7 @@ import Filter from "@/components/Filter";
 import { filterDataList } from "@/utils/data";
 import { setStore, getStore } from "@/utils/localStorage";
 import { getExecuteList, subscribe } from "@/services/executeControl";
+import { getDpr } from "@/utils/utils";
 import Loading from "@/components/PullLoading";
 import { EmptyNoDataPage, LoadingPage } from "@/components/EmptyPage";
 import Item from "@/components/ExecuteItem";
@@ -45,7 +46,7 @@ function ExecuteList() {
   const [refreshing, setRefreshing] = useState(false);
   const [footLoading, onEndReached] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [imgUrl, setImgUrl] = useState("add_subscribe.png");
+  const [imgUrl, setImgUrl] = useState(["add_subscribe", "png"]);
   const [showImg, setShowImg] = useState(false);
   const [executeList, setExecuteList] = useState([]);
   const [currentId, setCurrentId] = useState("");
@@ -91,22 +92,22 @@ function ExecuteList() {
 
   /** 点击图处理 status(0: 已订阅 1：未订阅 2：订阅动画 3：取消动画 4: 订阅失败) */
   const changeImgUrl = status => {
-    let imgForUrl = "add_subscribe.png";
+    let imgForUrl = ["add_subscribe", ".png"];
     switch (status) {
       case 0:
-        imgForUrl = "add_subscribe.png";
+        imgForUrl = ["add_subscribe", ".png"];
         break;
       case 1:
-        imgForUrl = "subscribed_small.png";
+        imgForUrl = ["subscribed_small", ".png"];
         break;
       case 2:
-        imgForUrl = "sub_success.gif";
+        imgForUrl = ["sub_success", ".gif"];
         break;
       case 3:
-        imgForUrl = "sub_cancel.gif";
+        imgForUrl = ["sub_cancel", ".gif"];
         break;
       case 4:
-        imgForUrl = "sub_fail.gif";
+        imgForUrl = ["sub_fail", ".gif"];
         break;
       default:
         break;
@@ -178,7 +179,7 @@ function ExecuteList() {
       node = <LoadingPage />;
     } else if (executeList.length) {
       node = (
-        <div className={styles.lists} style={{ height: "calc(100vh - 90px)" }}>
+        <div className={styles.lists}>
           <List
             data={executeList}
             loading={footLoading}
@@ -192,7 +193,7 @@ function ExecuteList() {
       );
     } else {
       node = (
-        <div style={{ height: "calc(100vh - 90px)", overflow: "hidden" }}>
+        <div className={styles['no-data']}>
           <PullToRefresh onRefresh={refresh} damping={30} indicator={{ release: <Loading /> }}>
             <EmptyNoDataPage />
           </PullToRefresh>
@@ -208,7 +209,7 @@ function ExecuteList() {
       <Filter filterDatas={filterDataList} callback={getFilterVal} />
       {renderContext()}
       <div className={styles.result}>
-        <img src={showImg ? "/static/2x/sub_success_big.gif" : ""} alt="" />
+        <img src={showImg ? getDpr('executeControl/sub_success_big', '.gif') : ""} alt="" />
       </div>
     </div>
   );

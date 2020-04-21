@@ -2,6 +2,7 @@ import React, { useState, memo } from "react";
 import { List } from "antd-mobile";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+import cloneDeep from "lodash/cloneDeep";
 import { getTitle } from "@/utils/common";
 import styles from "./styles/index.less";
 
@@ -65,7 +66,8 @@ function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => 
 
   /** 列表点击方法 */
   const itemClick = (itemKey, value) => {
-    const filterDataObj = filterList.find(data => data.key === key);
+    const oFilterList = cloneDeep(filterList);
+    const filterDataObj = oFilterList.find(data => data.key === key);
     if (!filterDataObj) return;
     if (itemKey === "不限") {
       filterDataObj.title = getTitle(key);
@@ -84,7 +86,7 @@ function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => 
       return valueList;
     });
     setVisible(visibled => !visibled);
-    setFilterList(filterList);
+    setFilterList(oFilterList);
     callback({ key, value });
   };
 
@@ -96,9 +98,7 @@ function Filter({ filterDatas = [], style = { width: "100%" }, callback = () => 
         </div>
         <FilterList visible={visible} valList={valList} currentKey={key} selected={selected} onClick={itemClick} />
       </div>
-      {visible ? (
-        <div className={styles.mask} onClick={() => setVisible(!visible)} style={{ height: "calc(100vh - 45px)" }} />
-      ) : null}
+      {visible ? <div className={styles.mask} onClick={() => setVisible(!visible)} /> : null}
       <div className={styles.height} />
     </>
   );

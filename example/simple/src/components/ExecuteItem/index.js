@@ -7,7 +7,7 @@ import moment from "moment";
 import router from "next/router";
 import { getRedirectStatus } from "@/utils/common";
 import LoadImg from "@/components/ImgLoad";
-import { getCalculateTime } from "@/utils/utils";
+import { getCalculateTime, getDpr } from "@/utils/utils";
 import routes from "@/routes";
 import styles from "./styles/index.less";
 
@@ -16,8 +16,8 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
   /** 名单库转字符串 */
   const nameListToStr = (nameList = []) => {
     let nameListStr = nameList.map(data => data.tab_name).join(",");
-    if (nameListStr.length > 18) {
-      nameListStr = `${nameListStr.slice(0, 16)}...`;
+    if (nameListStr.length > 15) {
+      nameListStr = `${nameListStr.slice(0, 13)}...`;
     }
     return nameListStr;
   };
@@ -78,17 +78,9 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
           <div className={styles.card}>
             <div className={styles.date}>{getTime(item.start_time, item.end_time)}</div>
             <div className={styles.detail}>
-              <img
-                style={{ height: 14, width: 14, marginRight: "2%", verticalAlign: "bottom" }}
-                src="/static/3x/user.png"
-                alt=""
-              />
+              <img className={styles["user-icon"]} src="/static/3x/user.png" alt="" />
               <span>{item.owner}</span>
-              <img
-                style={{ height: 14, width: 14, margin: "0 2%", verticalAlign: "bottom" }}
-                src="/static/3x/time.png"
-                alt=""
-              />
+              <img className={styles["time-icon"]} src="/static/3x/time.png" alt="" />
               <span>{getCalculateTime(item.create_time)}</span>
               <TouchFeedback activeClassName="active">
                 <span
@@ -98,10 +90,13 @@ const ListItem = ({ item, imgUrl, changeImgUrl, currentId, subscribeHandler }) =
                   <img
                     src={
                       currentId === item.disposition_id
-                        ? `/static/2x/${imgUrl}`
-                        : `/static/2x/${changeImgUrl(Number(item.subscribe_status))}`
+                        ? getDpr(`executeControl/${imgUrl[0]}`, imgUrl[1])
+                        : getDpr(
+                            `executeControl/${changeImgUrl(Number(item.subscribe_status))[0]}`,
+                            changeImgUrl(Number(item.subscribe_status))[1]
+                          )
                     }
-                    style={{ height: 18, width: 16 }}
+                    className={styles["operation-icon"]}
                     alt=""
                   />
                 </span>
