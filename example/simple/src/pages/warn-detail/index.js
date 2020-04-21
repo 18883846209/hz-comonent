@@ -116,7 +116,7 @@ const Detail = ({ item = {} }) => {
       <div className={styles.top}>
         <div className={styles.name}>{item.name || ""}</div>
         <div className={styles.similar}>
-          <Progress percent={item.alarm_score} />
+          <Progress percent={Number(item.alarm_score)} />
         </div>
         <div className={styles.center}>
           {cardListData.map((v, i) => (
