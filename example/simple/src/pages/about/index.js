@@ -3,7 +3,7 @@
  * @Date: 2020-04-08 16:24:11
  * @LastEditors: dengsha
  * @Description: 关于页面
- * @LastEditTime: 2020-04-21 09:32:49
+ * @LastEditTime: 2020-04-21 11:31:07
  */
 import React from "react";
 import { getCookie } from "@/utils/cookie";
@@ -16,7 +16,7 @@ const AboutPage = () => {
       <div className={styles.about_imgDiv}>
         <img src={getDpr("home/about_logo")} width={104} height={104} alt="" />
         <div className={styles.about_name}>掌上作战室</div>
-        <div className={styles.about_version}>{`Version ${getCookie("versionName")}`}</div>
+        <div className={styles.about_version}>{`Version ${getCookie("versionName") || ""}`}</div>
       </div>
 
       <div className={styles.about_bottom}>
