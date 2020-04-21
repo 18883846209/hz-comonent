@@ -3,7 +3,7 @@
  * @Date: 2020-04-08 16:24:11
  * @LastEditors: dengsha
  * @Description: 关于页面
- * @LastEditTime: 2020-04-20 17:38:21
+ * @LastEditTime: 2020-04-21 09:22:07
  */
 import React from "react";
 import { getCookie } from "@/utils/cookie";
@@ -19,7 +19,7 @@ const AboutPage = () => {
       </div>
 
       <div className={styles.about_bottom}>
-        <div className={styles.about_compony}>紫光华智版权所有11</div>
+        <div className={styles.about_compony}>紫光华智版权所有</div>
         <div className={styles.about_componyEng}>Copyright © 2020-2029 Unisinsight. All Rights Reserved.</div>
       </div>
     </div>
